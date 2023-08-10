@@ -1,0 +1,84 @@
+speed_config:
+  speeds:
+    - speed1:
+      #客户端发起进入游戏请求
+      cmd: 141
+      #接口访问间隔
+      time: 1000
+      #接口累计超速
+      count: 0
+      #是否幂等接口
+      idempotent: true
+      #幂等返回cmd
+      response: 150
+
+    - speed2:
+      #客户端请求创建一个角色
+      cmd: 139
+      #接口访问间隔
+      time: 1000
+      #接口累计超速
+      count: 0
+      #是否幂等接口
+      idempotent: true
+      #幂等返回cmd
+      response: 226
+
+    - speed3:
+      #客户端发起点击
+      cmd: 261
+      #接口访问间隔
+      time: 450
+      #是否幂等接口
+      idempotent: false
+      #幂等返回cmd
+      response: 0
+      
+    - speed4:
+      #客户端发起拾取物品
+      cmd: 34
+      #接口访问间隔
+      time: 1000
+      #接口累计超速(当接口超速127次 停顿 100ms)
+      count: 127
+      #是否幂等接口
+      idempotent: false
+      #幂等返回cmd
+      response: 0
+
+    - speed5:
+      #客户端发起丢弃物品
+      cmd: 39
+      #接口访问间隔
+      time: 100
+      #接口累计超速(当接口超速127次 停顿 100ms)
+      count: 127
+      #是否幂等接口
+      idempotent: false
+      #幂等返回cmd
+      response: 0
+
+    - speed6:
+      #客户端发起丢弃物品
+      cmd: 22
+      #接口访问间隔
+      time: 100
+      #接口累计超速(当接口超速127次 停顿 100ms)
+      count: 127
+      #是否幂等接口
+      idempotent: false
+      #幂等返回cmd
+      response: 0
+
+    - speed7:
+      #客户端发起丢弃物品
+      cmd: 216
+      #接口访问间隔
+      time: 100
+      #接口累计超速(当接口超速127次 停顿 100ms)
+      count: 127
+      #是否幂等接口
+      idempotent: false
+      #幂等返回cmd
+      response: 0
+  

@@ -1,0 +1,9 @@
+config:
+  gateServer: "127.0.0.1:3013"
+  gameServer: "127.0.0.1:18800"
+  cacheSize: 8096
+  packSize: 2097152
+  gatewayCode: 101
+  dbWebServer: "http://127.0.0.1:5000"
+  launcherServer: "0.0.0.0:18500"
+  debugLevel: 0

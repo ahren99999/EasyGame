@@ -1,0 +1,15 @@
+<AppConfig>
+	<ServerUid>1001</ServerUid>
+	<ServerName>凯旋服务器A</ServerName>
+	<ServerCode>1</ServerCode>
+	<MainServer>true</MainServer>
+	<LoginUrl>http://127.0.0.1:5000</LoginUrl>
+	<Address>127.0.0.1:18900</Address>
+	<LoginAddr>127.0.0.1:18700</LoginAddr>
+	<CenterServerAddr>127.0.0.1:18800</CenterServerAddr>
+	<PackSize>2097152</PackSize>
+	<MapX>50000</MapX>
+	<MapY>50000</MapY>
+	<MapCell>500</MapCell>
+	<PrsistenceInterval>120</PrsistenceInterval>
+</AppConfig>

@@ -1,0 +1,27 @@
+﻿---自动生成的 不要手动编辑---
+---@type $tableName$_data[]
+local _$tableName$_table = 
+{
+$tableContent$
+}
+
+---@class $tableName$_data
+local $tableName$_data =
+{
+	$dataContent$
+}
+
+local indexTable = 
+{
+	__index = function()
+		return $tableName$_data
+	end,
+	__newindex = function (t,k,v)
+		error('lua表格不允许修改！！' .. debug.traceback())
+	end
+}
+
+setmetatable(_$tableName$_table, indexTable)
+
+$tableName$_table = _$tableName$_table
+return _$tableName$_table

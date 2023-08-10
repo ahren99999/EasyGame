@@ -1,0 +1,14 @@
+<AppConfig>
+	<ServerName>凯旋中心服务器</ServerName>
+	<Address>127.0.0.1:18800</Address>
+	<PackSize>2097152</PackSize>
+	<IOCP>8</IOCP>
+	<DebugLevel>0</DebugLevel>
+	<GatewayList>
+		<value>127.0.0.2</value>
+		<value>127.0.0.1</value>
+	</GatewayList>
+	<ScenesList>
+		<value>127.0.0.1</value>
+	</ScenesList>
+</AppConfig>
