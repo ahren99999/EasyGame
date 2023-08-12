@@ -430,3 +430,24 @@ end
 --- @return vector<Player>
 function player:GetTeamNumbers()
 end
+
+--- 注册一个定时器
+--- @param timerId uint32_t 定时器id
+--- @param ms uint32_t 延迟
+--- @param tableName string lua 表名
+--- @param funName string lua 函数名
+--- @param isLoop boolean 是否循环
+function player:RegisterTimer(timerId, ms, tableName, funName, isLoop)
+end
+
+--- 取消一个定时器
+--- @param timerId uint32_t 定时器id
+function player:UnRegisterTimer(timerId)
+end
+
+--- 新增一个Buff，会覆盖相同Buff
+--- @param buffIdx int32_t Buff配置idx
+--- @param duration int32_t 持续时间
+--- @param isSave boolean 离线是否保存
+function player:AddBuffByIdx(buffIdx, duration, isSave)
+end
