@@ -66,12 +66,12 @@ local function CustomCommand_Map(player, args)
 end
 
 m.cmd = {
-    ["11"] = {gm_level = 0, fun = CustomCommand_MakeItem},
+    ["11"] = {gm_level = 10, fun = CustomCommand_MakeItem},
     ["Map"] = {gm_level = 0, fun = CustomCommand_Map},
-    ["移动"] = {gm_level = 0, fun = CustomCommand_MapMove},
-    ["刷怪"] = {gm_level = 0, fun = CustomCommand_CreateMonster},
-    ["增加技能"] = {gm_level = 0, fun = CustomCommand_AddSkill},
-    ["刷新技能"] = {gm_level = 0, fun = CustomCommand_RefreshSkillAll},
+    ["移动"] = {gm_level = 10, fun = CustomCommand_MapMove},
+    ["刷怪"] = {gm_level = 10, fun = CustomCommand_CreateMonster},
+    ["增加技能"] = {gm_level = 10, fun = CustomCommand_AddSkill},
+    ["刷新技能"] = {gm_level = 10, fun = CustomCommand_RefreshSkillAll},
 }
 
 ---处理客户端发起的自定义命令
@@ -79,6 +79,13 @@ m.cmd = {
 ---@param args table 客户端发来的参数列表
 function m.HandleCustomCommand(player, args)
     local cmd = m.cmd[args[1]]
+
+    ---如果权限等级小于命令所需权限
+    if player:GetNumber("管理员_权限等级", 0) < cmd.gm_level then
+        player:SendMsg(3, "提示：权限不足！")
+        return
+    end
+
     if cmd then
         cmd.fun(player, args)
     end

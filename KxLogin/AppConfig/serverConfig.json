@@ -1,4 +1,4 @@
 {
-  "ConnectionString": "PORT=5432;DATABASE=postgres;HOST=127.0.0.1;PASSWORD=12345678;USER ID=kx"
+  "ConnectionString": "PORT=5432;DATABASE=postgres;HOST=127.0.0.1;PASSWORD=postgres;USER ID=postgres"
 
 }

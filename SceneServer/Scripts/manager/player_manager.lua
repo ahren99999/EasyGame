@@ -12,6 +12,7 @@ local skillManager
 
 ---重新加载脚本事件
 function m.Init()
+    adminList = Admin
     petManager = PetManager
     buffManager = BuffManager
     skillManager = SkillManager
@@ -20,13 +21,13 @@ end
 ---管理员登录操作
 ---@param player Player
 local function AdminLoginSucess(player)
-    if not Admin[player:Name()]  then
+    if not adminList[player:Name()]  then
        return
     end
     player:SetGod(true)
-    --player:SetHiding(true)
     local tempSpeed = player:GetNumber("临时属性_移动速度", 0)
     tempSpeed = tempSpeed + 1000
+    player:SetNumber("管理员_权限等级", adminList[player:Name()], false)
     player:SetNumber("临时属性_移动速度", tempSpeed, false);
     log(string.format("AdminLoginSucess name %s", player:Name()));
 end
