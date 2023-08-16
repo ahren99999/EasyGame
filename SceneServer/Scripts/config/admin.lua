@@ -5,7 +5,7 @@ local m = {
     ["Ahren02"] = 8,
     ["Ahren03"] = 10,
     ["Ahren04"] = 10,
-    ["Ahren05"] = 8,
+    ["Ahren05"] = 10,
 }
 
 Admin = m

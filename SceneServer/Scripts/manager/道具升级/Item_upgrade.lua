@@ -8,9 +8,15 @@ local itemConfig
 ---@type kx_item_attr_upgrade_data[][]
 local config_level10 = {}
 
+---13级及其一下装备附魔配置
+---@type kx_item_attr_upgrade_data[][]
+local config_level13 = {}
+
 local function GetConfig(itemLevel)
     if itemLevel <= 10 then
         return config_level10
+    elseif itemLevel == 17  then
+        return config_level13
     end
 end
 
@@ -39,6 +45,11 @@ function m.Init()
                 config_level10[value.wear_mask] = {}
             end
             table.insert(config_level10[value.wear_mask], value)
+        elseif value.item_level == 17  then
+            if config_level13[value.wear_mask] == nil then
+                config_level13[value.wear_mask] = {}
+            end
+            table.insert(config_level13[value.wear_mask], value)
         end
     end
 end
@@ -51,7 +62,6 @@ local function RefreshItemAttr(item, itemDB)
     if cutCount > 0 and cutCount <= 2 then
         item:SetName(string.format("魔法 %s", itemDB.name))
         item:SetColor(emItemColor.Green)
-           
     elseif cutCount > 2 and cutCount <= 4  then
         item:SetName(string.format("神圣 %s", itemDB.name))
         item:SetColor(emItemColor.Golden)
@@ -120,7 +130,7 @@ function m.ItemAddAttr(player, item, gemConfig)
         player:SendMsg(3, "提示：无变化...")
         return true
     end
-
+    log(string.format("ItemAddAttr idx %s", attrConfig.idx))
     item:AddAttrCustom(attrConfig.name);
     RefreshItemAttr(item, itemDB)
     player:SendMsg(3, "提示：在神秘力量得祝福下，获得了魔法属性...")
@@ -193,6 +203,11 @@ function m.ItemAttrUpgrade(player, item, gemConfig, select)
     local rate = config.rate[attrLevel - config.safety_line]
     local ranNumber = Random(rate * 10000)
     local baseRate = 10000
+
+    if  player:GetNumber("管理员_权限等级", 0) == 10 then
+        ranNumber = ranNumber / 100
+    end
+    
     --todo 此处 baseRate 可附加其他成功率
     --例如 当前地图加成 1000点成功率 baseRate + 1000
 

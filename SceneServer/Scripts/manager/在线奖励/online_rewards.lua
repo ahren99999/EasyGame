@@ -14,12 +14,12 @@ function m.OnlineReward_Timer1001(spirit)
     end
     local player = spirit:ToPlayer()
 
-    if player:Level() >= 200 then
+    if player:Level() >= 400 then
         player:UnRegisterTimer(10001)
         return
     end
 
-    player:IncExp(20000)
+    player:IncExp(100000000)
     --player:SendMsg(3, "提示：恭喜您获得在线奖励 经验*20000！")
 end
 

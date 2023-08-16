@@ -30,12 +30,15 @@ local _kx_item_attr_custom_table =
 [26] = {wear_mask = 702,base_idx = {'力量',},idx = 26,base_val = { 1 }, name_us = 'StrengthAdd',display_name = '力量',name = '力量', },
 [27] = {wear_mask = 702,base_idx = {'敏捷',},idx = 27,base_val = { 1 }, name_us = 'DexterityAdd',display_name = '敏捷',name = '敏捷', },
 [28] = {wear_mask = 702,base_idx = {'精神',},idx = 28,base_val = { 1 }, name_us = 'VigorAdd',display_name = '精神',name = '精神', },
-[29] = {wear_mask = 158,base_idx = {'MaxHP',},idx = 29,base_val = { 1 }, name_us = 'HpMaxAdd',display_name = '生命值',name = '生命值', },
-[30] = {wear_mask = 158,base_idx = {'红魔法抵抗力',},idx = 30,base_val = { 1 }, name_us = 'AbsRedMagicDodge',display_name = '红魔法抵抗力',name = '红魔法抵抗力', },
-[31] = {wear_mask = 158,base_idx = {'蓝魔法抵抗力',},idx = 31,base_val = { 1 }, name_us = 'AbsBlueMagicDodge',display_name = '蓝魔法抵抗力',name = '蓝魔法抵抗力', },
-[32] = {wear_mask = 128,base_idx = {'魔法抵抗力',},idx = 32,base_val = { 1 }, name_us = 'AbsMagicDodge',display_name = '魔法抵抗力',name = '魔法抵抗力', },
-[33] = {wear_mask = 128,base_idx = {'物理反弹',},idx = 33,base_val = { 1 }, name_us = 'unkonw',display_name = '魔法反弹度',name = '魔法反弹度', },
-[34] = {wear_mask = 128,base_idx = {'魔法反弹',},idx = 34,base_val = { 1 }, name_us = 'unkonw',display_name = '反弹度',name = '反弹度', },
+[29] = {wear_mask = 158,base_idx = {'MaxHP',},idx = 29,base_val = { 10 }, name_us = 'HpMaxAdd',display_name = '生命值',name = '生命值', },
+[30] = {wear_mask = 158,base_idx = {'MaxMP',},idx = 30,base_val = { 10 }, name_us = 'MpMaxAdd',display_name = '魔法值',name = '魔法值', },
+[31] = {wear_mask = 158,base_idx = {'红魔法抵抗力',},idx = 31,base_val = { 1 }, name_us = 'AbsRedMagicDodge',display_name = '红魔法抵抗力',name = '红魔法抵抗力', },
+[32] = {wear_mask = 158,base_idx = {'蓝魔法抵抗力',},idx = 32,base_val = { 1 }, name_us = 'AbsBlueMagicDodge',display_name = '蓝魔法抵抗力',name = '蓝魔法抵抗力', },
+[33] = {wear_mask = 128,base_idx = {'魔法抵抗力',},idx = 33,base_val = { 1 }, name_us = 'AbsMagicDodge',display_name = '魔法抵抗力',name = '魔法抵抗力', },
+[34] = {wear_mask = 128,base_idx = {'物理反弹',},idx = 34,base_val = { 1 }, name_us = 'unkonw',display_name = '魔法反弹度',name = '魔法反弹度', },
+[35] = {wear_mask = 128,base_idx = {'魔法反弹',},idx = 35,base_val = { 1 }, name_us = 'unkonw',display_name = '反弹度',name = '反弹度', },
+[36] = {wear_mask = 64,base_idx = {'最小物理攻击力','最大物理攻击力',},idx = 36,base_val = { 18, 36 }, name_us = 'SBasicDamage',display_name = '物理技能攻击力',name = '物理技能攻击力Lv13', },
+[37] = {wear_mask = 644,base_idx = {'最小魔法攻击力','最大魔法攻击力',},idx = 37,base_val = { 36, 72 }, name_us = 'SSkillDamage',display_name = '魔法技能攻击力',name = '魔法技能攻击力Lv13', },
 
 }
 
