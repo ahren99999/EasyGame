@@ -4,6 +4,7 @@ local m = {}
 --前置申明 在Init函数中初始化
 local itemConfig
 
+---10级及其一下装备附魔配置
 ---@type kx_item_attr_upgrade_data[][]
 local config_level10 = {}
 
@@ -13,10 +14,25 @@ local function GetConfig(itemLevel)
     end
 end
 
+---重新加载脚本后执行此方法
 function m.Init()
+    --将全局表缓存到当前文件内用于提高性能
     itemConfig = LuaConfig.itemConfig
 
+    --获取所有的附魔配置
     local itemAttrUpgrade = LuaConfig.GetItemAttrUpgrade()
+    --遍历所有的附魔配置
+    --将附魔配置重新排列组合
+    --组装完成后的数据结构
+    --[[
+        --10级以及一下的附魔属性
+        config_level10 = {
+            --穿戴位置为武器(64)的附魔属性
+            [64] = {
+                ...
+            }
+        }
+    ]]
     for _, value in ipairs(itemAttrUpgrade) do
         if value.item_level == 10 then
             if config_level10[value.wear_mask] == nil then
@@ -74,6 +90,7 @@ function m.ItemAddAttr(player, item, gemConfig)
         return false
     end
 
+    --获取到物品DB配置、物品附魔配置
     local itemDB = itemConfig[item:Idx()]
     local tabLevelConfig = GetConfig(itemDB.level)
     local tabAttrConfig = tabLevelConfig[itemDB.wear_pos_mask]
@@ -174,10 +191,10 @@ function m.ItemAttrUpgrade(player, item, gemConfig, select)
     end
 
     local rate = config.rate[attrLevel - config.safety_line]
-
     local ranNumber = Random(rate * 10000)
-    --todo 次数 baseRate可附加其他成功率
     local baseRate = 10000
+    --todo 此处 baseRate 可附加其他成功率
+    --例如 当前地图加成 1000点成功率 baseRate + 1000
 
     if ranNumber > baseRate  then
         if gemConfig.name == "幻想的凯旋宝石" then

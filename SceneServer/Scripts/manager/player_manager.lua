@@ -9,6 +9,8 @@ local petManager
 local buffManager
 ---@type SkillManager
 local skillManager
+---管理员名单
+local adminList
 
 ---重新加载脚本事件
 function m.Init()
@@ -29,6 +31,10 @@ local function AdminLoginSucess(player)
     tempSpeed = tempSpeed + 1000
     player:SetNumber("管理员_权限等级", adminList[player:Name()], false)
     player:SetNumber("临时属性_移动速度", tempSpeed, false);
+    player:SendMsg(3, string.format("尊敬的管理员！您好，当前开区天数 %s 开区分钟数 %s 场景在线玩家人数 %s",
+    Game:GetNumber("全局变量_开区天数", 0), 
+    Game:GetNumber("全局变量_开区分钟数", 0),
+    Game:GetTotalPlayer()))
     log(string.format("AdminLoginSucess name %s", player:Name()));
 end
 

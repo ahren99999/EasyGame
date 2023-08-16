@@ -2,8 +2,8 @@
 ---@type kx_global_timer_data[]
 local _kx_global_timer_table = 
 {
-[1] = {is_loop = true,func_name = 'OnTimerInvoker_1',table_name = 'GlobalTimerManager',idx = 1,cron = '0/30 * * * * ?',name = '攻城战', },
-[2] = {is_loop = true,func_name = 'OnTimerInvoker_2',table_name = 'GlobalTimerManager',idx = 2,cron = '59 59 23 * * ? ',name = '每日定时器', },
+[1] = {is_loop = true,func_name = 'OnTimerInvoker_1',table_name = 'GlobalTimerManager',idx = 1,cron = '0 0/1 * * * ? ',name = '分钟计时器', },
+[2] = {is_loop = true,func_name = 'OnTimerInvoker_2',table_name = 'GlobalTimerManager',idx = 2,cron = '1 0 0 1/1 * ? ',name = '天计时器', },
 
 }
 
@@ -13,7 +13,7 @@ local kx_global_timer_data =
 	
 ---序号
 idx = 0,
----阶段
+---名字
 name = nil,
 ---cron表达式
 cron = nil,

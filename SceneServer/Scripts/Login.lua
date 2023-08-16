@@ -9,12 +9,12 @@
 local baseDB = BaseDB
 
 function Login(player)
+
 	if type(jit) == "table" then
 		log("LuaJIT with JIT enabled")
 	else
 		log("Regular Lua without JIT")
 	end
-	return false
 end
 
 return 1

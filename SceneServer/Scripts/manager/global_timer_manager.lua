@@ -18,19 +18,22 @@ end
 ---定时任务触发
 ---@param idx number 定时任务配置序号
 function m.OnTimerInvoker_1(idx)
-    local gTimerDB = luaConfig.globalTimer[idx]
-
-    local date_time = os.date("%Y-%m-%d %H:%M:%S", os.time())
-    log(string.format("OnTimerInvoker_1 DateTime %s Name %s", date_time, gTimerDB.name))
+    ---如果不是主场景 不处理
+    if not Game:IsMainScene() then
+        return
+    end
+    Game:SetNumber("全局变量_开区分钟数", Game:GetNumber("全局变量_开区分钟数", 0) + 1, true)
 end
 
 ---定时任务触发
 ---@param idx number 定时任务配置序号
 function m.OnTimerInvoker_2(idx)
-    local gTimerDB = luaConfig.globalTimer[idx]
-    
-    local date_time = os.date("%Y-%m-%d %H:%M:%S", os.time())
-    log(string.format("OnTimerInvoker_1 DateTime %s Name %s", date_time, gTimerDB.name))
+    ---如果不是主场景 不处理
+    if not Game:IsMainScene() then
+        return
+    end
+    Game:SetNumber("全局变量_开区天数", Game:GetNumber("全局变量_开区天数", 0) + 1, true)
+    log("OnTimerInvoker_2")
 end
 
 

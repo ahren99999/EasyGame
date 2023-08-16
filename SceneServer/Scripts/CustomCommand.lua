@@ -80,6 +80,10 @@ m.cmd = {
 function m.HandleCustomCommand(player, args)
     local cmd = m.cmd[args[1]]
 
+    if cmd == nil then
+        return
+    end
+
     ---如果权限等级小于命令所需权限
     if player:GetNumber("管理员_权限等级", 0) < cmd.gm_level then
         player:SendMsg(3, "提示：权限不足！")
