@@ -37,8 +37,10 @@ local _kx_item_attr_custom_table =
 [33] = {wear_mask = 128,base_idx = {'魔法抵抗力',},idx = 33,base_val = { 1 }, name_us = 'AbsMagicDodge',display_name = '魔法抵抗力',name = '魔法抵抗力', },
 [34] = {wear_mask = 128,base_idx = {'物理反弹',},idx = 34,base_val = { 1 }, name_us = 'unkonw',display_name = '魔法反弹度',name = '魔法反弹度', },
 [35] = {wear_mask = 128,base_idx = {'魔法反弹',},idx = 35,base_val = { 1 }, name_us = 'unkonw',display_name = '反弹度',name = '反弹度', },
-[36] = {wear_mask = 64,base_idx = {'最小物理攻击力','最大物理攻击力',},idx = 36,base_val = { 18, 36 }, name_us = 'SBasicDamage',display_name = '物理技能攻击力',name = '物理技能攻击力Lv13', },
-[37] = {wear_mask = 644,base_idx = {'最小魔法攻击力','最大魔法攻击力',},idx = 37,base_val = { 36, 72 }, name_us = 'SSkillDamage',display_name = '魔法技能攻击力',name = '魔法技能攻击力Lv13', },
+[36] = {wear_mask = 64,base_idx = {'最小物理攻击力','最大物理攻击力',},idx = 36,base_val = { 18, 36 }, attr_replace = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 20, 20, 20, 20, 20 }, name_us = 'SBasicDamage',display_name = '物理技能攻击力',name = '物理技能攻击力Lv13', },
+[37] = {wear_mask = 644,base_idx = {'最小魔法攻击力','最大魔法攻击力',},idx = 37,base_val = { 36, 72 }, attr_replace = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 20, 20, 20, 20, 20 }, name_us = 'SSkillDamage',display_name = '魔法技能攻击力',name = '魔法技能攻击力Lv13', },
+[38] = {wear_mask = 64,base_idx = {'最小物理攻击力','最大物理攻击力',},idx = 38,base_val = { 18, 36 }, attr_replace = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 21, 22, 23, 24, 25 }, name_us = 'SBasicDamage',display_name = '物理技能攻击力',name = '物理技能攻击力Lv14', },
+[39] = {wear_mask = 644,base_idx = {'最小魔法攻击力','最大魔法攻击力',},idx = 39,base_val = { 36, 72 }, attr_replace = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 21, 22, 23, 24, 25 }, name_us = 'SSkillDamage',display_name = '魔法技能攻击力',name = '魔法技能攻击力Lv14', },
 
 }
 
@@ -60,6 +62,7 @@ name_us = nil,
 base_idx = {},
 ---基础属性值
 base_val = {},
+attr_replace = {},
 }
 
 local indexTable = 

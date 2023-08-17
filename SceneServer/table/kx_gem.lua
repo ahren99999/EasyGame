@@ -12,7 +12,7 @@ local _kx_gem_table =
 [8] = {is_select = true,is_upgrade = true,wear_mask = 65535,max_count = 10,min_count = 1,item_idx = 455,is_delete = false,is_add = false,min_item_level = 0,idx = 8,max_item_level = 0,name = '超级凯旋宝石', },
 [9] = {is_select = true,is_upgrade = false,wear_mask = 65535,max_count = 10,min_count = 1,item_idx = 1860,is_delete = true,is_add = false,min_item_level = 0,idx = 9,max_item_level = 0,name = '德尔福罗斯宝石', },
 [10] = {is_select = false,is_upgrade = true,wear_mask = 65535,max_count = 10,min_count = 1,item_idx = 1500,is_delete = false,is_add = false,min_item_level = 0,idx = 10,max_item_level = 0,name = '幻想的凯旋宝石', },
-[11] = {is_select = false,is_upgrade = false,wear_mask = 65535,max_count = 6,min_count = 4,item_idx = 2092,is_delete = false,is_add = true,min_item_level = 0,idx = 11,max_item_level = 0,name = '赫尔梅德林', },
+[11] = {is_select = false,is_upgrade = false,wear_mask = 65535,max_count = 6,min_count = 4,item_idx = 2067,is_delete = false,is_add = true,min_item_level = 0,idx = 11,max_item_level = 0,name = '赫尔梅德林', },
 [12] = {is_select = false,is_upgrade = false,wear_mask = 65535,max_count = 10,min_count = 0,item_idx = 1865,is_delete = false,is_add = false,min_item_level = 0,idx = 12,max_item_level = 0,name = '升级宝石', },
 
 }

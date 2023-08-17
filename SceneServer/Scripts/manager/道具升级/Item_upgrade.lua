@@ -2,22 +2,51 @@
 local m = {}
 
 --前置申明 在Init函数中初始化
+---@type kx_item_data[]
 local itemConfig
 
 ---10级及其一下装备附魔配置
 ---@type kx_item_attr_upgrade_data[][]
 local config_level10 = {}
 
----13级及其一下装备附魔配置
+---13级装备附魔配置
 ---@type kx_item_attr_upgrade_data[][]
 local config_level13 = {}
 
-local function GetConfig(itemLevel)
+---13级装备附魔配置
+---@type kx_item_attr_upgrade_data[][]
+local config_level14 = {}
+
+
+---判断是否属于13类型
+---@param itemLevel number 物品配置类型
+---@param itemMode3 number 物品附加字段
+---@return boolean
+local function IsLevel13(itemLevel, itemMode3)
+    return (itemLevel == 17 and (itemMode3 == nil or itemMode3 == 0))
+end
+
+---判断是否属于14类型
+---@param itemLevel number 物品配置类型
+---@param itemMode3 number 物品附加字段
+---@return boolean
+local function IsLevel14(itemLevel, itemMode3)
+    return ((itemLevel == 18) or (itemMode3 ~= nil and itemMode3 == 14 and itemLevel == 17))
+end
+
+---获取装备的附魔配置表
+---@param itemLevel number 物品配置类型
+---@param itemMode3 number 物品附加字段
+---@return kx_item_attr_upgrade_data[][]
+local function GetConfig(itemLevel, itemMode3)
     if itemLevel <= 10 then
         return config_level10
-    elseif itemLevel == 17  then
+    elseif IsLevel13(itemLevel, itemMode3)  then
         return config_level13
+    elseif IsLevel14(itemLevel, itemMode3)  then
+        return config_level14
     end
+    return nil
 end
 
 ---重新加载脚本后执行此方法
@@ -45,11 +74,16 @@ function m.Init()
                 config_level10[value.wear_mask] = {}
             end
             table.insert(config_level10[value.wear_mask], value)
-        elseif value.item_level == 17  then
+        elseif IsLevel13(value.item_level, value.item_mode3) then
             if config_level13[value.wear_mask] == nil then
                 config_level13[value.wear_mask] = {}
             end
             table.insert(config_level13[value.wear_mask], value)
+        elseif IsLevel14(value.item_level, value.item_mode3) then     
+            if config_level14[value.wear_mask] == nil then
+                config_level14[value.wear_mask] = {}
+            end
+            table.insert(config_level14[value.wear_mask], value)
         end
     end
 end
@@ -102,7 +136,7 @@ function m.ItemAddAttr(player, item, gemConfig)
 
     --获取到物品DB配置、物品附魔配置
     local itemDB = itemConfig[item:Idx()]
-    local tabLevelConfig = GetConfig(itemDB.level)
+    local tabLevelConfig = GetConfig(itemDB.level, itemDB.mode3)
     local tabAttrConfig = tabLevelConfig[itemDB.wear_pos_mask]
 
     local count = 0
@@ -171,7 +205,7 @@ function m.ItemAttrUpgrade(player, item, gemConfig, select)
     local tablItemAttrLevel = item:GetVecAttrLevel()
     local attrName = tablItemAttrName[select + 1]
     local attrLevel = tablItemAttrLevel[select + 1]
-    local config = GetAttrInTab(GetConfig(itemDB.level), itemDB.wear_pos_mask, attrName)
+    local config = GetAttrInTab(GetConfig(itemDB.level, itemDB.mode3), itemDB.wear_pos_mask, attrName)
 
 
     --选择的属性位置超过了属性总数
