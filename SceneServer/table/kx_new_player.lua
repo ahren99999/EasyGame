@@ -2,11 +2,11 @@
 ---@type kx_new_player_data[]
 local _kx_new_player_table = 
 {
-[1] = {job = 'OneHand',white_magic = 0,dex = 42,birth_place = 'Ladianes',x = 22965,y = 34238,str = 64,item_num = { 1, 1, 2, 1 }, spi = 52,black_magic = 42,wear = '防身刀',yellow_magic = 0,idx = 1,red_magic = 0,blue_magic = 0,gold = 10000000,item_name = {'防身头盔','防身护腿','防身护臂','轻型铠',}, },
-[2] = {job = 'Bare',white_magic = 0,dex = 42,birth_place = 'Ladianes',x = 22965,y = 34238,str = 64,item_num = { 1, 1, 2, 1 }, spi = 52,black_magic = 42,wear = '防身拳套',yellow_magic = 0,idx = 2,red_magic = 0,blue_magic = 0,gold = 10000000,item_name = {'防身头盔','防身护腿','防身护臂','轻型铠',}, },
-[3] = {job = 'Red',white_magic = 0,dex = 41,birth_place = 'Ladianes',x = 22965,y = 34238,str = 44,item_num = { 1, 1, 2, 1 }, spi = 53,black_magic = 0,wear = '学徒杖',yellow_magic = 0,idx = 3,red_magic = 62,blue_magic = 0,gold = 10000000,item_name = {'学徒帽','学徒护腿','学徒护臂','学徒袍',}, },
-[4] = {job = 'Bow',white_magic = 0,dex = 60,birth_place = 'Ladianes',x = 22965,y = 34238,str = 45,item_num = { 1, 1, 2, 1 }, spi = 50,black_magic = 42,wear = '精灵十字弩',yellow_magic = 0,idx = 4,red_magic = 0,blue_magic = 0,gold = 10000000,item_name = {'起始之帽','起始之护腿','起始护腕','起始之服',}, },
-[5] = {job = 'Blue',white_magic = 0,dex = 41,birth_place = 'Ladianes',x = 22965,y = 34238,str = 44,item_num = { 1, 1, 2, 1 }, spi = 53,black_magic = 0,wear = '精灵之杖',yellow_magic = 0,idx = 5,red_magic = 0,blue_magic = 62,gold = 10000000,item_name = {'卑下之帽','卑下之护腿','卑下之护腕','卑下之服',}, },
+[1] = {dex = 42,x = 22965,y = 34238,item_num = { 1, 1, 2, 1 }, item_name = {'防身头盔','防身护腿','防身护臂','轻型铠',},str = 64,wear = '防身刀',spi = 52,yellow_magic = 0,gold = 10000000,blue_magic = 0,idx = 1,birth_place = 'Ladianes',black_magic = 42,red_magic = 0,white_magic = 0,job = 'OneHand', },
+[2] = {dex = 42,x = 22965,y = 34238,item_num = { 1, 1, 2, 1 }, item_name = {'防身头盔','防身护腿','防身护臂','轻型铠',},str = 64,wear = '防身拳套',spi = 52,yellow_magic = 0,gold = 10000000,blue_magic = 0,idx = 2,birth_place = 'Ladianes',black_magic = 42,red_magic = 0,white_magic = 0,job = 'Bare', },
+[3] = {dex = 41,x = 22965,y = 34238,item_num = { 1, 1, 2, 1 }, item_name = {'学徒帽','学徒护腿','学徒护臂','学徒袍',},str = 44,wear = '学徒杖',spi = 53,yellow_magic = 0,gold = 10000000,blue_magic = 0,idx = 3,birth_place = 'Ladianes',black_magic = 0,red_magic = 62,white_magic = 0,job = 'Red', },
+[4] = {dex = 60,x = 22965,y = 34238,item_num = { 1, 1, 2, 1 }, item_name = {'起始之帽','起始之护腿','起始护腕','起始之服',},str = 45,wear = '精灵十字弩',spi = 50,yellow_magic = 0,gold = 10000000,blue_magic = 0,idx = 4,birth_place = 'Ladianes',black_magic = 42,red_magic = 0,white_magic = 0,job = 'Bow', },
+[5] = {dex = 41,x = 22965,y = 34238,item_num = { 1, 1, 2, 1 }, item_name = {'卑下之帽','卑下之护腿','卑下之护腕','卑下之服',},str = 44,wear = '精灵之杖',spi = 53,yellow_magic = 0,gold = 10000000,blue_magic = 62,idx = 5,birth_place = 'Ladianes',black_magic = 0,red_magic = 0,white_magic = 0,job = 'Blue', },
 
 }
 

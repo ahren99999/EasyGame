@@ -2,8 +2,8 @@
 ---@type kx_point_trigger_data[]
 local _kx_point_trigger_table = 
 {
-[1] = {level = 0,trigger = false,target_z = -7205,range = 3,target_range = 1,x = 24481,y = 34921,target_x = 21158,idx = 1,target_y = 28611, },
-[2] = {level = 0,trigger = false,target_z = -6703,range = 2,target_range = 1,x = 21158,y = 28620,target_x = 24481,idx = 2,target_y = 34909, },
+[1] = {x = 24481,y = 34921,target_x = 21158,target_z = -7205,idx = 1,trigger = false,range = 3,level = 0,target_y = 28611,target_range = 1, },
+[2] = {x = 21158,y = 28620,target_x = 24481,target_z = -6703,idx = 2,trigger = false,range = 2,level = 0,target_y = 34909,target_range = 1, },
 
 }
 

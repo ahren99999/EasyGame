@@ -129,6 +129,27 @@ function m.OnPlayerDamageEvent(player, spirit, skillName, value, isMagic)
     return value
 end
 
+--玩家被死亡事件
+---@param player Player 死亡的玩家对象
+---@param killer Spirit 击杀者(可能为空)
+---@return boolean ok 返回false 玩家不死亡 返回true正常死亡
+function m.OnPlayerDeadEvent(player, killer)
+   
+    if killer ~= nil and killer:IsPlayer() then
+        log("1111111212")
+        local mapDB = LuaConfig.mapConfig[player:GetCurrentMapIdx()]
+        --@RGB=231-90-39
+        Game:SendMsg(2, string.format("[PVP频道] %s 技艺精湛，在%s击败了%s级的 %s", 
+        killer:Name(),
+        mapDB.map_name,
+        player:Level(),
+        player:Name()
+    ))
+    end
+
+    return true
+end
+
 
 ---玩家组队获取经验事件
 ---@param player Player 获取经验的成员

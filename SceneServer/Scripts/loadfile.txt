@@ -16,7 +16,7 @@ manager\player_manager.lua
 manager\monster_manager.lua
 manager\global_timer_manager.lua
 manager\point_trigger_manager.lua
-manager\道具升级\Item_upgrade.lua
+manager\item_upgrade\item_upgrade.lua
 manager\在线奖励\online_rewards.lua
 npcs\仓库保管员.lua
 npcs\尤博.lua

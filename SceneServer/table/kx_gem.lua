@@ -2,18 +2,18 @@
 ---@type kx_gem_data[]
 local _kx_gem_table = 
 {
-[1] = {is_select = false,is_upgrade = true,wear_mask = 158,min_count = 1,item_idx = 465,is_delete = false,is_add = false,idx = 1,min_item_level = 0,max_count = 1,max_item_level = 0,name = '红色荣誉', },
-[2] = {is_select = false,is_upgrade = true,wear_mask = 320,max_count = 1,min_count = 1,item_idx = 461,is_delete = false,is_add = false,min_item_level = 0,idx = 2,max_item_level = 0,name = '青之泪', },
-[3] = {is_select = false,is_upgrade = false,wear_mask = 65535,max_count = 1,min_count = 0,item_idx = 460,is_delete = false,is_add = true,min_item_level = 0,idx = 3,max_item_level = 0,name = '红宝石', },
-[4] = {is_select = false,is_upgrade = true,wear_mask = 65535,max_count = 10,min_count = 1,item_idx = 459,is_delete = false,is_add = false,min_item_level = 0,idx = 4,max_item_level = 0,name = '凯旋宝石', },
-[5] = {is_select = false,is_upgrade = false,wear_mask = 65535,max_count = 2,min_count = 1,item_idx = 458,is_delete = false,is_add = true,min_item_level = 0,idx = 5,max_item_level = 0,name = '金钢石', },
-[6] = {is_select = false,is_upgrade = true,wear_mask = 65535,max_count = 4,min_count = 1,item_idx = 457,is_delete = false,is_add = false,min_item_level = 0,idx = 6,max_item_level = 0,name = '小型凯旋宝石', },
-[7] = {is_select = false,is_upgrade = false,wear_mask = 65535,max_count = 4,min_count = 2,item_idx = 456,is_delete = false,is_add = true,min_item_level = 0,idx = 7,max_item_level = 0,name = '神圣宝石', },
-[8] = {is_select = true,is_upgrade = true,wear_mask = 65535,max_count = 10,min_count = 1,item_idx = 455,is_delete = false,is_add = false,min_item_level = 0,idx = 8,max_item_level = 0,name = '超级凯旋宝石', },
-[9] = {is_select = true,is_upgrade = false,wear_mask = 65535,max_count = 10,min_count = 1,item_idx = 1860,is_delete = true,is_add = false,min_item_level = 0,idx = 9,max_item_level = 0,name = '德尔福罗斯宝石', },
-[10] = {is_select = false,is_upgrade = true,wear_mask = 65535,max_count = 10,min_count = 1,item_idx = 1500,is_delete = false,is_add = false,min_item_level = 0,idx = 10,max_item_level = 0,name = '幻想的凯旋宝石', },
-[11] = {is_select = false,is_upgrade = false,wear_mask = 65535,max_count = 6,min_count = 4,item_idx = 2067,is_delete = false,is_add = true,min_item_level = 0,idx = 11,max_item_level = 0,name = '赫尔梅德林', },
-[12] = {is_select = false,is_upgrade = false,wear_mask = 65535,max_count = 10,min_count = 0,item_idx = 1865,is_delete = false,is_add = false,min_item_level = 0,idx = 12,max_item_level = 0,name = '升级宝石', },
+[1] = {is_select = false,name = '红色荣誉',max_count = 1,is_delete = false,is_add = false,item_idx = 465,idx = 1,is_bbk = '0',min_item_level = 0,max_item_level = 0,is_upgrade = true,wear_mask = 158,min_count = 1, },
+[2] = {is_select = false,name = '青之泪',max_count = 1,is_delete = false,is_add = false,item_idx = 461,idx = 2,is_bbk = '0',min_item_level = 0,max_item_level = 0,is_upgrade = true,wear_mask = 320,min_count = 1, },
+[3] = {is_select = false,name = '红宝石',max_count = 1,is_delete = false,is_add = true,item_idx = 460,idx = 3,is_bbk = '0',min_item_level = 0,max_item_level = 0,is_upgrade = false,wear_mask = 65535,min_count = 0, },
+[4] = {is_select = false,name = '凯旋宝石',max_count = 10,is_delete = false,is_add = false,item_idx = 459,idx = 4,is_bbk = '0',min_item_level = 0,max_item_level = 0,is_upgrade = true,wear_mask = 65535,min_count = 1, },
+[5] = {is_select = false,name = '金钢石',max_count = 2,is_delete = false,is_add = true,item_idx = 458,idx = 5,is_bbk = '0',min_item_level = 0,max_item_level = 0,is_upgrade = false,wear_mask = 65535,min_count = 1, },
+[6] = {is_select = false,name = '小型凯旋宝石',max_count = 4,is_delete = false,is_add = false,item_idx = 457,idx = 6,is_bbk = '0',min_item_level = 0,max_item_level = 0,is_upgrade = true,wear_mask = 65535,min_count = 1, },
+[7] = {is_select = false,name = '神圣宝石',max_count = 4,is_delete = false,is_add = true,item_idx = 456,idx = 7,is_bbk = '0',min_item_level = 0,max_item_level = 0,is_upgrade = false,wear_mask = 65535,min_count = 2, },
+[8] = {is_select = true,name = '超级凯旋宝石',max_count = 10,is_delete = false,is_add = false,item_idx = 455,idx = 8,is_bbk = '0',min_item_level = 0,max_item_level = 0,is_upgrade = true,wear_mask = 65535,min_count = 1, },
+[9] = {is_select = true,name = '德尔福罗斯宝石',max_count = 10,is_delete = true,is_add = false,item_idx = 1860,idx = 9,is_bbk = '0',min_item_level = 0,max_item_level = 0,is_upgrade = false,wear_mask = 65535,min_count = 1, },
+[10] = {is_select = false,name = '幻想的凯旋宝石',max_count = 10,is_delete = false,is_add = false,item_idx = 1500,idx = 10,is_bbk = '1',min_item_level = 0,max_item_level = 0,is_upgrade = true,wear_mask = 65535,min_count = 1, },
+[11] = {is_select = false,name = '赫尔梅德林',max_count = 6,is_delete = false,is_add = true,item_idx = 2067,idx = 11,is_bbk = '0',min_item_level = 0,max_item_level = 0,is_upgrade = false,wear_mask = 65535,min_count = 4, },
+[12] = {is_select = false,name = '升级宝石',max_count = 10,is_delete = false,is_add = false,item_idx = 1865,idx = 12,is_bbk = '0',min_item_level = 0,max_item_level = 0,is_upgrade = false,wear_mask = 65535,min_count = 0, },
 
 }
 
@@ -35,6 +35,8 @@ is_add = false,
 is_select = false,
 ---是否可以升级属性
 is_upgrade = false,
+---是否属于保护性石头
+is_bbk = 0,
 ---属性个数下限
 min_count = 0,
 ---属性个数上限

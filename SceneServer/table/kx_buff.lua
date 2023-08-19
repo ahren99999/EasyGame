@@ -2,17 +2,17 @@
 ---@type kx_buff_data[]
 local _kx_buff_table = 
 {
-[1] = {is_stack = false,stack_count = 0,interval = 0,name = 'SpeedScroll',is_trigger = false,is_icon = true,is_remove = true,idx = 1, },
-[2] = {is_stack = false,stack_count = 0,interval = 0,name = 'FastScroll',is_trigger = false,is_icon = true,is_remove = true,idx = 2, },
-[3] = {is_stack = false,stack_count = 0,interval = 0,name = 'Warm',is_trigger = false,is_icon = true,is_remove = true,idx = 3, },
-[4] = {is_stack = false,stack_count = 0,interval = 0,name = 'FireWarm',is_trigger = false,is_icon = true,is_remove = true,idx = 4, },
-[5] = {is_stack = false,stack_count = 0,interval = 0,name = 'WarmOther',is_trigger = false,is_icon = true,is_remove = true,idx = 5, },
-[6] = {is_stack = false,stack_count = 0,interval = 0,name = 'ManaBarrier',is_trigger = false,is_icon = true,is_remove = false,idx = 6, },
-[7] = {is_stack = true,stack_count = 5,interval = 500,name = 'BlastBlade',is_trigger = true,is_icon = false,is_remove = false,idx = 7, },
-[8] = {is_stack = true,stack_count = 5,interval = 500,name = 'RainbowArrow',is_trigger = true,is_icon = false,is_remove = false,idx = 8, },
-[9] = {is_stack = true,stack_count = 5,interval = 500,name = 'Bare',is_trigger = true,is_icon = false,is_remove = false,idx = 9, },
-[10] = {is_stack = true,stack_count = 5,interval = 800,name = 'Blizzard',is_trigger = true,is_icon = false,is_remove = false,idx = 10, },
-[11] = {is_stack = false,stack_count = 0,interval = 0,name = 'HawkEye',is_trigger = false,is_icon = false,is_remove = false,idx = 11, },
+[1] = {is_stack = false,is_trigger = false,interval = 0,stack_count = 0,is_icon = true,name = 'SpeedScroll',idx = 1,is_remove = true, },
+[2] = {is_stack = false,is_trigger = false,interval = 0,stack_count = 0,is_icon = true,name = 'FastScroll',idx = 2,is_remove = true, },
+[3] = {is_stack = false,is_trigger = false,interval = 0,stack_count = 0,is_icon = true,name = 'Warm',idx = 3,is_remove = true, },
+[4] = {is_stack = false,is_trigger = false,interval = 0,stack_count = 0,is_icon = true,name = 'FireWarm',idx = 4,is_remove = true, },
+[5] = {is_stack = false,is_trigger = false,interval = 0,stack_count = 0,is_icon = true,name = 'WarmOther',idx = 5,is_remove = true, },
+[6] = {is_stack = false,is_trigger = false,interval = 0,stack_count = 0,is_icon = true,name = 'ManaBarrier',idx = 6,is_remove = false, },
+[7] = {is_stack = true,is_trigger = true,interval = 500,stack_count = 5,is_icon = false,name = 'BlastBlade',idx = 7,is_remove = false, },
+[8] = {is_stack = true,is_trigger = true,interval = 500,stack_count = 5,is_icon = false,name = 'RainbowArrow',idx = 8,is_remove = false, },
+[9] = {is_stack = true,is_trigger = true,interval = 500,stack_count = 5,is_icon = false,name = 'Bare',idx = 9,is_remove = false, },
+[10] = {is_stack = true,is_trigger = true,interval = 800,stack_count = 5,is_icon = false,name = 'Blizzard',idx = 10,is_remove = false, },
+[11] = {is_stack = false,is_trigger = false,interval = 0,stack_count = 0,is_icon = false,name = 'HawkEye',idx = 11,is_remove = false, },
 
 }
 

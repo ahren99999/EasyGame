@@ -162,7 +162,8 @@ end
 
 --- 升级一个属性
 --- @param select int8_t 选择要升级的属性索引
-function item:UpgradeAttrCustom(select)
+--- @param level int32_t 指定等级 默认为1
+function item:UpgradeAttrCustom(select, level)
 end
 
 --- 获取宠物名字

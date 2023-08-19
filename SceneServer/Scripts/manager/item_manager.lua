@@ -25,7 +25,6 @@ end
 ---@param select number 选择的属性序号
 ---@return boolean 返回true使用成功扣除宝石false不满足条件不扣除任何道具
 function m.UseGem(player, item, gemIdx, select)
-    log("select" .. select)
     ---@type kx_gem_data
     local gemConfig = LuaConfig.gemComfig[gemIdx]
     if gemConfig.is_add then                        --增加属性宝石

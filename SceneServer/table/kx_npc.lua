@@ -2,18 +2,18 @@
 ---@type kx_npc_data[]
 local _kx_npc_table = 
 {
-[1] = {size = 1,z = -6643,table_name = 'StorerNpc',title = '<仓库>',x = 22918,y = 34218,func_name = 'OnClickMain',dir = 1.83,idx = 1,city = '莱蒂尼斯',model = 'Banker',district = '莱蒂尼斯城',name = '保管所职员', },
-[2] = {size = 1,z = -6643,shop_id = { 1, 2 }, table_name = 'YouBoNpc',title = '<杂货铺>',x = 23012,y = 34278,func_name = 'OnClickMain',dir = 3.1,idx = 2,city = '莱蒂尼斯',model = 'Lizel',district = '莱蒂尼斯城',name = '尤博', },
-[3] = {size = 1,z = -6620,table_name = 'GuildNpc',title = '<行会管理>',x = 22690,y = 34088,func_name = 'OnClickMain',dir = 0,idx = 3,city = '莱蒂尼斯',model = 'Banker',district = '莱蒂尼斯城',name = '彬伊', },
-[4] = {size = 1,z = -6643,table_name = 'CopyMap4Npc',title = '<副本4>',x = 23007,y = 34285,func_name = 'OnClickMain',dir = 0,idx = 4,city = '莱蒂尼斯',model = 'Lizel',district = '莱蒂尼斯城',name = '副本4', },
-[5] = {size = 1,z = -6643,shop_id = { 3 }, table_name = 'SaiYiNaNpc',title = '<宠物商店>',x = 22923,y = 34264,func_name = 'OnClickMain',dir = 4.7,idx = 5,city = '莱蒂尼斯',model = 'Woman',district = '莱蒂尼斯城',name = '塞伊娜', },
-[6] = {size = 1,z = -6643,shop_id = { 5, 4, 11 }, table_name = 'JieKeNpc',title = '<防具商店>',x = 22933,y = 34276,func_name = 'OnClickMain',dir = 0,idx = 6,city = '莱蒂尼斯',model = 'BlackSmith',district = '莱蒂尼斯城',name = '杰克', },
-[7] = {size = 1,z = -6643,shop_id = { 9, 10, 15 }, table_name = 'KaCiNpc',title = '<武器商店>',x = 23006,y = 34211,func_name = 'OnClickMain',dir = 2.8,idx = 7,city = '莱蒂尼斯',model = 'BlackSmith',district = '莱蒂尼斯城',name = '卡茨', },
-[8] = {size = 1,z = -6643,shop_id = { 7, 13 }, title = '<护臂商店>',x = 22953,y = 34187,func_name = 'OnClickMain',table_name = 'TuLuPuNpc',idx = 8,city = '莱蒂尼斯',model = 'BlackSmith',district = '莱蒂尼斯城',name = '图鲁普', },
-[9] = {size = 1,z = -6643,shop_id = { 8, 14 }, table_name = 'DuLaKenNpc',title = '<头盔商店>',x = 22994,y = 34168,func_name = 'OnClickMain',dir = 2.8,idx = 9,city = '莱蒂尼斯',model = 'BlackSmith',district = '莱蒂尼斯城',name = '度拉肯', },
-[10] = {size = 1,z = -6643,shop_id = { 6, 12 }, title = '<护腿商店>',x = 22955,y = 34154,func_name = 'OnClickMain',table_name = 'ALaTeNpc',idx = 10,city = '莱蒂尼斯',model = 'BlackSmith',district = '莱蒂尼斯城',name = '阿拉特', },
-[11] = {size = 1,z = -6643,table_name = 'YiSiNaSi',title = '<传送>',x = 22963,y = 34240,func_name = 'OnClickMain',dir = 1.5,idx = 11,city = '莱蒂尼斯',model = 'Banker',district = '莱蒂尼斯城',name = '伊斯纳斯', },
-[12] = {size = 1,z = -6677,shop_id = { 26 }, table_name = 'BaoShiNpc',title = '<宝石>',x = 22960,y = 34281,func_name = 'OnClickMain',dir = 4.7,idx = 12,city = '莱蒂尼斯',model = 'Lizel',district = '莱蒂尼斯城',name = '宝石商人', },
+[1] = {x = 22918,y = 34218,z = -6643,name = '保管所职员',table_name = 'StorerNpc',dir = 1.83,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 1,model = 'Banker',city = '莱蒂尼斯',title = '<仓库>',size = 1, },
+[2] = {x = 23012,y = 34278,z = -6643,shop_id = { 1, 2 }, name = '尤博',table_name = 'YouBoNpc',dir = 3.1,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 2,model = 'Lizel',city = '莱蒂尼斯',title = '<杂货铺>',size = 1, },
+[3] = {x = 22690,y = 34088,z = -6220,name = '彬伊',table_name = 'GuildNpc',dir = 0,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 3,model = 'Banker',city = '莱蒂尼斯',title = '<行会管理>',size = 1, },
+[4] = {x = 23007,y = 34285,z = -6643,name = '副本4',table_name = 'CopyMap4Npc',dir = 0,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 4,model = 'Lizel',city = '莱蒂尼斯',title = '<副本4>',size = 1, },
+[5] = {x = 22923,y = 34264,z = -6643,shop_id = { 3 }, name = '塞伊娜',table_name = 'SaiYiNaNpc',dir = 4.7,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 5,model = 'Woman',city = '莱蒂尼斯',title = '<宠物商店>',size = 1, },
+[6] = {x = 22933,y = 34276,z = -6643,shop_id = { 5, 4, 11 }, name = '杰克',table_name = 'JieKeNpc',dir = 0,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 6,model = 'BlackSmith',city = '莱蒂尼斯',title = '<防具商店>',size = 1, },
+[7] = {x = 23006,y = 34211,z = -6643,shop_id = { 9, 10, 15 }, name = '卡茨',table_name = 'KaCiNpc',dir = 2.8,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 7,model = 'BlackSmith',city = '莱蒂尼斯',title = '<武器商店>',size = 1, },
+[8] = {x = 22953,y = 34187,z = -6643,shop_id = { 7, 13 }, name = '图鲁普',table_name = 'TuLuPuNpc',district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 8,model = 'BlackSmith',city = '莱蒂尼斯',title = '<护臂商店>',size = 1, },
+[9] = {x = 22994,y = 34168,z = -6643,shop_id = { 8, 14 }, name = '度拉肯',table_name = 'DuLaKenNpc',dir = 2.8,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 9,model = 'BlackSmith',city = '莱蒂尼斯',title = '<头盔商店>',size = 1, },
+[10] = {x = 22955,y = 34154,z = -6643,shop_id = { 6, 12 }, name = '阿拉特',table_name = 'ALaTeNpc',district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 10,model = 'BlackSmith',city = '莱蒂尼斯',title = '<护腿商店>',size = 1, },
+[11] = {x = 22963,y = 34240,z = -6643,name = '伊斯纳斯',table_name = 'YiSiNaSi',dir = 1.5,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 11,model = 'Banker',city = '莱蒂尼斯',title = '<传送>',size = 1, },
+[12] = {x = 22960,y = 34281,z = -6677,shop_id = { 26 }, name = '宝石商人',table_name = 'BaoShiNpc',dir = 4.7,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 12,model = 'Lizel',city = '莱蒂尼斯',title = '<宝石>',size = 1, },
 
 }
 

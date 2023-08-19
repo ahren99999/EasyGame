@@ -65,6 +65,35 @@ local function CustomCommand_Map(player, args)
         player:SceneName(), player:PosX(), player:PosY(), player:PosZ()))
 end
 
+---全身增幅
+---@param player Player
+---@param args any
+local function CustomCommand_FullEnhancement(player, args)
+    if player == nil then
+         return
+    end
+
+    if args[2] == nil then
+        player:SendMsg(3, "提示：/全身增幅 等级")
+        return
+    end
+    local level = tonumber(args[2])
+    if level == nil then
+        player:SendMsg(3, "提示：/全身增幅 等级")
+        return
+    end
+
+    for i = 0, 31, 1 do
+        local item = player:GetEquipmentBySlot(i)
+        if item == nil then
+            goto continue
+        end
+        ItemUpgrade.FullEnhancement(player, item, level);
+        ::continue::
+    end
+    player:SendMsg(3, "提示：全身装备增幅完成！")
+ end
+
 m.cmd = {
     ["11"] = {gm_level = 10, fun = CustomCommand_MakeItem},
     ["Map"] = {gm_level = 0, fun = CustomCommand_Map},
@@ -72,6 +101,7 @@ m.cmd = {
     ["刷怪"] = {gm_level = 10, fun = CustomCommand_CreateMonster},
     ["增加技能"] = {gm_level = 10, fun = CustomCommand_AddSkill},
     ["刷新技能"] = {gm_level = 10, fun = CustomCommand_RefreshSkillAll},
+    ["全身增幅"] = {gm_level = 10, fun = CustomCommand_FullEnhancement},
 }
 
 ---处理客户端发起的自定义命令
