@@ -1,0 +1,14 @@
+2023-08-22 23:06:06.8120/KxLogin.Helper.NlogHelper/INFO/CS2DB_GetPlayerData_Event Enter _lock has 48579080 
+2023-08-22 23:06:06.8120/KxLogin.Helper.NlogHelper/INFO/GetPlayerData by Sql uid 662212900806725632 
+2023-08-22 23:06:07.6033/KxLogin.Helper.NlogHelper/INFO/CS2DB_GetPlayerData_Event Exite _lock has 48579080 
+2023-08-22 23:06:31.5521/KxLogin.Helper.NlogHelper/INFO/CS2DB_GetPlayerData_Event Enter _lock has 8357312 
+2023-08-22 23:06:31.5521/KxLogin.Helper.NlogHelper/INFO/GetPlayerData by Sql uid 662213002568929280 
+2023-08-22 23:06:32.3155/KxLogin.Helper.NlogHelper/INFO/CS2DB_GetPlayerData_Event Exite _lock has 8357312 
+2023-08-22 23:07:29.5490/KxLogin.Helper.NlogHelper/INFO/S2DB_SavePlayerData_Event Enter _lock has 8357312 
+2023-08-22 23:07:30.6389/KxLogin.Helper.NlogHelper/INFO/GetPlayerData by Sql uid 662213002568929280 
+2023-08-22 23:07:31.3784/KxLogin.Helper.NlogHelper/INFO/KxLogin player out login name Ahren02 
+2023-08-22 23:07:31.3784/KxLogin.Helper.NlogHelper/INFO/S2DB_SavePlayerData_Event Exite _lock has 8357312 
+2023-08-22 23:07:31.3784/KxLogin.Helper.NlogHelper/INFO/S2DB_SavePlayerData_Event Enter _lock has 48579080 
+2023-08-22 23:07:32.4083/KxLogin.Helper.NlogHelper/INFO/GetPlayerData by Sql uid 662212900806725632 
+2023-08-22 23:07:33.1547/KxLogin.Helper.NlogHelper/INFO/KxLogin player out login name Ahren01 
+2023-08-22 23:07:33.1547/KxLogin.Helper.NlogHelper/INFO/S2DB_SavePlayerData_Event Exite _lock has 48579080 

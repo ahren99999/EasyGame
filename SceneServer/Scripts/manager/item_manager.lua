@@ -12,13 +12,6 @@ function m.OnItemDropEvent(monster, item)
     return true
 end
 
-
-
-
-
-
-
-
 ---使用宝石
 ---@param item Item 被升级的物品
 ---@param gemIdx number 使用的宝石序号
@@ -35,6 +28,9 @@ function m.UseGem(player, item, gemIdx, select)
     end
     if gemConfig.is_upgrade then
        return ItemUpgrade.ItemAttrUpgrade(player, item, gemConfig, select)
+    end
+    if gemConfig.is_upgrade_quality then
+        return ItemUpgrade.ItemQualityUpgrade(player, item, gemConfig)
     end
     return false
 end

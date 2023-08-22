@@ -2,6 +2,15 @@
 ---@class SkillManager
 local m = {}
 
+local luaConfig
+
+---重新加载脚本事件
+function m.Init()
+    luaConfig = LuaConfig
+    PlayerManager.RefreshAttributeEvent:addAction(m.OnSkillRefreshAttribute)
+end
+GameManager.ScriptLoadedEvent:addAction(m.Init)
+
 --使用剑气
 local function UseSoulBlade(player, spirit, skill, skillDB)
     local maxDc = player:GetAttr(emBaseAttr.MinDC)
@@ -47,7 +56,7 @@ end
 ---@return number atkNum 返回伤害值
 function m.HandlePlayerAttack(player, spirit, skill, skill_Idx, x, y)
     local atk = 0
-    local skillDB = LuaConfig.skillConfig[skill_Idx]
+    local skillDB = luaConfig.skillConfig[skill_Idx]
     if skillDB.skill_type == 0 then
         atk = player:GetAttr(emBaseAttr.MinDC)
     elseif skillDB.skill_type == 1 then
@@ -174,20 +183,19 @@ local function OnHandle_BasicSkill(player)
     ---@type Skill 魔法技能
     local magicSkill = player:GetSkillByName_US(player:CurrentMagicSkill())
 
-
     ---基础技能加成计算 技能成长属性 * 技能等级
     if physSkill ~= nil then
-        local growth = LuaConfig.skillConfig[physSkill:Idx()].growth_attr
+        local growth = luaConfig.skillConfig[physSkill:Idx()].growth_attr
         player:IncAttr(emBaseAttr.MinDC,  math.floor(growth * physSkill:Level()))
     end
 
     if physMagSkill ~= nil then
-        local growth = LuaConfig.skillConfig[physMagSkill:Idx()].growth_attr
+        local growth = luaConfig.skillConfig[physMagSkill:Idx()].growth_attr
         player:IncAttr(emBaseAttr.MaxDC, math.floor(growth * physMagSkill:Level()))
     end
 
     if magicSkill ~= nil then
-        local growth = LuaConfig.skillConfig[magicSkill:Idx()].growth_attr
+        local growth = luaConfig.skillConfig[magicSkill:Idx()].growth_attr
         player:IncAttr(emBaseAttr.MinMC, math.floor(growth * magicSkill:Level()))
         player:IncAttr(emBaseAttr.MaxMC, math.floor(growth * magicSkill:Level()))
     end
@@ -207,6 +215,67 @@ function m.OnSkillRefreshAttribute(player)
     OnHandle_Illusion(player)           --处理幻影迷踪
     OnHandle_MentalCommand(player)      --处理法力强化
 end
+
+---命中热情
+---@param player Player 释放Buff的玩家
+---@param hitPlayer Player 命中Buff的玩家
+---@param skill Skill 技能对象
+---@param skillName_US string 技能英文名字
+local function HitWarm(player, hitPlayer, skill, skillName_US)
+    ---热情光环只能给自己使用
+    if player:Id() ~= hitPlayer:Id() then
+        return
+    end
+
+    ---200基础数值 + 200 * 技能等级 / 100
+    local num = 200 + math.floor(200 * skill:Level() / 100)
+    player:SetNumber("BUFF技能_热情", num, false)
+    player:AddBuffByName_US(skillName_US, 180, false);
+end
+
+---命中热情光环
+---@param player Player 释放Buff的玩家
+---@param hitPlayer Player 命中Buff的玩家
+---@param skill Skill 技能对象
+---@param skillName_US string 技能英文名字
+local function HitFireWarm(player, hitPlayer, skill, skillName_US)
+    ---热情光环只能给自己使用
+    if player:Id() ~= hitPlayer:Id() then
+        return
+    end
+
+    ---260基础数值 + 260 * 技能等级 / 100
+    local num = 260 + math.floor(260 * skill:Level() / 100)
+    player:SetNumber("BUFF技能_热情光环", num, false)
+    player:AddBuffByName_US(skillName_US, 180, false);
+end
+
+---使用字典存储函数指针
+local mapHitBuffEvent = {
+    ["Warm"] = HitWarm,
+    ["FireWarm"] = HitFireWarm
+}
+
+---当玩家命中buff
+---@param player Player 释放Buff的玩家
+---@param hitPlayer Player 命中Buff的玩家
+---@param skillName_US string 技能名称
+function m.OnPlayerHitBuffEvent(player, hitPlayer, skillName_US)
+    ---没有命中对象不处理
+    if hitPlayer == nil then
+        return
+    end
+    local skill = player:GetSkillByName_US(skillName_US)
+
+    ---使用了未实现的buff技能
+    if mapHitBuffEvent[skillName_US] == nil then
+        return
+    end
+    ---使用策略模式分发函数
+    mapHitBuffEvent[skillName_US](player, hitPlayer, skill, skillName_US)
+end
+
+
 
 SkillManager = m
 return m

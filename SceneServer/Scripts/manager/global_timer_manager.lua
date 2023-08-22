@@ -5,7 +5,9 @@
 ---   全局定时器触发文件
 ---   处理所有配置的定时任务触发
 
-local m = {}
+local m = {
+    NewDayResetCustomCacheEvent = Event:newEvent()
+}
 
 local luaConfig
 
@@ -13,6 +15,7 @@ local luaConfig
 function m.Init()
     luaConfig = LuaConfig
 end
+GameManager.ScriptLoadedEvent:addAction(m.Init)
 
 
 ---定时任务触发
@@ -33,7 +36,35 @@ function m.OnTimerInvoker_2(idx)
         return
     end
     Game:SetNumber("全局变量_开区天数", Game:GetNumber("全局变量_开区天数", 0) + 1, true)
-    log("OnTimerInvoker_2")
+
+    ---@type ResetCustomCache[]
+    local tabResetCustom = {}
+    m.NewDayResetCustomCacheEvent:trigger(tabResetCustom)
+
+    ---先将全局在线玩家变量重置
+    -- local mapPlayer = Game:GetPlayerAll()
+    -- for key, player in pairs(mapPlayer) do
+    --     if player == nil then
+    --         goto continue
+    --     end
+    --     for index, value in ipairs(tabResetCustom) do
+    --         if value.key == "" or value.type == "" then
+    --             goto _continue
+    --         end
+    --         if value.type == "int" then
+    --             player:SetNumber(value.key, value.val, true)
+    --         elseif value.type == "bool" then
+    --             player:SetBool(value.key, value.val, true)
+    --         elseif value.type == "string" then
+    --             player:SetString(value.key, value.val, true)
+    --         end
+    --         ::_continue::
+    --     end
+    --     ::continue::
+    -- end
+    ---再重置数据库变量
+    --Gane:ResetCustomCache(tabResetCustom);
+    Game:SendMsg(2, " 嗨，勇士们新的一天又来到了！为什么不开始一场新的游戏冒险呢？")
 end
 
 

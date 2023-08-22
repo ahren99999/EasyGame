@@ -29,9 +29,8 @@ local function getCoordinatesInRange(x, y, range)
     end
     return tab
 end
---json = require "cjson"
----初始化传送点坐标
 
+---初始化传送点坐标
 function m.Init()
     local pointConfig = LuaConfig.GetPointTriggerConfig()
 
@@ -45,10 +44,10 @@ function m.Init()
             tempTab[point.x][point.y] = value
         end
     end
-    
     m.point = tempTab
-
 end
+GameManager.ScriptLoadedEvent:addAction(m.Init)
+
 ---点位移动触发
 ---@param player any
 ---@param x any

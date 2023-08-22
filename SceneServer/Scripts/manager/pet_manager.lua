@@ -2,6 +2,12 @@
 ---@class PetManager
 local m = {}
 
+---重新加载脚本事件
+function m.Init()
+    PlayerManager.RefreshAttributeEvent:addAction(m.OnPetRefreshAttribute)
+end
+GameManager.ScriptLoadedEvent:addAction(m.Init)
+
 ---宠物刷新加成计算
 ---@param player Player
 function m.OnPetRefreshAttribute(player)

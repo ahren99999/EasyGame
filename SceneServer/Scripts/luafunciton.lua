@@ -47,5 +47,36 @@ function m.ConcatTable(tbl, indent)
     return result
 end
 
+---奖励道具转换字符串
+---@param tabRewards any
+function m.RewardsToStr(tabRewards)
+    local str = ""
+    for index, value in ipairs(tabRewards) do
+        if index ~= #tabRewards then
+            str = string.format("%s%s*%s、", str, value.name, value.count)
+        else
+            str = string.format("%s%s*%s", str, value.name, value.count)
+        end
+    end
+    return str
+end
+
+---批量给予玩家奖励
+---@param player Player 玩家对象
+---@param tabRewards TabRewards[] 奖励列表
+---@param desc string 备注
+function m.GiveRewards(player, tabRewards, desc)
+    for index, value in ipairs(tabRewards) do
+        if value.name == "金币" then
+            player:IncGold(value.count)
+        elseif value.name == "经验" then
+            player:IncExp(value.count)
+        else
+            player:GiveItem(value.name, value.count, desc)
+        end
+    end
+end
+
+
 Utility = m
 return m

@@ -108,8 +108,10 @@ function m.Init()
             end
             table.insert(config_level14[value.wear_mask], value)
         end
+        ::continue::
     end
 end
+GameManager.ScriptLoadedEvent:addAction(m.Init)
 
 ---刷新装备附加描述
 ---@param item Item 物品对象
@@ -216,6 +218,12 @@ function m.ItemAddAttr(player, item, gemConfig)
         local ranIndex = Random(#tabAttrConfig) + 1
         log(string.format("ItemAddAttr ranIndex %s", ranIndex) )
         attrConfig = tabAttrConfig[ranIndex]
+
+        ---跳过装备升级 todo 临时解决办法 后期将通过权重值控制
+        if attrConfig.name == "装备升级"  then
+            goto continue
+        end
+
         --如果附加的随机属性已存在 则跳过本次循环
         if Utility.VecIndexOf(tablItemAttrName, attrConfig.name) > 0 then
             goto continue
@@ -350,6 +358,57 @@ function m.FullEnhancement(player, item, level)
             item:UpgradeAttrCustom(i - 1, level > config.bbk_line and config.bbk_line or level)
         end
     end
+end
+
+---装备品质提升
+---@param player Player
+---@param item Item
+---@param gemConfig kx_gem_data
+---@return boolean
+function m.ItemQualityUpgrade(player, item, gemConfig)
+    local itemDB = itemConfig[item:Idx()]
+    local config = GetAttrInTab(GetConfig(itemDB.level, itemDB.mode3), itemDB.wear_pos_mask, "装备升级")
+
+    --未获取到配置表
+    if config == nil then
+        warn(string.format("Lua ItemQualityUpgrade warn config == nil itemIdx %s", item:Idx()))
+        return false
+    end
+
+    ---获取到装备品质 减去1 乘以100 得到装备等级
+    local currentQuality = item:Quality()
+    local level = (currentQuality - 1) * 100
+    level = math.ceil(level <= 0 and 1 or level)
+
+    if level >= config.max_level then
+        player:SendMsg(3, "无变化...")
+        return false
+    end
+
+    local rate = config.rate[level - config.safety_line]
+    local ranNumber = Random(rate * 10000)
+    local baseRate = 10000
+
+    if  player:GetNumber("管理员_权限等级", 0) == 10 then
+        ranNumber = ranNumber / 100
+    end
+
+    --todo 此处 baseRate 可附加其他成功率
+    --例如 当前地图加成 1000点成功率 baseRate + 1000
+    if ranNumber > baseRate  then
+        if gemConfig.is_bbk then
+            item:SetQuality(currentQuality - 0.01)
+            player:SendMsg(3, "提示：魔法属性降低了...")
+            return false
+        end
+        player:TakeItem(item:Id(), 1)
+        player:SendMsg(3, "提示：物品消失了...")
+        return false
+    end
+
+    item:SetQuality(currentQuality + 0.01)
+    player:SendMsg(3, "提示：魔法属性提高了...")
+    return false
 end
 
 

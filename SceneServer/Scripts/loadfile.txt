@@ -1,6 +1,11 @@
+utils\event.lua
+manager\game_manager.lua
+
 luafunciton.lua
 Login.lua
+
 public\enum.lua
+public\model.lua
 config\admin.lua
 config\map_point.lua
 config\config_manager.lua
@@ -18,6 +23,7 @@ manager\global_timer_manager.lua
 manager\point_trigger_manager.lua
 manager\item_upgrade\item_upgrade.lua
 manager\在线奖励\online_rewards.lua
+quest\daily_quest.lua
 npcs\仓库保管员.lua
 npcs\尤博.lua
 npcs\行会管理员.lua

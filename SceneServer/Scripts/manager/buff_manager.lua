@@ -2,6 +2,20 @@
 ---@class BuffManager
 local m = {}
 
+
+---重新加载脚本事件
+function m.Init()
+   PlayerManager.RefreshAttributeEvent:addAction(m.OnBuffRefreshAttribute_1)
+   PlayerManager.RefreshAttributeEvent:addAction(m.OnBuffRefreshAttribute_2)
+   PlayerManager.RefreshAttributeEvent:addAction(m.OnBuffRefreshAttribute_3)
+   PlayerManager.RefreshAttributeEvent:addAction(m.OnBuffRefreshAttribute_4)
+
+
+end
+GameManager.ScriptLoadedEvent:addAction(m.Init)
+
+
+
 ---持续伤害
 ---@param player Player 玩家对象
 ---@param idx number buff index
@@ -125,6 +139,64 @@ function m.OnBuffRefreshAttribute_2(player)
     --log("IncSpeed " .. val)
     if val > 0 then
         player:IncAttr(emBaseAttr.AttackSpeed, val);
+    end
+end
+
+---热情 技能开始
+---@param player Player 玩家对象
+---@param idx number buff idx
+function m.OnBuffStart_3(player, idx, buffUid)
+    ---显式调用刷新属性(重新计算人物属性)
+    player:RefreshAttribute(false)
+end
+
+---热情 到期触发
+---@param player Player 玩家对象
+---@param idx number buff idx
+function m.OnBuffExpired_3(player, idx, buffUid)
+    ---buff技能需要将变量清0
+    player:SetNumber("BUFF技能_热情", 0, false)
+    ---显式调用刷新属性(重新计算人物属性)
+    player:RefreshAttribute(false)
+end
+
+---热情 刷新属性回调
+---@param player Player
+function m.OnBuffRefreshAttribute_3(player)
+    local val = player:GetNumber("BUFF技能_热情", 0)
+    --log("IncSpeed " .. val)
+    if val > 0 then
+        player:IncAttr(emBaseAttr.MinMC, val * 2);
+        player:IncAttr(emBaseAttr.MaxMC, val * 2);
+    end
+    player:SendMsg(3, string.format("OnBuffRefreshAttribute_3 %s", val))
+end
+
+---热情光环 技能开始
+---@param player Player 玩家对象
+---@param idx number buff idx
+function m.OnBuffStart_4(player, idx, buffUid)
+    ---显式调用刷新属性(重新计算人物属性)
+    player:RefreshAttribute(false)
+end
+
+---热情光环 到期触发
+---@param player Player 玩家对象
+---@param idx number buff idx
+function m.OnBuffExpired_4(player, idx, buffUid)
+    ---buff技能需要将变量清0
+    player:SetNumber("BUFF技能_热情光环", 0, false)
+    ---显式调用刷新属性(重新计算人物属性)
+    player:RefreshAttribute(false)
+end
+
+---热情光环 刷新属性回调
+---@param player Player
+function m.OnBuffRefreshAttribute_4(player)
+    local val = player:GetNumber("BUFF技能_热情光环", 0)
+    if val > 0 then
+        player:IncAttr(emBaseAttr.MinMC, val * 2);
+        player:IncAttr(emBaseAttr.MaxMC, val * 2);
     end
 end
 

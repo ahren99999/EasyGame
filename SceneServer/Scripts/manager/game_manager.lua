@@ -1,15 +1,17 @@
 
 
 local m = {}
-
+m.ScriptLoadedEvent = Event.newEvent()
 ---comment
 function m.ScriptLoaded(game)
 
-    ItemUpgrade.Init()
-    PlayerManager.Init()
-    GlobalTimerManager.Init()
-    PointTriggerMnager.Init();
+    m.ScriptLoadedEvent:trigger(game)
 
+    log("Lua ScriptLoaded...")
+    --ItemUpgrade.Init()
+    --PlayerManager.Init()
+    --GlobalTimerManager.Init()
+    --PointTriggerMnager.Init();
 end
 
 GameManager = m

@@ -1,7 +1,13 @@
 
 
 ---@class PlayerManager
-local m = {}
+local m = {
+    ---玩家打开任务界面事件
+    OpenQuestPanelEvent = Event.newEvent(),
+    ---玩家属性刷新事件
+    RefreshAttributeEvent = Event.newEvent(),
+
+}
 
 ---@type PetManager
 local petManager
@@ -19,6 +25,7 @@ function m.Init()
     buffManager = BuffManager
     skillManager = SkillManager
 end
+GameManager.ScriptLoadedEvent:addAction(m.Init)
 
 ---管理员登录操作
 ---@param player Player
@@ -98,11 +105,36 @@ end
 ---穿戴装备或者变更属性点时触发
 ---@param player Player
 function m.RefreshAttribute(player)
-    buffManager.OnBuffRefreshAttribute_1(player)            --刷新移动速度卷轴
-    buffManager.OnBuffRefreshAttribute_2(player)            --刷新攻击速度卷轴
-    petManager.OnPetRefreshAttribute(player)                --刷新宠物附加属性
-    skillManager.OnSkillRefreshAttribute(player)            --刷新被动技能属性
+    m.RefreshAttributeEvent:trigger(player)
     LuaRefreshAttribute(player)
+end
+
+---处理武器吸血
+---@param player Player 攻击者
+---@param spirit Spirit 被攻击的对象基类
+---@param skillName string 攻击者使用的技能英文名
+---@param value number 伤害
+---@param isMagic boolean 是否魔法攻击
+local function HandelWeaponVampirism(player, spirit, skillName, value, isMagic)
+
+
+    ---本次攻击的伤害小于0 或者是魔法攻击 不处理
+    if value <= 0 and isMagic == true then
+        return
+    end
+
+    ---获取到穿戴的武器
+    local weapon = player:GetEquipmentBySlot(emWearSlot.Weapon)
+    if weapon == nil then
+        return
+    end
+
+    ---设置佩戴麒麟牙 百分之10的概率 吸血 20%
+    if weapon:Name() == "麒麟牙" and Random(10) == 0 then
+        local number = math.floor(value * 0.2)
+        player:IncAttr(emBaseAttr.HP, number)
+        player:SendMsg(3, string.format("提示：佩戴的武器 %s 触发吸血特性， HP恢复 %s 点", weapon:Name(), number))
+    end
 end
 
 --玩家发起攻击事件
@@ -112,8 +144,11 @@ end
 ---@param value number 伤害
 ---@param isMagic boolean 是否魔法攻击
 ---@return number damage 返回本次攻击的伤害如果为0则躲避
-function m.OnPlayerAttackEvent(player, spirit, skillName, value, isMagic)
-    
+function m.OnPlayerAttackEvent(player, spirit, skillName, value, isMagic) 
+    ---处理武器吸血
+    HandelWeaponVampirism(player, spirit, skillName, value, isMagic)
+
+
     return value
 end
 
@@ -238,6 +273,16 @@ function m.OnBuyStallItemsEvent(player, item, gold, count)
 end
 
 
+---玩家打开任务界面
+---@param player Player 玩家对象
+---@param vIncompleteTasks Quest[] 未完成的任务
+---@param vCompletedTasks string 已完成的任务
+function m.OnOpenQuestPanelEvent(player, vIncompleteTasks, vCompletedTasks)
+    --每日任务
+    --DailyQuest.OnOpenQuestPanelEvent(player, vIncompleteTasks, vCompletedTasks)
+
+    m.OpenQuestPanelEvent:trigger(player, vIncompleteTasks, vCompletedTasks)
+end
 
 
 
