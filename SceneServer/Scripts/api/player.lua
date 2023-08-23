@@ -3,9 +3,6 @@
 ---@class Player:Spirit
 local player
 
----@type Player
-local m
-
 --- 是否新玩家
 --- @return boolean
 function player:IsNew()
@@ -359,66 +356,90 @@ end
 function player:RemoveSkillBuff(buffUid)
 end
 
+--- 通过穿戴位置获取穿戴的装备 为空就是没有穿戴
+--- @param wearSlot 穿戴位置
+--- @returns Item
+function player:GetEquipmentBySlot(wearSlot)
+end
+
+--- 通过Idx获取技能对象
+--- @param idx 技能配置索引
+--- @returns Skill
+function player:GetSkillByIdx(idx)
+end
+
+--- 获取 buff 技能通过uid
+--- @param buffUid
+--- @returns Skill
+function player:GetSkillBuffByUid(buffUid)
+end
+
+--- 通过技能中文名称获取技能对象
+--- @param name
+--- @returns Skill
+function player:GetSkillByName(name)
+end
+
+--- 通过技能英文名称获取技能对象
+--- @param name
+--- @returns Skill
+function player:GetSkillByName_US(name)
+end
 
 --- 是否在安全区
---- @return boolean
+--- @returns boolean
 function player:IsInSafe()
 end
 
 --- 地图移动
---- @param sceneName string 场景名称
---- @param x int32_t 游戏坐标x
---- @param y int32_t 游戏坐标y
+--- @param sceneName 场景名称
+--- @param x 游戏坐标x
+--- @param y 游戏坐标y
 function player:MapMove(sceneName, x, y)
 end
 
---- 地图移动
---- @param sceneName string 场景名称
---- @param x int32_t 游戏坐标x
---- @param y int32_t 游戏坐标y
---- @param z int32_t 游戏坐标z
+--- 带有Z坐标的地图移动
+--- @param sceneName 场景名称
+--- @param x 游戏坐标x
+--- @param y 游戏坐标y
+--- @param z 游戏坐标z
 function player:MapMoveEx(sceneName, x, y, z)
 end
 
---- 获取当前地图区域配置索引号
---- @return int32_t
-function player:GetCurrentMapIdx()
-end
-
 --- 收起宠物
---- @param isDie boolean 回收时设置宠物死亡
+--- @param isDie 回收时设置宠物死亡
 function player:RecallPet(isDie)
 end
 
 --- 是否启用宠物
---- @return boolean
+--- @returns boolean
 function player:IsEnablePet()
 end
 
 --- 获取宠物属性
---- @param point emPetPoint 属性枚举值
---- @return int64_t
+--- @param point 属性枚举值
+--- @returns int64_t
 function player:GetPetPoint(point)
 end
 
 --- 设置宠物属性,自动刷新客户端
---- @param point int8_t 属性枚举值
---- @param val int64_t 数值
+--- @param point 属性枚举值
+--- @param val 数值
 function player:SetPetPoint(point, val)
 end
 
 --- 是否是队长
---- @return boolean
+--- @returns boolean
 function player:IsCaptain()
 end
 
 --- 是否在队伍中
---- @return boolean
+--- @returns boolean
 function player:HasTeam()
 end
 
 --- 获取队长
---- @return Player
+--- @returns player
 function player:GetCaptain()
 end
 
@@ -427,27 +448,75 @@ function player:LeaveTeam()
 end
 
 --- 获取组队成员(不包含自己)
---- @return vector<Player>
+--- @returns table
 function player:GetTeamNumbers()
 end
 
 --- 注册一个定时器
---- @param timerId uint32_t 定时器id
---- @param ms uint32_t 延迟
---- @param tableName string lua 表名
---- @param funName string lua 函数名
---- @param isLoop boolean 是否循环
+--- @param timerId 定时器id
+--- @param ms 延迟
+--- @param tableName lua 表名
+--- @param funName lua 函数名
+--- @param isLoop 是否循环
 function player:RegisterTimer(timerId, ms, tableName, funName, isLoop)
 end
 
 --- 取消一个定时器
---- @param timerId uint32_t 定时器id
+--- @param timerId 定时器id
 function player:UnRegisterTimer(timerId)
 end
 
 --- 新增一个Buff，会覆盖相同Buff
---- @param buffIdx int32_t Buff配置idx
---- @param duration int32_t 持续时间
---- @param isSave boolean 离线是否保存
+--- @param buffIdx Buff配置idx
+--- @param duration 持续时间
+--- @param isSave 离线是否保存
 function player:AddBuffByIdx(buffIdx, duration, isSave)
 end
+
+--- 新增一个Buff，会覆盖相同Buff
+--- @param skillName_US 技能英文名称
+--- @param duration 持续时间
+--- @param isSave 离线是否保存
+function player:AddBuffByName_US(skillName_US, duration, isSave)
+end
+
+--- 增加当前经验
+--- @param val 经验值
+function player:IncExp(val)
+end
+
+--- 增加属性值
+--- @param attr 属性枚举
+--- @param value 数值
+function player:IncAttr(attr, value)
+end
+
+--- 减少属性值
+--- @param attr 属性枚举
+--- @param value 数值
+function player:SubAttr(attr, value)
+end
+
+--- 获取属性值
+--- @param attr 属性枚举
+--- @returns int32_t
+function player:GetAttr(attr)
+end
+
+--- 设置属性值
+--- @param attr 属性枚举
+--- @param value 数值
+function player:SetAttr(attr, value)
+end
+
+--- 获取基本属性点数
+--- @param idx 1：力量 2：敏捷 3：精神 4：魔法点数
+--- @returns int32_t
+function player:GetBasePonit(idx)
+end
+
+--- 刷新基础属性(重新计算属性)
+--- @param isLogin 是否登录
+function player:RefreshAttribute(isLogin)
+end
+
