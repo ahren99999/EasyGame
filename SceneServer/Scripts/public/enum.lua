@@ -66,6 +66,16 @@ emBaseAttr = {
 	MaxATKOfElves			= 62,		--精灵系最大攻击力
 	EDRate					= 63,		--精灵系防御率
 	EDdef					= 64,		--精灵系防御力
+	CritDamageBonus         = 65,		--物理致命伤害加成
+	MCritDamageBonus		= 66,		--魔法致命伤害加成
+	FinalPerMilDC			= 67,		--最终物理伤害千分比
+	FinalPerMilMC			= 68,		--最终魔法伤害千分比
+	KatarsPerMilAC			= 69,		--忽视物理防御千分比
+	KatarsPerMilMAC			= 70,		--忽视魔法防御千分比
+	FinalPerMilHP			= 71,		--最终生命加成千分比
+	FinalPerMilMP			= 72,		--最终魔法加成千分比
+	PerMilDC				= 73,		--物理攻击千分比
+	PerMilMC				= 74,		--魔法攻击千分比
 }
 
 --宠物属性枚举
@@ -156,4 +166,13 @@ emProfession = {
 	Red = 3,
 	Bow = 4,
 	Blue = 5
+}
+
+---1：力量 2：敏捷 3：精神 4：魔法点数
+---@class emBasePoint
+emBasePoint = {
+	STR = 1,			--力量
+	DEX = 2,			--敏捷
+	SPI = 3,			--精神
+	Magic = 4			--魔法点数
 }

@@ -9,6 +9,7 @@ local m = {
 
 }
 
+local luaConfig
 ---@type PetManager
 local petManager
 ---@type BuffManager
@@ -21,6 +22,7 @@ local adminList
 ---重新加载脚本事件
 function m.Init()
     adminList = Admin
+    luaConfig = LuaConfig
     petManager = PetManager
     buffManager = BuffManager
     skillManager = SkillManager
@@ -63,8 +65,31 @@ function m.LoginSuccess(player)
     AdminLoginSucess(player)                                --管理员登录
     ExpManager.InitExpMultiplier(player)                    --初始化经验倍率
 
-    player:RegisterTimer(1001, 1000 * 1, "OnlineRewards", "OnlineReward_Timer1001", true)   --在线奖励
+    player:RegisterTimer(1001, 1000 * 1, "OnlineRewards", "OnlineReward_Timer1001", true)       --在线奖励
+    player:RegisterTimer(1002, 1000 * 1, "PlayerManager", "OnStateRecovery_Timer1002", true)    --状态恢复
     Game:SendMsg(2, string.format("系统:尊敬的玩家 %s 上线了！", player:Name()));
+end
+
+function m.OnStateRecovery_Timer1002(spirit)
+    ---@type Player
+    local player = spirit:ToPlayer()
+    local hpRegen = player:GetAttr(emBaseAttr.HPRegen)
+    local mpRegen = player:GetAttr(emBaseAttr.MPRegen)
+    if hpRegen > 0 then
+        local hp = player:HP()
+        local maxHP = player:MaxExp()
+        if hp < maxHP then
+            player:IncAttr(emBaseAttr.HP, hpRegen)
+        end
+    end
+
+    if mpRegen > 0 then
+        local mp = player:MP()
+        local maxMP = player:MaxMP()
+        if mp < maxMP then
+            player:IncAttr(emBaseAttr.MP, mpRegen)
+        end
+    end
 end
 
 ---玩家升级事件(升级后)
@@ -107,6 +132,39 @@ end
 function m.RefreshAttribute(player)
     m.RefreshAttributeEvent:trigger(player)
     LuaRefreshAttribute(player)
+
+
+    ---最终生命加成千分比
+    local finalPerMilHP = player:GetAttr(emBaseAttr.FinalPerMilHP)
+    if finalPerMilHP > 0 then
+        local maxHP = player:GetAttr(emBaseAttr.MaxHP)
+        player:IncAttr(emBaseAttr.MaxHP, math.floor( maxHP * finalPerMilHP / 1000))
+    end
+
+    ---最终魔法加成千分比
+    local finalPerMilMP = player:GetAttr(emBaseAttr.FinalPerMilMP)
+    if finalPerMilMP > 0 then
+        local maxMP = player:GetAttr(emBaseAttr.MaxMP)
+        player:IncAttr(emBaseAttr.MaxMP, math.floor( maxMP * finalPerMilMP / 1000))
+    end
+
+    ---最终物理加成千分比
+    local perMilDC = player:GetAttr(emBaseAttr.PerMilDC)
+    if perMilDC > 0 then
+        local minDC = player:GetAttr(emBaseAttr.MinDC)
+        local maxDC = player:GetAttr(emBaseAttr.MaxDC)
+        player:IncAttr(emBaseAttr.MinDC, math.floor( minDC * perMilDC / 1000))
+        player:IncAttr(emBaseAttr.MaxDC, math.floor( maxDC * perMilDC / 1000))
+    end
+
+    ---最终魔法加成千分比
+    local perMilMC = player:GetAttr(emBaseAttr.PerMilMC)
+    if perMilMC > 0 then
+        local minMC = player:GetAttr(emBaseAttr.MinMC)
+        local maxMC = player:GetAttr(emBaseAttr.MaxMC)
+        player:IncAttr(emBaseAttr.MinMC, math.floor( minMC * perMilMC / 1000))
+        player:IncAttr(emBaseAttr.MaxMC, math.floor( maxMC * perMilMC / 1000))
+    end
 end
 
 ---处理武器吸血
@@ -137,31 +195,184 @@ local function HandelWeaponVampirism(player, spirit, skillName, value, isMagic)
     end
 end
 
---玩家发起攻击事件
+
+---处理暴击加成
 ---@param player Player 攻击者
 ---@param spirit Spirit 被攻击的对象基类
----@param skillName string 攻击者使用的技能英文名
----@param value number 伤害
----@param isMagic boolean 是否魔法攻击
----@return number damage 返回本次攻击的伤害如果为0则躲避
-function m.OnPlayerAttackEvent(player, spirit, skillName, value, isMagic) 
-    ---处理武器吸血
-    HandelWeaponVampirism(player, spirit, skillName, value, isMagic)
+---@param skill Skill 攻击者使用的技能对象
+---@param skillDB kx_skill_data 攻击者使用的技能配置
+---@param damage number 本次基础伤害值
+local function HandleCrit(player, spirit, skill, skillDB, damage)
+    local code = 0
+    if skillDB.skill_type > 2 then
+        return damage, 0
+    end
+    
+    local ranNum = Random(1000)
+    if skillDB.damage_type == 1 then
+        local cri = player:GetAttr(emBaseAttr.CritRate)
+        if cri > ranNum then
+            code = 1
+             damage = damage * player:GetAttr(emBaseAttr.CritDamageBonus) / 100
+        end
+    elseif skillDB.damage_type == 2 then
+        local cri = player:GetAttr(emBaseAttr.MagicCritRate)
+        if cri > ranNum then
+            code = 5
+            damage = damage * player:GetAttr(emBaseAttr.MCritDamageBonus) / 100
+        end
+    end
 
-
-    return value
+    return damage, code
 end
 
---玩家被攻击事件
+---处理怪物防御
+---@param player Player 攻击者
+---@param monster Monster 被攻击的玩家对象
+---@param skill Skill 攻击者使用的技能对象
+---@param skillDB kx_skill_data  攻击者使用的技能配置
+---@param damage number 伤害
+---@param isMust boolean 是否必中
+---@return number 返回防御减免后伤害
+local function HandleMonsterDefenses(player, monster, skill, skillDB, damage, isMust)
+    return damage   --todo 怪物防御等待实现
+end
+
+
+---玩家发起攻击事件
+---此处是最终伤害计算
+---返回攻击、伤害效果、是否魔法攻击
+---伤害效果: 0:掉蓝 1:致命 2:眩晕 4掉血 5:最大化
+---@param player Player 攻击者
+---@param spirit Spirit 被攻击的对象基类
+---@param skill Skill 攻击者使用的技能对象
+---@return number, number, boolean 返回伤害、伤害效果、是否魔法攻击
+function m.OnPlayerAttackEvent(player, spirit, skill)
+    ---@type kx_skill_data
+    local skillDB = luaConfig.skillConfig[skill:Idx()]
+    local code = 0                          ---攻击效果 0:掉蓝 1:致命 2:眩晕 4掉血 5:最大化
+    local damage = 0                        ---基础伤害值
+    local katarsDamage = 0                  ---真实伤害
+    local isMust = false                    ---是否必中
+    local isMagic = skillDB.damage_type == 2---是否魔法伤害
+
+    ---获取本次基础伤害值、真实伤害值、是否必中
+    damage, katarsDamage, isMust = skillManager.HandlePlayerAttack(player, spirit, skill, skillDB)
+    ---获取计算暴击后的伤害值、攻击效果
+    damage, code = HandleCrit(player, spirit, skill, skillDB, damage)
+
+
+
+    if spirit:IsPlayer() then
+        ---处理人物防御
+        damage = m.OnPlayerDamageEvent(spirit, player, damage, isMust, isMagic)
+    else
+        ---处理怪物防御
+        damage = HandleMonsterDefenses(player, spirit, skill, skillDB, damage, isMust)
+    end
+
+    ---todo 攻击者武器减耐久
+
+    ---todo 被攻击者护甲减耐久
+
+    ---加上真实伤害
+    damage  = math.floor(damage + katarsDamage)
+    return damage, code, isMagic
+end
+
+
+
+
+---玩家被攻击事件
+---返回计算后的伤害值
+---lua层显示调用
+---C++怪物攻击调用
 ---@param player Player 被攻击的玩家对象
----@param spirit Spirit 攻击者
----@param skillName string 攻击者使用的技能英文名
----@param value number 伤害
+---@param spirit Spirit 攻击者(可能是怪物、可能是人物)
+---@param damage number 伤害
+---@param isMust boolean 是否必中
 ---@param isMagic boolean 是否魔法攻击
 ---@return number damage 返回本次攻击的伤害如果为0则躲避
-function m.OnPlayerDamageEvent(player, spirit, skillName, value, isMagic)
-    
-    return value
+function m.OnPlayerDamageEvent(player, spirit, damage, isMust, isMagic)
+    ---计算物理防御
+    if isMagic == false then
+        
+        local hit = 0
+        local deHit = 0;
+        if spirit:IsPlayer() then
+            ---@type Player
+            local otherPlayer = spirit
+            ---攻击者玩家属性
+            hit = otherPlayer:GetAttr(emBaseAttr.HIT) + 100              ---命中
+            deHit = otherPlayer:GetAttr(emBaseAttr.ReducedBlockChance)   ---降低对方格挡率
+        else
+            ---如果是怪物默认给予10点属性
+            hit = 100
+        end
+
+        ---被攻击者玩家属性
+        local blockRate = player:GetAttr(emBaseAttr.BlockRate)  ---格挡成功率
+        local ac = player:GetAttr(emBaseAttr.AC)                       ---物理防御力
+        local perMilAC = player:GetAttr(emBaseAttr.PerMilAC)     ---物理防御千分比
+        local pr = player:GetAttr(emBaseAttr.PR)                       ---物理反弹 todo
+
+        ---计算命中率
+        local hitRate = hit + deHit + blockRate
+        local ranNum = Random(hitRate)
+        if (ranNum > ( hit + deHit) and (isMust == false) ) then
+            return 0
+        end
+
+        ---物理防御千分比减免的伤害值
+        local subDamage = 0
+        if perMilAC > 0 then
+            subDamage = damage * perMilAC / 1000;
+        end
+
+        damage = damage - ac
+        damage = damage - subDamage
+        ---破不了防给予少许伤害
+        damage =  math.floor(damage < 0 and RandomEx(1, 10) or damage)
+    ---计算魔法防御    
+    else
+        ---被攻击者得玩家属性
+        local mac = player:GetAttr(emBaseAttr.MAC)                  ---魔法防御力
+        local perMilMAC = player:GetAttr(emBaseAttr.PerMilMAC)      ---魔法防御千分比
+        local magicResistance = player:GetAttr(emBaseAttr.MagicResistance)---魔法抵抗力
+
+        ---魔法防御千分比减免的伤害值
+        local subDamageA = 0
+        if perMilMAC > 0 then
+            subDamageA = damage * perMilMAC / 1000;
+        end
+
+        ---魔法抵抗力减免的伤害值
+        local subDamageB = 0
+        if magicResistance > 0 then
+            subDamageB = damage * magicResistance / 1000;
+        end
+
+        damage = damage - mac
+        damage = damage - subDamageA
+        damage = damage - subDamageB
+        ---破不了防给予少许伤害
+        damage = math.floor(damage < 0 and RandomEx(1, 50) or damage)
+    end
+
+    ---计算魔法屏障抵消
+    if player:HasSkillBuff(6) then
+        local mpReduction = player:GetNumber("BUFF技能_魔法屏障_MP抵抗_临时属性", 0)
+        local damageReduction = player:GetNumber("BUFF技能_魔法屏障_伤害减免_临时属性", 0)
+        if mpReduction > 0 and damageReduction > 0 then
+            local subMP = math.floor(damage * mpReduction / 100)
+            if player:MP() <= subMP then
+                player:RemoveBuffByIdx(6)
+            end
+            player:SubMP(subMP)
+            damage = math.floor(damage * damageReduction / 100)
+        end
+    end
+    return damage
 end
 
 --玩家被死亡事件
@@ -169,9 +380,8 @@ end
 ---@param killer Spirit 击杀者(可能为空)
 ---@return boolean ok 返回false 玩家不死亡 返回true正常死亡
 function m.OnPlayerDeadEvent(player, killer)
-   
+    
     if killer ~= nil and killer:IsPlayer() then
-        log("1111111212")
         local mapDB = LuaConfig.mapConfig[player:GetCurrentMapIdx()]
         --@RGB=231-90-39
         Game:SendMsg(2, string.format("[PVP频道] %s 技艺精湛，在%s击败了%s级的 %s", 

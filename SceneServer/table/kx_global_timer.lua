@@ -2,7 +2,7 @@
 ---@type kx_global_timer_data[]
 local _kx_global_timer_table = 
 {
-[1] = {name = '分钟计时器',table_name = 'GlobalTimerManager',cron = '0 0/1 * * * ? ',func_name = 'OnTimerInvoker_1',idx = 1,is_loop = true, },
+[1] = {name = '分钟计时器',table_name = 'GlobalTimerManager',cron = '0 0/2 * * * ? ',func_name = 'OnTimerInvoker_1',idx = 1,is_loop = true, },
 [2] = {name = '天计时器',table_name = 'GlobalTimerManager',cron = '1 0 0 1/1 * ? ',func_name = 'OnTimerInvoker_2',idx = 2,is_loop = true, },
 
 }

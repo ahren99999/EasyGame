@@ -39,7 +39,17 @@ local function CustomCommand_AddSkill(player, args)
     if player == nil then
         return
     end
-    player:AddSkill(skillName)
+    player:AddSkill(skillName, level)
+end
+
+local function CustomCommand_SetSkill(player, args)
+    local skillName = args[2]
+    local level = args[3] == nil and 1 or tonumber(args[3])
+    if skillName == nil or level == nil then
+        player:SendMsg(3, "提示：/修改技能 技能名称 等级")
+        return
+    end
+    player:SetSkillLevel(skillName, level)
 end
 
 local function CustomCommand_RefreshSkillAll(player, args)
@@ -53,7 +63,6 @@ local function CustomCommand_MapMove(player, args)
     local sceneName = args[2]
     local x = tonumber(args[3])
     local y = tonumber(args[4])
-    log("aaaaaaaa" .. x .. y)
     if player == nil then
         return
     end
@@ -100,6 +109,7 @@ m.cmd = {
     ["移动"] = {gm_level = 10, fun = CustomCommand_MapMove},
     ["刷怪"] = {gm_level = 10, fun = CustomCommand_CreateMonster},
     ["增加技能"] = {gm_level = 10, fun = CustomCommand_AddSkill},
+    ["修改技能"] = {gm_level = 10, fun = CustomCommand_SetSkill},
     ["刷新技能"] = {gm_level = 10, fun = CustomCommand_RefreshSkillAll},
     ["全身增幅"] = {gm_level = 10, fun = CustomCommand_FullEnhancement},
 }

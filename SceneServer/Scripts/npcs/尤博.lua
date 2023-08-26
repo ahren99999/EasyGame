@@ -18,22 +18,11 @@ function m.OnClickMain(npc, player)
         dailyQuestSelect,
         "取消|Exit"
     }
-    
-    -- if dailyQuestSelect ~= "" then
-    --     select = {
-    --         "我想要购买杂货|OnClickOpenShop",
-    --         dailyQuestSelect,
-    --         "取消|Exit"
-    --     }
-    -- end
-
-
     content = string.format(content, player:Name(), npc:District())
     npc:Say(player, content, select)
 end
 
 function m.OnClickOpenShop(npc, player)
-    GlobalTimerManager.OnTimerInvoker_2(2)
     npc:OpenShop(player)
 end
 YouBoNpc = m

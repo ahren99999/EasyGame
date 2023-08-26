@@ -9,6 +9,8 @@ function m.OnClickMain(npc, player)
 
     local select = {
         "我想要购买宝石|OnClickOpenShop",
+        "开启超级技能|OnClickTest1",
+        "开启觉醒技能|OnClickTest2",
         "取消|Exit"
     }
     content = string.format(content, player:Name(), npc:District())
@@ -19,6 +21,15 @@ function m.OnClickOpenShop(npc, player)
     npc:OpenShop(player)
 end
 
+function m.OnClickTest1(npc, player)
+    player:SetAwakeningStage(1)
+    player:SendMsg(3 ,"提示：您完成了变身任务！")
+end
+
+function m.OnClickTest2(npc, player)
+    player:SetAwakeningStage(2)
+    player:SendMsg(3 ,"提示：您完成了觉醒任务！")
+end
 
 
 BaoShiNpc = m

@@ -45,7 +45,7 @@ local _kx_item_attr_custom_table =
 [41] = {base_val = { 36, 7, 22, 27, 27 }, name = '魔法攻击祝福',base_idx = {'最小魔法攻击力','最大魔法攻击力','魔法必杀成功率','降低对方格挡成功率','攻击成功率',},idx = 41,name_us = 'GodAttackStaff',display_name = '祝福', },
 [42] = {base_val = { 9, 4, 8, 8, 13, 13 }, name = '铠甲防御祝福',base_idx = {'物理防御力','物理防御千分比','魔法防御力','魔法防御千分比','必杀成功率','魔法必杀成功率',},idx = 42,name_us = 'GodFirstDefense',display_name = '祝福', },
 [43] = {base_val = { 9, 4, 8, 8, 2, 2 }, name = '防具防御祝福',base_idx = {'物理防御力','物理防御千分比','魔法防御力','魔法防御千分比','生命恢复力','魔法恢复力',},idx = 43,name_us = 'GodSecondDefense',display_name = '祝福', },
-[44] = {base_val = { 9, 4, 8, 8, 24 }, name = '头盔防御祝福',base_idx = {'物理防御力','物理防御千分比','魔法防御力','魔法防御千分比','MaxHP','MaxMP',},idx = 44,name_us = 'GodThirdDefense',display_name = '祝福', },
+[44] = {base_val = { 9, 4, 8, 8, 12, 24 }, name = '头盔防御祝福',base_idx = {'物理防御力','物理防御千分比','魔法防御力','魔法防御千分比','MaxHP','MaxMP',},idx = 44,name_us = 'GodThirdDefense',display_name = '祝福', },
 [45] = {base_val = { 13, 7, 18, 8, 17, 1 }, name = '护盾祝福',base_idx = {'物理防御力','物理防御千分比','魔法防御力','魔法防御千分比','降低对方格挡成功率','魔法抵抗力',},idx = 45,name_us = 'GodBlock',display_name = '祝福', },
 [46] = {base_val = { 5, 2 }, name = '绝对防御力',base_idx = {'物理防御力','物理防御千分比',},idx = 46,name_us = 'AbsDefenseDamage',display_name = '绝对防御力', },
 [47] = {base_val = { 4, 1 }, name = '绝对魔法防御力',base_idx = {'魔法防御力','魔法防御千分比',},idx = 47,name_us = 'AbsAllResist',display_name = '绝对魔法防御力', },

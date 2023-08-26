@@ -1,5 +1,5 @@
 
-
+---@class LuaConfig
 local m = {}
 
 ---@type kx_item_data[]

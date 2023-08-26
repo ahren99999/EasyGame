@@ -51,7 +51,7 @@ end
 ---@param itemIdx number 使用的物品idx
 ---@return boolean 返回 true则扣除物品， 返回false 则不会扣除物品
 function m.OnUseItem_2(player, itemIdx)
-    player:AddBuffByIdx(11, 120, false);
+    player:AddBuffByIdx(10, 120, false);
     return true
 end
 

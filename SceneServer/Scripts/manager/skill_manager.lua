@@ -2,10 +2,14 @@
 ---@class SkillManager
 local m = {}
 
-local luaConfig
+
+
+---buff技能单独处理
+local skillBuff
 
 ---重新加载脚本事件
 function m.Init()
+    skillBuff = SkillBuff
     luaConfig = LuaConfig
     PlayerManager.RefreshAttributeEvent:addAction(m.OnSkillRefreshAttribute)
 end
@@ -46,46 +50,72 @@ local function UseIceFury(player, spirit, skill, skillDB)
     return math.floor(maxDc + (maxDc * skill:Level() * 0.2))
 end
 
+
+local mapMainPoint = {
+    [emProfession.OneHand] = emBasePoint.STR,
+    [emProfession.Bare] = emBasePoint.DEX,
+    [emProfession.Red] = emBasePoint.Magic,
+    [emProfession.Bow] = emBasePoint.DEX,
+    [emProfession.Blue] = emBasePoint.Magic,  
+
+}
+
+---获取玩家主属性
+---@param player Player 玩家对象
+local function GetMainPoint(player)
+    return player:GetBasePonit(mapMainPoint[player:ProfessionIndex()])
+end
+
+---计算高级技能伤害
+---返回基础伤害数值、真实伤害数值
+---@param player Player 发起攻击的玩家
+---@param spirit Spirit 被攻击的对象基类
+---@param skill Skill 使用的技能
+---@param skillDB kx_skill_data 使用的技能配置
+---@return number, number
+local function HandleAdvancedSkill(player, spirit, skill, skillDB)
+    local level = skill:Level()
+    local min = skillDB.min[level]
+    local max = skillDB.max[level]
+    local min2 = skillDB.min2[level]
+    local max2 = skillDB.max2[level]
+    --最大物理攻击力
+    local maxDC = player:GetAttr(emBaseAttr.MaxDC)
+    --最大魔法攻击力
+    local maxMC = player:GetAttr(emBaseAttr.MaxMC)
+    --基础伤害值
+    local baseDamage = math.floor((maxDC + maxMC) * RandomEx(min, max) / 100)
+    ---主属性点数
+    local mainPoint = GetMainPoint(player)
+    --真实伤害值
+    local katarsDamage = math.floor(mainPoint * RandomEx(min2, max2) / 100)
+    return baseDamage, katarsDamage
+end
+
+
 ---玩家使用技能攻击
 ---@param player Player 发起攻击的玩家
 ---@param spirit Spirit 被攻击的对象基类
 ---@param skill Skill 使用的技能
----@param skill_Idx number 使用的技能配置
----@param x number 坐标x
----@param y number 坐标y
----@return number atkNum 返回伤害值
-function m.HandlePlayerAttack(player, spirit, skill, skill_Idx, x, y)
-    local atk = 0
-    local skillDB = luaConfig.skillConfig[skill_Idx]
+---@param skillDB kx_skill_data 使用的技能配置
+---@return number, number, boolean 基础伤害数值，真实伤害数值，是否必中
+function m.HandlePlayerAttack(player, spirit, skill, skillDB)
+    ---基础伤害数值，真实伤害数值
+    local baseDamage, katarsDamage = 0, 0;
+    ---物理1技能使用最小攻击力
     if skillDB.skill_type == 0 then
-        atk = player:GetAttr(emBaseAttr.MinDC)
+        baseDamage = player:GetAttr(emBaseAttr.MinDC)
+    ---物理2技能使用最大物理攻击力    
     elseif skillDB.skill_type == 1 then
-        atk = player:GetAttr(emBaseAttr.MaxDC)
+        baseDamage = player:GetAttr(emBaseAttr.MaxDC)
+    ---魔法技能使用最小魔法攻击力    
     elseif skillDB.skill_type == 2 then
-        atk = player:GetAttr(emBaseAttr.MinMC)
+        baseDamage = player:GetAttr(emBaseAttr.MinMC)
+    ---计算高级技能伤害    
+    elseif skillDB.skill_type == 4 then
+        baseDamage, katarsDamage= HandleAdvancedSkill(player, spirit, skill, skillDB)
     end
-
-    if skillDB.english_name == "SoulBlade" then
-        return UseSoulBlade(player, spirit, skill, skillDB)
-    end
-
-    if skillDB.english_name == "SoulFist" then
-        return UseSoulFist(player, spirit, skill, skillDB)
-    end
-
-    if skillDB.english_name == "FireFury" then
-        return UseFireFury(player, spirit, skill, skillDB)
-    end
-
-    if skillDB.english_name == "DeadlyCount" then
-        return UseDeadlyCount(player, spirit, skill, skillDB)
-    end
-
-    if skillDB.english_name == "IceFury" then
-        return UseIceFury(player, spirit, skill, skillDB)
-    end
-
-    return atk
+    return baseDamage, katarsDamage, skillDB.skill_type > 2
 end
 
 ---玩家刷新附加属性事件
@@ -96,11 +126,10 @@ local function OnHandle_Endure(player)
     if skill == nil then
         return
     end
-    local num = 100
-    if player:ProfessionIndex() == emProfession.OneHand then
-        num = 200
-    end
-    player:IncAttr(emBaseAttr.MaxHP, math.floor(num * skill:Level()))
+    ---@type kx_skill_data
+    local skillDB = luaConfig.skillConfig[skill:Idx()]
+    local num = skillDB.min[skill:Level()] * 10;
+    player:IncAttr(emBaseAttr.FinalPerMilHP, math.floor(num))
 end
 
 ---玩家刷新附加属性事件
@@ -111,10 +140,9 @@ local function OnHandle_Might(player)
     if skill == nil then
         return
     end
-    local num = 80
-    player:IncAttr(emBaseAttr.MinDC, math.floor(num * skill:Level()))
-    player:IncAttr(emBaseAttr.MaxDC, math.floor(2 * num * skill:Level()))
-
+    ---@type kx_skill_data
+    local skillDB = luaConfig.skillConfig[skill:Idx()]
+    player:IncAttr(emBaseAttr.PerMilAC, math.floor(skillDB.min[skill:Level()] * 10))
 end
 
 ---玩家刷新附加属性事件
@@ -125,12 +153,9 @@ local function OnHandle_Fanatical(player)
     if skill == nil then
         return
     end
-    local num = 0.25 * skill:Level() / 10
-    if player:ProfessionIndex() == emProfession.Bare then
-        num = 0.3 * skill:Level() / 10
-    end
-    local speed = player:GetAttr(emBaseAttr.AttackSpeed)
-    player:IncAttr(emBaseAttr.AttackSpeed, math.floor(speed + speed *num))
+    ---@type kx_skill_data
+    local skillDB = luaConfig.skillConfig[skill:Idx()]
+    player:IncAttr(emBaseAttr.AttackSpeed, skillDB.min[skill:Level()])
 end
 
 ---玩家刷新附加属性事件
@@ -141,9 +166,9 @@ local function OnHandle_GuardianProtection(player)
     if skill == nil then
         return
     end
-    local num = 10
-    --魔法防御千分比
-    player:IncAttr(emBaseAttr.PerMilMAC, math.floor(skill:Level() *num))
+    ---@type kx_skill_data
+    local skillDB = luaConfig.skillConfig[skill:Idx()]
+    player:IncAttr(emBaseAttr.MAC, skillDB.min[skill:Level()])
 end
 
 ---玩家刷新附加属性事件
@@ -154,22 +179,23 @@ local function OnHandle_Illusion(player)
     if skill == nil then
         return
     end
-    local num = 0.15 * skill:Level() / 10
-    local blockRate = player:GetAttr(emBaseAttr.BlockRate)
-    --魔法防御千分比
-    player:IncAttr(emBaseAttr.BlockRate, math.floor(blockRate + blockRate *num))
+    ---@type kx_skill_data
+    local skillDB = luaConfig.skillConfig[skill:Idx()]
+    player:IncAttr(emBaseAttr.BlockRate, math.floor(skillDB.min[skill:Level()] * 10))
 end
 
 ---玩家刷新附加属性事件
 ---处理法力强化
 ---@param player Player
 local function OnHandle_MentalCommand(player)
+    ---@type Skill
     local skill = player:GetSkillByName_US("MentalCommand")
     if skill == nil then
         return
     end
-    local num = 300
-    player:IncAttr(emBaseAttr.MaxHP, math.floor(num * skill:Level()))
+    ---@type kx_skill_data
+    local skillDB = luaConfig.skillConfig[skill:Idx()]
+    player:IncAttr(emBaseAttr.FinalPerMilMP, math.floor(skillDB.min[skill:Level()] * 10))
 end
 
 ---玩家刷新附加属性事件
@@ -183,21 +209,35 @@ local function OnHandle_BasicSkill(player)
     ---@type Skill 魔法技能
     local magicSkill = player:GetSkillByName_US(player:CurrentMagicSkill())
 
-    ---基础技能加成计算 技能成长属性 * 技能等级
+    ---基础技能加成计算 最小数值 + ((最大数值 - 最小数值) * 技能等级百分比)
+
+    ---物理1技能增加人物最小攻击力
     if physSkill ~= nil then
-        local growth = luaConfig.skillConfig[physSkill:Idx()].growth_attr
-        player:IncAttr(emBaseAttr.MinDC,  math.floor(growth * physSkill:Level()))
+        ---@type kx_skill_data
+        local skillDB = luaConfig.skillConfig[physSkill:Idx()]
+        local min = skillDB.min[1]
+        local max = skillDB.max[1]
+        local num = min + ((max - min) * physSkill:Level() / 100)
+        player:IncAttr(emBaseAttr.MinDC,  math.floor(num))
     end
 
+    ---物理2技能增加人物最大攻击力(1.9倍)
     if physMagSkill ~= nil then
-        local growth = luaConfig.skillConfig[physMagSkill:Idx()].growth_attr
-        player:IncAttr(emBaseAttr.MaxDC, math.floor(growth * physMagSkill:Level()))
+        local skillDB = luaConfig.skillConfig[physMagSkill:Idx()]
+        local min = skillDB.min[1]
+        local max = skillDB.max[1]
+        local num = min + ((max - min) * physMagSkill:Level() / 100)
+        player:IncAttr(emBaseAttr.MaxDC, math.floor(num * 1.9))
     end
 
+    ---魔法技能增加人物魔法最大最小
     if magicSkill ~= nil then
-        local growth = luaConfig.skillConfig[magicSkill:Idx()].growth_attr
-        player:IncAttr(emBaseAttr.MinMC, math.floor(growth * magicSkill:Level()))
-        player:IncAttr(emBaseAttr.MaxMC, math.floor(growth * magicSkill:Level()))
+        local skillDB = luaConfig.skillConfig[magicSkill:Idx()]
+        local min = skillDB.min[1]
+        local max = skillDB.max[1]
+        local num = math.floor(min + ((max - min) * magicSkill:Level() / 100))
+        player:IncAttr(emBaseAttr.MinMC, num)
+        player:IncAttr(emBaseAttr.MaxMC, num)
     end
 end
 
@@ -216,46 +256,6 @@ function m.OnSkillRefreshAttribute(player)
     OnHandle_MentalCommand(player)      --处理法力强化
 end
 
----命中热情
----@param player Player 释放Buff的玩家
----@param hitPlayer Player 命中Buff的玩家
----@param skill Skill 技能对象
----@param skillName_US string 技能英文名字
-local function HitWarm(player, hitPlayer, skill, skillName_US)
-    ---热情光环只能给自己使用
-    if player:Id() ~= hitPlayer:Id() then
-        return
-    end
-
-    ---200基础数值 + 200 * 技能等级 / 100
-    local num = 200 + math.floor(200 * skill:Level() / 100)
-    player:SetNumber("BUFF技能_热情", num, false)
-    player:AddBuffByName_US(skillName_US, 180, false);
-end
-
----命中热情光环
----@param player Player 释放Buff的玩家
----@param hitPlayer Player 命中Buff的玩家
----@param skill Skill 技能对象
----@param skillName_US string 技能英文名字
-local function HitFireWarm(player, hitPlayer, skill, skillName_US)
-    ---热情光环只能给自己使用
-    if player:Id() ~= hitPlayer:Id() then
-        return
-    end
-
-    ---260基础数值 + 260 * 技能等级 / 100
-    local num = 260 + math.floor(260 * skill:Level() / 100)
-    player:SetNumber("BUFF技能_热情光环", num, false)
-    player:AddBuffByName_US(skillName_US, 180, false);
-end
-
----使用字典存储函数指针
-local mapHitBuffEvent = {
-    ["Warm"] = HitWarm,
-    ["FireWarm"] = HitFireWarm
-}
-
 ---当玩家命中buff
 ---@param player Player 释放Buff的玩家
 ---@param hitPlayer Player 命中Buff的玩家
@@ -265,14 +265,7 @@ function m.OnPlayerHitBuffEvent(player, hitPlayer, skillName_US)
     if hitPlayer == nil then
         return
     end
-    local skill = player:GetSkillByName_US(skillName_US)
-
-    ---使用了未实现的buff技能
-    if mapHitBuffEvent[skillName_US] == nil then
-        return
-    end
-    ---使用策略模式分发函数
-    mapHitBuffEvent[skillName_US](player, hitPlayer, skill, skillName_US)
+    skillBuff.HandleSkillBuff(player, hitPlayer, skillName_US)
 end
 
 

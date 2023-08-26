@@ -42,28 +42,30 @@ function m.OnTimerInvoker_2(idx)
     m.NewDayResetCustomCacheEvent:trigger(tabResetCustom)
 
     ---先将全局在线玩家变量重置
-    -- local mapPlayer = Game:GetPlayerAll()
-    -- for key, player in pairs(mapPlayer) do
-    --     if player == nil then
-    --         goto continue
-    --     end
-    --     for index, value in ipairs(tabResetCustom) do
-    --         if value.key == "" or value.type == "" then
-    --             goto _continue
-    --         end
-    --         if value.type == "int" then
-    --             player:SetNumber(value.key, value.val, true)
-    --         elseif value.type == "bool" then
-    --             player:SetBool(value.key, value.val, true)
-    --         elseif value.type == "string" then
-    --             player:SetString(value.key, value.val, true)
-    --         end
-    --         ::_continue::
-    --     end
-    --     ::continue::
-    -- end
-    ---再重置数据库变量
-    --Gane:ResetCustomCache(tabResetCustom);
+    local mapPlayer = Game:GetPlayerAll()
+
+    for key, player in mapPlayer:pairs() do 
+        if player == nil then
+            goto continue
+        end
+        for index, value in ipairs(tabResetCustom) do
+            if value.key == "" or value.type == "" then
+                goto _continue
+            end
+            if value.type == "int" then
+                player:SetNumber(value.key, value.val, true)
+            elseif value.type == "bool" then
+                player:SetBool(value.key, value.val, true)
+            elseif value.type == "string" then
+                player:SetString(value.key, value.val, true)
+            end
+            ::_continue::
+        end
+        ::continue::
+    end
+
+    --再重置数据库变量
+    Game:ResetCustomCache(tabResetCustom);
     Game:SendMsg(2, " 嗨，勇士们新的一天又来到了！为什么不开始一场新的游戏冒险呢？")
 end
 
