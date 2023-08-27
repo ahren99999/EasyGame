@@ -337,7 +337,7 @@ function m.ItemAttrUpgrade(player, item, gemConfig, select)
         return false
     end
 
-    item:UpgradeAttrCustom(select)
+    item:UpgradeAttrCustom(select, 0)
     player:SendMsg(3, "提示：魔法属性提高了...")
     return false
 end
