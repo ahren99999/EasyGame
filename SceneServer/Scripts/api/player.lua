@@ -1,6 +1,6 @@
 
 ---玩家对象
----@class Player:Spirit
+---@class player:Spirit
 local player
 
 --- 是否新玩家
@@ -86,6 +86,11 @@ end
 --- 最大魔法
 --- @return uint32_t
 function player:MaxMP()
+end
+
+--- 扣除魔法
+--- @param val int32_t
+function player:SubMP(val)
 end
 
 --- 力量点数
@@ -520,3 +525,63 @@ end
 function player:RefreshAttribute(isLogin)
 end
 
+--- 判断是否拥有buff
+--- @param idx uint32_t
+--- @return boolean
+function player:HasSkillBuff(idx)
+end
+
+--- 通过buffIdx移除buff技能
+--- @param idx uint32_t
+function player:RemoveBuffByIdx(idx)
+end
+
+--- 获取SC点数
+--- @return int32_t
+function player:SCPoint()
+end
+
+--- 设置SC点数
+--- @param val int32_t
+function player:SetSCPoint(val)
+end
+
+--- 获取RC点数
+--- @return int32_t
+function player:RCPoint()
+end
+
+--- 设置RC点数
+--- @param val int32_t
+function player:SetRCPoint(val)
+end
+
+--- 获取觉醒阶段
+--- @return int32_t
+function player:AwakeningStage()
+end
+
+--- 设置觉醒阶段
+--- @param val int32_t
+function player:SetAwakeningStage(val)
+end
+
+--- 检查是否处于眩晕状态
+--- @return boolean
+function player:Stun()
+end
+
+--- 设置眩晕状态
+--- @param val boolean
+function player:SetStun(val)
+end
+
+--- 检查是否处于变身状态
+--- @return boolean
+function player:Transformation()
+end
+
+--- 设置变身状态
+--- @param val boolean
+function player:SetTransformation(val)
+end
