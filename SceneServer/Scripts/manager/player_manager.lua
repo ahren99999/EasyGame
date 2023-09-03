@@ -16,6 +16,9 @@ local petManager
 local buffManager
 ---@type SkillManager
 local skillManager
+
+local skillBeAttached
+
 ---管理员名单
 local adminList
 
@@ -26,6 +29,7 @@ function m.Init()
     petManager = PetManager
     buffManager = BuffManager
     skillManager = SkillManager
+    skillBeAttached = SkillBeAttached
 end
 GameManager.ScriptLoadedEvent:addAction(m.Init)
 
@@ -130,8 +134,8 @@ end
 ---穿戴装备或者变更属性点时触发
 ---@param player Player
 function m.RefreshAttribute(player)
-    m.RefreshAttributeEvent:trigger(player)
     LuaRefreshAttribute(player)
+    m.RefreshAttributeEvent:trigger(player)
 
 
     ---最终生命加成千分比
@@ -148,7 +152,7 @@ function m.RefreshAttribute(player)
         player:IncAttr(emBaseAttr.MaxMP, math.floor( maxMP * finalPerMilMP / 1000))
     end
 
-    ---最终物理加成千分比
+    ---最终物理攻击加成千分比
     local perMilDC = player:GetAttr(emBaseAttr.PerMilDC)
     if perMilDC > 0 then
         local minDC = player:GetAttr(emBaseAttr.MinDC)
@@ -157,7 +161,7 @@ function m.RefreshAttribute(player)
         player:IncAttr(emBaseAttr.MaxDC, math.floor( maxDC * perMilDC / 1000))
     end
 
-    ---最终魔法加成千分比
+    ---最终魔法攻击加成千分比
     local perMilMC = player:GetAttr(emBaseAttr.PerMilMC)
     if perMilMC > 0 then
         local minMC = player:GetAttr(emBaseAttr.MinMC)
@@ -165,33 +169,59 @@ function m.RefreshAttribute(player)
         player:IncAttr(emBaseAttr.MinMC, math.floor( minMC * perMilMC / 1000))
         player:IncAttr(emBaseAttr.MaxMC, math.floor( maxMC * perMilMC / 1000))
     end
-end
 
----处理武器吸血
----@param player Player 攻击者
----@param spirit Spirit 被攻击的对象基类
----@param skillName string 攻击者使用的技能英文名
----@param value number 伤害
----@param isMagic boolean 是否魔法攻击
-local function HandelWeaponVampirism(player, spirit, skillName, value, isMagic)
-
-
-    ---本次攻击的伤害小于0 或者是魔法攻击 不处理
-    if value <= 0 and isMagic == true then
-        return
+    --物理攻击减少千分比
+    local perMilSubDC = player:GetAttr(emBaseAttr.PerMilSubDC)
+    if perMilSubDC > 0 then
+        local minDC = player:GetAttr(emBaseAttr.MinDC)
+        local maxDC = player:GetAttr(emBaseAttr.MaxDC)
+        player:SubAttr(emBaseAttr.MinDC, math.floor( minDC * perMilSubDC / 1000))
+        player:SubAttr(emBaseAttr.MaxDC, math.floor( maxDC * perMilSubDC / 1000))
     end
 
-    ---获取到穿戴的武器
-    local weapon = player:GetEquipmentBySlot(emWearSlot.Weapon)
-    if weapon == nil then
-        return
+    --魔法攻击减少千分比
+    local perMilSubMC = player:GetAttr(emBaseAttr.PerMilSubMC)
+    if perMilSubMC > 0 then
+        local minMC = player:GetAttr(emBaseAttr.MinMC)
+        local maxMC = player:GetAttr(emBaseAttr.MaxMC)
+        player:SubAttr(emBaseAttr.MinMC, math.floor( minMC * perMilSubMC / 1000))
+        player:SubAttr(emBaseAttr.MaxMC, math.floor( maxMC * perMilSubMC / 1000))
     end
 
-    ---设置佩戴麒麟牙 百分之10的概率 吸血 20%
-    if weapon:Name() == "麒麟牙" and Random(10) == 0 then
-        local number = math.floor(value * 0.2)
-        player:IncAttr(emBaseAttr.HP, number)
-        player:SendMsg(3, string.format("提示：佩戴的武器 %s 触发吸血特性， HP恢复 %s 点", weapon:Name(), number))
+    --最终物理防御加成千分比
+    local finalPerMilAC = player:GetAttr(emBaseAttr.FinalPerMilAC)
+    if finalPerMilAC > 0 then
+        local ac = player:GetAttr(emBaseAttr.AC)
+        local perMilAC = player:GetAttr(emBaseAttr.PerMilAC)
+        player:IncAttr(emBaseAttr.AC, math.floor( ac * finalPerMilAC / 1000))
+        player:IncAttr(emBaseAttr.PerMilAC, math.floor( perMilAC * finalPerMilAC / 1000))
+    end
+
+    --最终魔法防御加成千分比
+    local finalPerMilMAC = player:GetAttr(emBaseAttr.FinalPerMilMAC)
+    if finalPerMilMAC > 0 then
+        local mac = player:GetAttr(emBaseAttr.MAC)
+        local perMilMAC = player:GetAttr(emBaseAttr.PerMilMAC)
+        player:IncAttr(emBaseAttr.MAC, math.floor( mac * finalPerMilMAC / 1000))
+        player:IncAttr(emBaseAttr.PerMilMAC, math.floor( perMilMAC * finalPerMilMAC / 1000))
+    end    
+
+    --物理防御减免千分比
+    local perMilSubAC = player:GetAttr(emBaseAttr.PerMilSubAC)
+    if perMilSubAC > 0 then
+        local ac = player:GetAttr(emBaseAttr.AC)
+        local perMilAC = player:GetAttr(emBaseAttr.PerMilAC)
+        player:SubAttr(emBaseAttr.AC, math.floor( ac * perMilSubAC / 1000))
+        player:SubAttr(emBaseAttr.PerMilAC, math.floor( perMilAC * perMilSubAC / 1000))
+    end
+
+    --魔法防御减少千分比
+    local perMilSubMAC = player:GetAttr(emBaseAttr.PerMilSubMAC)
+    if perMilSubMAC > 0 then
+        local mac = player:GetAttr(emBaseAttr.MAC)
+        local perMilMAC = player:GetAttr(emBaseAttr.PerMilMAC)
+        player:SubAttr(emBaseAttr.MAC, math.floor( mac * perMilSubMAC / 1000))
+        player:SubAttr(emBaseAttr.PerMilMAC, math.floor( perMilMAC * perMilSubMAC / 1000))
     end
 end
 
@@ -239,6 +269,15 @@ local function HandleMonsterDefenses(player, monster, skill, skillDB, damage, is
 end
 
 
+---被攻击时处理身上的buff
+---@param player Player 被攻击者
+---@param spirit Spirit 攻击者
+---@param damage number 伤害值
+---@return number 返回伤害值
+local function HandeleSkillBuff(player, spirit, damage)
+    return skillBeAttached.HandeleSkillBuff(player, spirit, damage)
+end
+
 ---玩家发起攻击事件
 ---此处是最终伤害计算
 ---返回攻击、伤害效果、是否魔法攻击
@@ -256,19 +295,44 @@ function m.OnPlayerAttackEvent(player, spirit, skill)
     local isMust = false                    ---是否必中
     local isMagic = skillDB.damage_type == 2---是否魔法伤害
 
+
     ---获取本次基础伤害值、真实伤害值、是否必中
     damage, katarsDamage, isMust = skillManager.HandlePlayerAttack(player, spirit, skill, skillDB)
     ---获取计算暴击后的伤害值、攻击效果
     damage, code = HandleCrit(player, spirit, skill, skillDB, damage)
 
-
-
     if spirit:IsPlayer() then
         ---处理人物防御
         damage = m.OnPlayerDamageEvent(spirit, player, damage, isMust, isMagic)
+
     else
         ---处理怪物防御
         damage = HandleMonsterDefenses(player, spirit, skill, skillDB, damage, isMust)
+    end
+
+    if damage > 0 and spirit:IsPlayer()  then
+        local otherPlayer = spirit:ToPlayer()
+        if isMagic then
+            --最终魔法伤害减免千分比
+            local finalPerMilSubMC = otherPlayer:GetAttr(emBaseAttr.FinalPerMilSubMC)
+            if finalPerMilSubMC > 0 then
+                if finalPerMilSubMC >= 1000 then
+                    damage = 0
+                else
+                    damage = damage - math.floor(damage * finalPerMilSubMC / 1000)
+                end
+            end
+        else
+            --最终物理伤害减免千分比
+            local finalPerMilSubDC = otherPlayer:GetAttr(emBaseAttr.FinalPerMilSubDC)
+            if finalPerMilSubDC > 0 then
+                if finalPerMilSubDC >= 1000 then
+                    damage = 0
+                else
+                    damage = damage - math.floor(damage * finalPerMilSubDC / 1000)
+                end
+            end
+        end
     end
 
     ---todo 攻击者武器减耐久
@@ -294,6 +358,9 @@ end
 ---@param isMagic boolean 是否魔法攻击
 ---@return number damage 返回本次攻击的伤害如果为0则躲避
 function m.OnPlayerDamageEvent(player, spirit, damage, isMust, isMagic)
+    ---处理被攻击玩家身上的Buff
+    damage = HandeleSkillBuff(player, spirit, damage)
+
     ---计算物理防御
     if isMagic == false then
         

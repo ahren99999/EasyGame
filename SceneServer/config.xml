@@ -10,6 +10,6 @@
 	<PackSize>2097152</PackSize>
 	<MapX>50000</MapX>
 	<MapY>50000</MapY>
-	<MapCell>500</MapCell>
+	<MapCell>50</MapCell>
 	<PrsistenceInterval>120</PrsistenceInterval>
 </AppConfig>

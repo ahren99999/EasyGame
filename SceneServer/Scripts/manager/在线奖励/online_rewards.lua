@@ -15,7 +15,7 @@ function m.OnlineReward_Timer1001(spirit)
     local player = spirit:ToPlayer()
 
     if player:Level() >= 400 then
-        player:UnRegisterTimer(10001)
+        player:UnRegisterTimer(1001)
         return
     end
 

@@ -62,7 +62,26 @@ EsayGame 是一个基于分布式多场景架构设计简单的游戏后端框�
 
 ## 更新日志
 ### 下版本预告
-- 攻城战、超级技能、觉醒技能自定义特殊词条(吸血、定身等等)
+- 攻城战、吸血、定身、爆率配置优化
+- ### 1.0.1.6 2023-09-03
+- 1.超级、觉醒技能机制已全部在Lua层实现(除致盲术)，如果技能机制错误，请及时反应给作者。
+- 2.修复滞留技能伤害计算错误问题。
+- 新增LuaAPI
+- `ChatChannelLeft()` 返回左边频道
+- `ChatChannelRight()` 返回右边频道
+- `AddBuffInScene(skillName_US, sceneName, x, y, z, duration, isSave)` 新增一个技能Buff
+- `GetAllBuffs()` 获取所有buff idx
+- `GetBuffStackCount(idx)` 获取buff叠加次数
+- `Pos_UEX()` 获取UE坐标x
+- `Pos_UEY()` 获取UE坐标y
+- `SubHP(val, spirit)` 扣除人物血量
+- `ShowDamage(uid, damage, code)` 播放伤害
+- `GetPlayerPtr()` 获取C++智能指针
+- `CheckChannel(otherPlayer)` 判断频道是否相同
+- `IsSameTeam(otherPlayer)` 是否一个队伍
+- 注意： 本次更新对配置表结构和Lua脚本进行了更改。请在更新前备份您的数据，并建议使用合并更新的方式。
+- #### 已知BUG
+- 水之冷却Buff效果延迟
 - ### 1.0.1.5 2023-08-26
 - 1.战斗结算和技能结算已经移植到Lua层以提高效率和可维护性。
 - 2.基础技能和高级技能已在Lua中实现。
@@ -85,7 +104,7 @@ EsayGame 是一个基于分布式多场景架构设计简单的游戏后端框�
 - `Transformation()` 检查是否处于变身状态
 - `SetTransformation(val)` 设置变身状态
 - 注意： 本次更新对配置表结构和Lua脚本进行了更改。请在更新前备份您的数据，并建议使用合并更新的方式。
-- ### 已知BUG
+- #### 已知BUG
 - 大地之斩等技能伤害计算错误。
 - ### 1.0.1.4 2023-08-22
 - 1.解决了装备无法使用升级宝石的问题。
@@ -98,7 +117,7 @@ EsayGame 是一个基于分布式多场景架构设计简单的游戏后端框�
 - 8.解决了使用`jemalloc.dll`时的Debug版本问题（不再需要`ucrtbased.dll`和`vcruntime140d.dll`）。
 - 9.修复了各种Bug和优化。
 - 注意： 本次更新对配置表结构和Lua脚本进行了重大更改。请在更新前备份您的数据，并建议使用合并更新的方式。
-- ### 已知BUG
+- #### 已知BUG
 - 1.重复使用Bug技能属性无法正确增加问题。
 - 2.每日任务24:00数据清理失效问题。
   

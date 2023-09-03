@@ -585,3 +585,75 @@ end
 --- @param val boolean
 function player:SetTransformation(val)
 end
+
+--- 获取左边聊天频道
+--- @return string
+function Player:ChatChannelLeft()
+end
+
+--- 获取右边聊天频道
+--- @return string
+function Player:ChatChannelRight()
+end
+
+--- 在场景中新增一个技能Buff
+--- @param skillName_US string 技能英文名
+--- @param sceneName string 场景名称
+--- @param x int32_t UE坐标x
+--- @param y int32_t UE坐标y
+--- @param z int32_t UE坐标z
+--- @param duration int32_t 持续时间
+--- @param isSave bool 是否保存
+function Player:AddBuffInScene(skillName_US, sceneName, x, y, z, duration, isSave)
+end
+
+--- 获取所有buff idx（排除无图标的buff）
+--- @return table
+function Player:GetAllBuffs()
+end
+
+--- 获取buff叠加次数
+--- @param idx uint32_t buffIdx
+--- @return int8_t
+function Player:GetBuffStackCount(idx)
+end
+
+--- 获取UE坐标x
+--- @return int32_t
+function Player:Pos_UEX()
+end
+
+--- 获取UE坐标y
+--- @return int32_t
+function Player:Pos_UEY()
+end
+
+--- 扣除人物血量
+--- @param val int64_t 扣除的血量值
+--- @param spirit SpiritPtr
+function Player:SubHP(val, spirit)
+end
+
+--- 播放伤害
+--- @param uid uint32_t 目标uid
+--- @param damage int32_t 伤害值
+--- @param code int8_t 攻击效果
+function Player:ShowDamage(uid, damage, code)
+end
+
+--- 获取C++智能指针
+--- @return table
+function Player:GetPlayerPtr()
+end
+
+--- 检查频道是否相同
+--- @param otherPlayer PlayerPtr
+--- @return boolean
+function Player:CheckChannel(otherPlayer)
+end
+
+--- 检查是否在同一队伍
+--- @param otherPlayer PlayerPtr
+--- @return boolean
+function Player:IsSameTeam(otherPlayer)
+end

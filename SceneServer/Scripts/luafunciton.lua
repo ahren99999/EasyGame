@@ -1,6 +1,23 @@
 ---@class Utility
 local m = {}
 
+---UE坐标转游戏坐标
+---@param ueX any
+---@param ueY any
+---@return unknown
+---@return unknown
+function m.UEPosToGamePos(ueX, ueY)
+    return math.floor(ueX / 100 + 26009), math.floor( ueY / 100 + 26009);
+end
+
+---游戏坐标转UE坐标
+---@param gameX any
+---@param gameY any
+---@return unknown
+---@return unknown
+function m.GamePosToUEPos(gameX, gameY)
+    return (gameX - 26009) * 100, (gameY + 26009) * 100
+end
 
 
 ---获取元素在table的下标,没有找到返回0
@@ -75,6 +92,57 @@ function m.GiveRewards(player, tabRewards, desc)
             player:GiveItem(value.name, value.count, desc)
         end
     end
+end
+
+
+
+
+
+
+---判断频道是否包含相同
+---@param player Player
+---@param otherPlayer Player
+---@return boolean ture相同，false不相同
+function m.CheckChannel(player, otherPlayer)
+    local myLeft = player:ChatChannelLeft()
+    local myRight = player:ChatChannelRight()
+    local otherLeft = otherPlayer:ChatChannelLeft()
+    local otherRight = otherPlayer:ChatChannelRight()
+
+    if myLeft == otherLeft then
+        return true
+    end
+    if myLeft == otherRight then
+        return true
+    end
+    if myRight == otherLeft then
+        return true
+    end
+    if myRight == otherRight then
+        return true
+    end
+    return false
+end
+
+---判断频道是否相同阵营
+---@param player Player
+---@param otherPlayer Player
+---@return boolean ture相同，false不相同
+function m.IsSameSide(player, otherPlayer)
+    if not otherPlayer then
+        return false
+    end
+    local otherPlayerPtr = otherPlayer:GetPlayerPtr()
+    ---判断频道是否相同
+    if player:CheckChannel(otherPlayerPtr) then
+        return true
+    end
+    ---判断队伍是否相同
+    if player:IsSameTeam(otherPlayerPtr) then
+        return true
+    end
+
+    return false
 end
 
 

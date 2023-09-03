@@ -22,7 +22,9 @@ manager\monster_manager.lua
 manager\global_timer_manager.lua
 manager\point_trigger_manager.lua
 manager\item_upgrade\item_upgrade.lua
-manager\skill_buff\skill_buff.lua
+manager\skill\skill_buff.lua
+manager\skill\skill_attack.lua
+manager\skill\skill_be_attached.lua
 manager\在线奖励\online_rewards.lua
 quest\daily_quest.lua
 npcs\仓库保管员.lua

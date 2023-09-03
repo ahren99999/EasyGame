@@ -3,53 +3,23 @@
 local m = {}
 
 
+local luaConfig
 
 ---buff技能单独处理
 local skillBuff
+
+---主动技能单独处理
+---@type SkillAttack
+local skillAttack
 
 ---重新加载脚本事件
 function m.Init()
     skillBuff = SkillBuff
     luaConfig = LuaConfig
+    skillAttack = SkillAttack
     PlayerManager.RefreshAttributeEvent:addAction(m.OnSkillRefreshAttribute)
 end
 GameManager.ScriptLoadedEvent:addAction(m.Init)
-
---使用剑气
-local function UseSoulBlade(player, spirit, skill, skillDB)
-    local maxDc = player:GetAttr(emBaseAttr.MinDC)
-    
-    return math.floor(maxDc + (maxDc * skill:Level() * 0.2))
-end
-
---使用雷电拳
-local function UseSoulFist(player, spirit, skill, skillDB)
-    local maxDc = player:GetAttr(emBaseAttr.MinDC)
-    
-    return math.floor(maxDc + (maxDc * skill:Level() * 0.2))
-end
-
---使用愤怒之火
-local function UseFireFury(player, spirit, skill, skillDB)
-    local maxDc = player:GetAttr(emBaseAttr.MinMC)
-    
-    return math.floor(maxDc + (maxDc * skill:Level() * 0.2))
-end
-
---使用致命一击
-local function UseDeadlyCount(player, spirit, skill, skillDB)
-    local maxDc = player:GetAttr(emBaseAttr.MinDC)
-    
-    return math.floor(maxDc + (maxDc * skill:Level() * 0.2))
-end
-
---使用霜之新星
-local function UseIceFury(player, spirit, skill, skillDB)
-    local maxDc = player:GetAttr(emBaseAttr.MinMC)
-    
-    return math.floor(maxDc + (maxDc * skill:Level() * 0.2))
-end
-
 
 local mapMainPoint = {
     [emProfession.OneHand] = emBasePoint.STR,
@@ -75,10 +45,10 @@ end
 ---@return number, number
 local function HandleAdvancedSkill(player, spirit, skill, skillDB)
     local level = skill:Level()
-    local min = skillDB.min[level]
-    local max = skillDB.max[level]
-    local min2 = skillDB.min2[level]
-    local max2 = skillDB.max2[level]
+    local min = skillDB.attribute1[level]
+    local max = skillDB.attribute2[level]
+    local min2 = skillDB.attribute3[level]
+    local max2 = skillDB.attribute4[level]
     --最大物理攻击力
     local maxDC = player:GetAttr(emBaseAttr.MaxDC)
     --最大魔法攻击力
@@ -100,6 +70,12 @@ end
 ---@param skillDB kx_skill_data 使用的技能配置
 ---@return number, number, boolean 基础伤害数值，真实伤害数值，是否必中
 function m.HandlePlayerAttack(player, spirit, skill, skillDB)
+
+    ---特殊技能单独处理
+    if skillAttack.mapSkillAttack[skillDB.english_name] then
+        return skillAttack.HandlePlayerAttack(player, spirit, skill, skillDB)
+    end
+
     ---基础伤害数值，真实伤害数值
     local baseDamage, katarsDamage = 0, 0;
     ---物理1技能使用最小攻击力
@@ -111,6 +87,9 @@ function m.HandlePlayerAttack(player, spirit, skill, skillDB)
     ---魔法技能使用最小魔法攻击力    
     elseif skillDB.skill_type == 2 then
         baseDamage = player:GetAttr(emBaseAttr.MinMC)
+    ---计算高级技能范围伤害  
+    elseif skillDB.skill_type == 4 and skillDB.attack_type == 5 then
+        baseDamage = math.floor(player:GetAttr(emBaseAttr.MaxDC) * skillDB.attribute1[skill:Level()] / 100)
     ---计算高级技能伤害    
     elseif skillDB.skill_type == 4 then
         baseDamage, katarsDamage= HandleAdvancedSkill(player, spirit, skill, skillDB)
@@ -128,7 +107,7 @@ local function OnHandle_Endure(player)
     end
     ---@type kx_skill_data
     local skillDB = luaConfig.skillConfig[skill:Idx()]
-    local num = skillDB.min[skill:Level()] * 10;
+    local num = skillDB.attribute1[skill:Level()] * 10;
     player:IncAttr(emBaseAttr.FinalPerMilHP, math.floor(num))
 end
 
@@ -142,7 +121,7 @@ local function OnHandle_Might(player)
     end
     ---@type kx_skill_data
     local skillDB = luaConfig.skillConfig[skill:Idx()]
-    player:IncAttr(emBaseAttr.PerMilAC, math.floor(skillDB.min[skill:Level()] * 10))
+    player:IncAttr(emBaseAttr.PerMilAC, math.floor(skillDB.attribute1[skill:Level()] * 10))
 end
 
 ---玩家刷新附加属性事件
@@ -155,7 +134,7 @@ local function OnHandle_Fanatical(player)
     end
     ---@type kx_skill_data
     local skillDB = luaConfig.skillConfig[skill:Idx()]
-    player:IncAttr(emBaseAttr.AttackSpeed, skillDB.min[skill:Level()])
+    player:IncAttr(emBaseAttr.AttackSpeed, skillDB.attribute1[skill:Level()])
 end
 
 ---玩家刷新附加属性事件
@@ -168,7 +147,7 @@ local function OnHandle_GuardianProtection(player)
     end
     ---@type kx_skill_data
     local skillDB = luaConfig.skillConfig[skill:Idx()]
-    player:IncAttr(emBaseAttr.MAC, skillDB.min[skill:Level()])
+    player:IncAttr(emBaseAttr.MAC, skillDB.attribute1[skill:Level()])
 end
 
 ---玩家刷新附加属性事件
@@ -181,7 +160,7 @@ local function OnHandle_Illusion(player)
     end
     ---@type kx_skill_data
     local skillDB = luaConfig.skillConfig[skill:Idx()]
-    player:IncAttr(emBaseAttr.BlockRate, math.floor(skillDB.min[skill:Level()] * 10))
+    player:IncAttr(emBaseAttr.BlockRate, math.floor(skillDB.attribute1[skill:Level()] * 10))
 end
 
 ---玩家刷新附加属性事件
@@ -195,7 +174,7 @@ local function OnHandle_MentalCommand(player)
     end
     ---@type kx_skill_data
     local skillDB = luaConfig.skillConfig[skill:Idx()]
-    player:IncAttr(emBaseAttr.FinalPerMilMP, math.floor(skillDB.min[skill:Level()] * 10))
+    player:IncAttr(emBaseAttr.FinalPerMilMP, math.floor(skillDB.attribute1[skill:Level()] * 10))
 end
 
 ---玩家刷新附加属性事件
@@ -215,8 +194,8 @@ local function OnHandle_BasicSkill(player)
     if physSkill ~= nil then
         ---@type kx_skill_data
         local skillDB = luaConfig.skillConfig[physSkill:Idx()]
-        local min = skillDB.min[1]
-        local max = skillDB.max[1]
+        local min = skillDB.attribute1[1]
+        local max = skillDB.attribute2[1]
         local num = min + ((max - min) * physSkill:Level() / 100)
         player:IncAttr(emBaseAttr.MinDC,  math.floor(num))
     end
@@ -224,8 +203,8 @@ local function OnHandle_BasicSkill(player)
     ---物理2技能增加人物最大攻击力(1.9倍)
     if physMagSkill ~= nil then
         local skillDB = luaConfig.skillConfig[physMagSkill:Idx()]
-        local min = skillDB.min[1]
-        local max = skillDB.max[1]
+        local min = skillDB.attribute1[1]
+        local max = skillDB.attribute2[1]
         local num = min + ((max - min) * physMagSkill:Level() / 100)
         player:IncAttr(emBaseAttr.MaxDC, math.floor(num * 1.9))
     end
@@ -233,15 +212,13 @@ local function OnHandle_BasicSkill(player)
     ---魔法技能增加人物魔法最大最小
     if magicSkill ~= nil then
         local skillDB = luaConfig.skillConfig[magicSkill:Idx()]
-        local min = skillDB.min[1]
-        local max = skillDB.max[1]
+        local min = skillDB.attribute1[1]
+        local max = skillDB.attribute2[1]
         local num = math.floor(min + ((max - min) * magicSkill:Level() / 100))
         player:IncAttr(emBaseAttr.MinMC, num)
         player:IncAttr(emBaseAttr.MaxMC, num)
     end
 end
-
-
 
 ---玩家刷新附加属性事件
 ---穿戴装备或者变更属性点时触发

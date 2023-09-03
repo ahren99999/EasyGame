@@ -74,8 +74,17 @@ emBaseAttr = {
 	KatarsPerMilMAC			= 70,		--忽视魔法防御千分比
 	FinalPerMilHP			= 71,		--最终生命加成千分比
 	FinalPerMilMP			= 72,		--最终魔法加成千分比
-	PerMilDC				= 73,		--物理攻击千分比
-	PerMilMC				= 74,		--魔法攻击千分比
+	PerMilDC				= 73,		--物理攻击值(面板)加成千分比
+	PerMilMC				= 74,		--魔法攻击值(面板)加成千分比
+	PerMilSubDC				= 75,		--物理攻击值(面板)减少千分比
+	PerMilSubMC				= 76,		--魔法攻击值(面板)减少千分比
+	PerMilMPCost			= 77,		--魔法消耗减免千分比
+	PerMilSubAC				= 78,		--物理防御值(面板)减少千分比
+	PerMilSubMAC			= 79,		--魔法防御值(面板)减少千分比
+	FinalPerMilAC			= 80,		--最终物理防御值(面板)加成千分比
+	FinalPerMilMAC			= 81,		--最终魔法防御值(面板)加成千分比
+	FinalPerMilSubDC		= 82,		--最终物理伤害减免千分比
+	FinalPerMilSubMC		= 83,		--最终魔法伤害减免千分比
 }
 
 --宠物属性枚举
