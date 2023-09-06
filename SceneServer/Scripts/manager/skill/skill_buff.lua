@@ -378,7 +378,10 @@ local function HitTransformation(player, hitPlayer, skill, skillName_US)
     if player:Id() ~= hitPlayer:Id() then
         return
     end
-    player:AddBuffByName_US(skillName_US, 120, false);
+    ---持续时间
+    local skillDB = luaConfig.skillConfig[skill:Idx()]
+    local duration = skillDB.buff_duration[skill:Level()]
+    player:AddBuffByName_US(skillName_US, duration, false);
 end
 
 ---命中封魔

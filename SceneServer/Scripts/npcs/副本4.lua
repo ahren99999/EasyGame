@@ -9,6 +9,7 @@ function m.OnClickMain(npc, player)
 
     local select = {
         "我要挑战副本4|OnClickEnterCopy",
+        "我要设置回城点|OnClickSetGoHome",
         "离开|Exit"
     }
 
@@ -23,6 +24,14 @@ function m.OnClickEnterCopy(npc, player)
     end
 
     player:MapMove(scene:Name(), 26467, 25141);
+end
+
+
+---@param npc Npc
+---@param player Player
+function m.OnClickSetGoHome(npc, player)
+    player:SetGomePos(player:PosX(), player:PosY())
+    player:SendMsg(3, "提示：您设置了新的回城坐标！")
 end
 
 

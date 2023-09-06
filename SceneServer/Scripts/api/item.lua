@@ -152,7 +152,8 @@ end
 
 --- 新增一个属性
 --- @param name string 属性名字
-function item:AddAttrCustom(name)
+--- @param level number 属性等级
+function item:AddAttrCustom(name, level)
 end
 
 --- 移除一个属性

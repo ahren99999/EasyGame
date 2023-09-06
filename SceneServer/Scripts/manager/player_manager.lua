@@ -310,31 +310,6 @@ function m.OnPlayerAttackEvent(player, spirit, skill)
         damage = HandleMonsterDefenses(player, spirit, skill, skillDB, damage, isMust)
     end
 
-    if damage > 0 and spirit:IsPlayer()  then
-        local otherPlayer = spirit:ToPlayer()
-        if isMagic then
-            --最终魔法伤害减免千分比
-            local finalPerMilSubMC = otherPlayer:GetAttr(emBaseAttr.FinalPerMilSubMC)
-            if finalPerMilSubMC > 0 then
-                if finalPerMilSubMC >= 1000 then
-                    damage = 0
-                else
-                    damage = damage - math.floor(damage * finalPerMilSubMC / 1000)
-                end
-            end
-        else
-            --最终物理伤害减免千分比
-            local finalPerMilSubDC = otherPlayer:GetAttr(emBaseAttr.FinalPerMilSubDC)
-            if finalPerMilSubDC > 0 then
-                if finalPerMilSubDC >= 1000 then
-                    damage = 0
-                else
-                    damage = damage - math.floor(damage * finalPerMilSubDC / 1000)
-                end
-            end
-        end
-    end
-
     ---todo 攻击者武器减耐久
 
     ---todo 被攻击者护甲减耐久
@@ -360,7 +335,6 @@ end
 function m.OnPlayerDamageEvent(player, spirit, damage, isMust, isMagic)
     ---处理被攻击玩家身上的Buff
     damage = HandeleSkillBuff(player, spirit, damage)
-
     ---计算物理防御
     if isMagic == false then
         
@@ -439,6 +413,31 @@ function m.OnPlayerDamageEvent(player, spirit, damage, isMust, isMagic)
             damage = math.floor(damage * damageReduction / 100)
         end
     end
+
+    if damage > 0 then
+        if isMagic then
+            --最终魔法伤害减免千分比
+            local finalPerMilSubMC = player:GetAttr(emBaseAttr.FinalPerMilSubMC)
+            if finalPerMilSubMC > 0 then
+                if finalPerMilSubMC >= 1000 then
+                    damage = 0
+                else
+                    damage = damage - math.floor(damage * finalPerMilSubMC / 1000)
+                end
+            end
+        else
+            --最终物理伤害减免千分比
+            local finalPerMilSubDC = player:GetAttr(emBaseAttr.FinalPerMilSubDC)
+            if finalPerMilSubDC > 0 then
+                if finalPerMilSubDC >= 1000 then
+                    damage = 0
+                else
+                    damage = damage - math.floor(damage * finalPerMilSubDC / 1000)
+                end
+            end
+        end
+    end
+
     return damage
 end
 
@@ -561,7 +560,49 @@ function m.OnOpenQuestPanelEvent(player, vIncompleteTasks, vCompletedTasks)
     m.OpenQuestPanelEvent:trigger(player, vIncompleteTasks, vCompletedTasks)
 end
 
+---装备穿戴之前触发
+---返回true 正常穿戴 返回false无法穿戴
+---@param player Player
+---@param wearSlot emWearSlot
+---@param item Item
+---@return boolean
+function m.OnWearItemBeforeEvent(player, wearSlot, item)
+    if player:HasSkillBuff(47) then
+        player:SendMsg(3, "提示：变身状态下无法穿戴装备！")
+        return false
+    end
+    return true
+end
 
+---装备穿戴之后触发
+---@param player Player
+---@param wearSlot emWearSlot
+---@param item Item
+function m.OnWearItemAfterEvent(player, wearSlot, item)
+
+end
+
+---装备脱下之前触发
+---返回true 正常脱下 返回false无法脱下
+---@param player Player
+---@param wearSlot emWearSlot
+---@param item Item
+---@return boolean
+function m.OnUnequipItemBeforeEvent(player, wearSlot, item)
+    if player:HasSkillBuff(47) then
+        player:SendMsg(3, "提示：变身状态下无法脱下装备！")
+        return false
+    end
+    return true
+end
+
+---装备脱下之后触发
+---@param player Player
+---@param wearSlot emWearSlot
+---@param item Item
+function m.OnUnequipItemAfterEvent(player, wearSlot, item)
+
+end
 
 
 PlayerManager = m

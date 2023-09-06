@@ -11,6 +11,7 @@ function m.OnClickMain(npc, player)
         "我想要购买宝石|OnClickOpenShop",
         "开启超级技能|OnClickTest1",
         "开启觉醒技能|OnClickTest2",
+        "我要设置回城点|OnClickSetGoHome",
         "取消|Exit"
     }
     content = string.format(content, player:Name(), npc:District())
@@ -29,6 +30,10 @@ end
 function m.OnClickTest2(npc, player)
     player:SetAwakeningStage(2)
     player:SendMsg(3 ,"提示：您完成了觉醒任务！")
+end
+
+function m.OnClickSetGoHome(npc, player)
+    player:SetGomePos(player:PosX(), player:PosY(), player:PosZ())
 end
 
 

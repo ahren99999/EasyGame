@@ -5,6 +5,48 @@ local m = {}
 
 
 
+local customItemConfig = {
+    [1] = {
+        name = "莱格尔路斯之剑",
+        quality = 1.15,
+        attr_level = {20, 20, 20, 20, 20},
+        attr_name = {"物理技能攻击力", "物理攻击力", "必杀成功率", "贯穿力", "击中率"},
+    }
+
+
+}
+
+---@param player Player
+---@param args any
+local function CustomCommand_MakeItemEx(player, args)
+    if args[2] == nil then
+        player:SendMsg(3, "提示：/制造物品 配置Idx")
+        return
+    end
+    local idx = tonumber(args[2])
+    local config = customItemConfig[idx]
+    if config == nil then
+        player:SendMsg(3, "提示：/制造物品 配置Idx")
+        return
+    end
+
+    ---@type Item
+    local item = player:GiveItemEx(config.name, "GM制作")
+    if item == nil then
+        player:SendMsg(3, "提示：背包空位不足！")
+        return
+    end
+
+    item:SetQuality(config.quality)
+    for index, value in ipairs(config.attr_level) do
+        ItemUpgrade.ItemAddAttrEx(item, config.attr_name[index], value)
+    end
+    player:SendMsg(3, "提示：获得物品 " .. item:Name())
+end
+
+
+
+
 local function CustomCommand_MakeItem(player, args)
     local itemName = args[2]
     local itemNum = args[3] == nil and 1 or tonumber(args[3])
@@ -112,6 +154,7 @@ m.cmd = {
     ["修改技能"] = {gm_level = 10, fun = CustomCommand_SetSkill},
     ["刷新技能"] = {gm_level = 10, fun = CustomCommand_RefreshSkillAll},
     ["全身增幅"] = {gm_level = 10, fun = CustomCommand_FullEnhancement},
+    ["制造物品"] = {gm_level = 10, fun = CustomCommand_MakeItemEx},
 }
 
 ---处理客户端发起的自定义命令

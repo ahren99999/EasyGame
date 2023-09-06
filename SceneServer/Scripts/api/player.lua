@@ -1,6 +1,6 @@
 
 ---玩家对象
----@class player:Spirit
+---@class Player:Spirit
 local player
 
 --- 是否新玩家
@@ -267,10 +267,16 @@ end
 function player:GoHomeY()
 end
 
+--- 回城Z坐标
+--- @return int32_t
+function player:GoHomeZ()
+end
+
 --- 设置回城坐标
 --- @param x int32_t 回城X坐标
 --- @param y int32_t 回城Y坐标
-function player:SetGomePos(x, y)
+----@param y int32_t 回城Z坐标
+function player:SetGomePos(x, y, z)
 end
 
 --- 当前对话的Npc
@@ -588,12 +594,12 @@ end
 
 --- 获取左边聊天频道
 --- @return string
-function Player:ChatChannelLeft()
+function player:ChatChannelLeft()
 end
 
 --- 获取右边聊天频道
 --- @return string
-function Player:ChatChannelRight()
+function player:ChatChannelRight()
 end
 
 --- 在场景中新增一个技能Buff
@@ -604,56 +610,63 @@ end
 --- @param z int32_t UE坐标z
 --- @param duration int32_t 持续时间
 --- @param isSave bool 是否保存
-function Player:AddBuffInScene(skillName_US, sceneName, x, y, z, duration, isSave)
+function player:AddBuffInScene(skillName_US, sceneName, x, y, z, duration, isSave)
 end
 
 --- 获取所有buff idx（排除无图标的buff）
 --- @return table
-function Player:GetAllBuffs()
+function player:GetAllBuffs()
 end
 
 --- 获取buff叠加次数
 --- @param idx uint32_t buffIdx
 --- @return int8_t
-function Player:GetBuffStackCount(idx)
+function player:GetBuffStackCount(idx)
 end
 
 --- 获取UE坐标x
 --- @return int32_t
-function Player:Pos_UEX()
+function player:Pos_UEX()
 end
 
 --- 获取UE坐标y
 --- @return int32_t
-function Player:Pos_UEY()
+function player:Pos_UEY()
 end
 
 --- 扣除人物血量
 --- @param val int64_t 扣除的血量值
 --- @param spirit SpiritPtr
-function Player:SubHP(val, spirit)
+function player:SubHP(val, spirit)
 end
 
 --- 播放伤害
 --- @param uid uint32_t 目标uid
 --- @param damage int32_t 伤害值
 --- @param code int8_t 攻击效果
-function Player:ShowDamage(uid, damage, code)
+function player:ShowDamage(uid, damage, code)
 end
 
 --- 获取C++智能指针
 --- @return table
-function Player:GetPlayerPtr()
+function player:GetplayerPtr()
 end
 
 --- 检查频道是否相同
---- @param otherPlayer PlayerPtr
+--- @param otherplayer playerPtr
 --- @return boolean
-function Player:CheckChannel(otherPlayer)
+function player:CheckChannel(otherplayer)
 end
 
 --- 检查是否在同一队伍
---- @param otherPlayer PlayerPtr
+--- @param otherplayer playerPtr
 --- @return boolean
-function Player:IsSameTeam(otherPlayer)
+function player:IsSameTeam(otherplayer)
+end
+
+--- 增加一个物品(自动判断在哪个背包，并自动合并叠加物品) 返回物品对象
+--- @param itemName string 物品名称
+--- @param des string 物品来源
+--- @return ItemPtr
+function player:GiveItemEx(itemName, des)
 end

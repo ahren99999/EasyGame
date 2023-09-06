@@ -2,12 +2,12 @@
 ---@type kx_monster_data[]
 local _kx_monster_table = 
 {
-[1] = {exp = 100,guard_range = 5,name = '蜂王',move_speed = 1,attack_speed = 1200,mac = 10,idx = 1,model = 'GlumWing',mc = 0,death_trigger = false,size = 1,ac = 10,trigger_attack = false,level = 1,attack_range = 3,hp = 100,dc = 1, },
+[1] = {exp = 100,guard_range = 5,name = '蜂王',move_speed = 1,attack_speed = 1200,mac = 10,idx = 1,model = 'GlumWing',mc = 0,death_trigger = false,size = 1,ac = 10,trigger_attack = false,level = 10,attack_range = 3,hp = 100,dc = 1, },
 [2] = {exp = 100,guard_range = 5,name = '小强',move_speed = 1,attack_speed = 1200,mac = 10,idx = 2,model = 'JuniorBeetle',mc = 0,death_trigger = false,size = 1,ac = 10,trigger_attack = false,level = 1,attack_range = 3,hp = 100,dc = 1, },
 [3] = {exp = 100,guard_range = 5,name = '石墙怪',move_speed = 1,attack_speed = 1200,mac = 10,idx = 3,model = 'WallStone',mc = 0,death_trigger = false,size = 1,ac = 10,trigger_attack = false,level = 1,attack_range = 3,hp = 100,dc = 1, },
 [4] = {exp = 100,guard_range = 5,name = '强爷',move_speed = 1,attack_speed = 1200,mac = 10,idx = 4,model = 'Shuregi',mc = 0,death_trigger = false,size = 1,ac = 10,trigger_attack = false,level = 1,attack_range = 3,hp = 100,dc = 1, },
 [5] = {level = 1,guard_range = 5,name = '傍埃狼 农府胶呕',move_speed = 1,attack_speed = 1500,mac = 10,idx = 5,model = 'crystal01',mc = 0,death_trigger = false,size = 0.2,ac = 10,trigger_attack = false,color = 0,attack_range = 3,hp = 100,dc = 1,exp = 100,kind = 0, },
-[6] = {level = 2,guard_range = 5,name = '冰蜂',move_speed = 1,attack_speed = 1200,mac = 10,idx = 6,model = 'GlumWing',mc = 0,death_trigger = false,size = 1,ac = 10,trigger_attack = false,color = 1,attack_range = 3,hp = 200,dc = 2,exp = 200, },
+[6] = {level = 20,guard_range = 5,name = '冰蜂',move_speed = 1,attack_speed = 1200,mac = 10,idx = 6,model = 'GlumWing',mc = 0,death_trigger = false,size = 1,ac = 10,trigger_attack = false,color = 1,attack_range = 3,hp = 200,dc = 2,exp = 200, },
 [7] = {level = 2,guard_range = 5,name = '大蜂王',move_speed = 1,attack_speed = 1200,mac = 10,idx = 7,model = 'GlumWing',mc = 0,death_trigger = false,size = 1.5,ac = 10,trigger_attack = false,color = 1,attack_range = 3,hp = 200,dc = 2,exp = 200,kind = 0, },
 [8] = {exp = 300,guard_range = 30,name = '石青蛙',move_speed = 1,attack_speed = 1200,mac = 10,idx = 8,model = 'StoneFrog',mc = 0,drop_id = 1,death_trigger = false,size = 1,ac = 10,trigger_attack = false,level = 3,attack_range = 10,hp = 300,base_skill = 'BasicMnstRange',dc = 3,skill = '{"远程物理攻击":1}', },
 [9] = {exp = 1900,guard_range = 30,name = '巨蛙',move_speed = 1,attack_speed = 1200,mac = 10,idx = 9,model = 'GiantFrog',mc = 0,drop_id = 1,death_trigger = false,size = 1,ac = 10,trigger_attack = false,level = 3,attack_range = 10,hp = 1900,base_skill = 'BasicMnstRange',dc = 3,skill = '{"远程物理攻击":1}', },
@@ -21,7 +21,7 @@ local _kx_monster_table =
 [17] = {level = 6,guard_range = 5,name = '巨型蝙蝠',move_speed = 1,attack_speed = 1200,mac = 10,idx = 17,model = 'Bat',mc = 0,death_trigger = false,size = 1.5,ac = 10,trigger_attack = false,color = 1,attack_range = 3,hp = 600,dc = 6,exp = 600,kind = 0, },
 [18] = {exp = 700,guard_range = 30,name = '消失之木',move_speed = 1,attack_speed = 1200,mac = 10,idx = 18,model = 'MissingWood',mc = 0,drop_id = 1,death_trigger = false,size = 1,ac = 10,trigger_attack = false,level = 7,attack_range = 10,hp = 700,base_skill = 'BasicMnstRange',dc = 7,skill = '{"远程物理攻击":1}', },
 [19] = {exp = 800,guard_range = 2,name = '蜥蜴怪龙',move_speed = 1,attack_speed = 1200,mac = 10,idx = 19,model = 'Rat',mc = 0,death_trigger = false,size = 1.5,ac = 10,trigger_attack = false,level = 8,attack_range = 3,hp = 800,dc = 8, },
-[20] = {exp = 900,guard_range = 3,name = '魔犬',move_speed = 1,attack_speed = 1200,mac = 10,idx = 20,model = 'Bulldozer',mc = 0,death_trigger = false,size = 1,ac = 10,trigger_attack = false,level = 9,attack_range = 3,hp = 900,dc = 9, },
+[20] = {exp = 900,guard_range = 3,name = '魔犬',move_speed = 1,attack_speed = 1200,mac = 10,idx = 20,model = 'Bulldozer',mc = 0,death_trigger = false,size = 1,ac = 10,trigger_attack = false,level = 30,attack_range = 3,hp = 900,dc = 9, },
 [21] = {exp = 900,guard_range = 30,name = '畸形怪男',move_speed = 1,attack_speed = 1200,mac = 10,idx = 21,model = 'MossMan',mc = 0,drop_id = 1,death_trigger = false,size = 1,ac = 10,trigger_attack = false,level = 9,attack_range = 10,hp = 900,base_skill = 'BasicMnstRange',dc = 9,skill = '{"远程物理攻击":1}', },
 [22] = {exp = 1000,guard_range = 5,name = '螳螂',move_speed = 1,attack_speed = 1200,mac = 10,idx = 22,model = 'Mantis',mc = 0,death_trigger = false,size = 1,ac = 10,trigger_attack = false,level = 10,attack_range = 3,hp = 1000,dc = 10, },
 [23] = {exp = 1100,guard_range = 30,name = '森林小妖',move_speed = 1,attack_speed = 1200,mac = 10,idx = 23,model = 'Bandits',mc = 0,drop_id = 1,death_trigger = false,size = 1,ac = 10,trigger_attack = false,level = 11,attack_range = 10,hp = 1100,base_skill = 'BasicMnstRange',dc = 11,skill = '{"远程物理攻击":1}', },
@@ -610,6 +610,8 @@ damage_range = 0,
 trigger_attack = false,
 ---死亡触发
 death_trigger = false,
+---爆率文件
+drop_monItem = nil,
 }
 
 local indexTable = 

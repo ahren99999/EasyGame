@@ -41,8 +41,7 @@ end
 ---@param itemIdx number 使用的物品idx
 ---@return boolean 返回 true则扣除物品， 返回false 则不会扣除物品
 function m.OnUseItem_1(player, itemIdx)
-    
-    player:MapMove("Main_Scene", player:GoHomeX(), player:GoHomeY())
+    player:MapMoveEx("Main_Scene", player:GoHomeX(), player:GoHomeY(), player:GoHomeZ())
     return true
 end
 

@@ -14,6 +14,7 @@ local _kx_npc_table =
 [10] = {x = 22955,y = 34154,z = -6643,shop_id = { 6, 12 }, name = '阿拉特',table_name = 'ALaTeNpc',district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 10,model = 'BlackSmith',city = '莱蒂尼斯',title = '<护腿商店>',size = 1, },
 [11] = {x = 22963,y = 34240,z = -6643,name = '伊斯纳斯',table_name = 'YiSiNaSi',dir = 1.5,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 11,model = 'Banker',city = '莱蒂尼斯',title = '<传送>',size = 1, },
 [12] = {x = 22960,y = 34281,z = -6677,shop_id = { 26 }, name = '宝石商人',table_name = 'BaoShiNpc',dir = 4.7,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 12,model = 'Lizel',city = '莱蒂尼斯',title = '<宝石>',size = 1, },
+[13] = {x = 22521,y = 25644,z = -3064,shop_id = { 26 }, name = '宝石商人',table_name = 'BaoShiNpc',dir = 4.7,district = '天空之城',func_name = 'OnClickMain',idx = 13,model = 'Lizel',city = '精灵城',title = '<宝石>',size = 1, },
 
 }
 

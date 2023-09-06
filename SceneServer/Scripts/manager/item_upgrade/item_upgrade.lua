@@ -411,6 +411,15 @@ function m.ItemQualityUpgrade(player, item, gemConfig)
     return false
 end
 
+function m.ItemAddAttrEx(item, attr_name, attr_level)
+    if item == nil then
+        return
+    end
+    local itemDB = LuaConfig.itemConfig[item:Idx()]
+    item:AddAttrCustom(attr_name, attr_level);
+    RefreshItemAttr(item, itemDB)
+end
+
 
 ItemUpgrade = m
 return ItemUpgrade
