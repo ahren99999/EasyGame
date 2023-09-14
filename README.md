@@ -81,7 +81,7 @@ EsayGame 是一个基于分布式多场景架构设计简单的游戏后端框�
 - `Game:GetSceneByName(sceneName)` 获取场景对象
 - `Game:AsyncCreateScene(sceneName, callback)` 异步创建场景
 - `Game:CreateItem(itemName, num)` 创建一个道具并返回道具对象
-- `Game:CreateNpc(idx, sceneName, x, y, z)` 创建一个Npc并返回道具对象
+- `Game:CreateNpc(idx, sceneName, x, y, z)` 创建一个Npc并返回Npc对象
 - `Game:CreateMonstersByName(monsterName, count, range, sceneName, x, y)` 批量创建怪物
 - `player:GiveItemEx(itemName, des)` 增加一个物品(自动判断在哪个背包，并自动合并叠加物品) 返回物品对象
 - `player:GoHomeZ()` 获取回城Z坐标
