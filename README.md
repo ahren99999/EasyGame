@@ -62,7 +62,31 @@ EsayGame 是一个基于分布式多场景架构设计简单的游戏后端框�
 
 ## 更新日志
 ### 下版本预告
-- 攻城战、吸血、定身、bgm支持白天夜晚、新增动态创建Npc
+- 攻城战、吸血、定身、bgm支持白天夜晚、怪物增加基础属性与buff
+- ### 1.0.1.8 2023-09-14
+- 1.Lua层新增穿戴物品脱下物品接口。
+- 2.Lua层新增动态创建Npc。
+- 3.Lua层新增副本传送点。
+- 4.启用多场景下，支持游戏内换线。
+- 5.修复进入不能pk的地图，PK状态不正确的bug.
+- 6.`/Reload` 增加权限控制，并且更换为`/重读脚本`.
+- 7.修复若干bug
+- 新增LuaAPI
+- `Scene:GetExpireTime()` 获取场景过期时间
+- `Scene:GetSpiritCount()` 获取场景精灵数量
+- `Scene:GetPlayerCount()` 获取场景玩家数量
+- `Scene:GetMonsterCount()` 获取场景怪物数量
+- `Game:ReloadLuaScripts()` 重新加载Lua脚本
+- `Game:GetSceneCount(sceneName)` 获取场景数量
+- `Game:GetSceneByName(sceneName)` 获取场景对象
+- `Game:AsyncCreateScene(sceneName, callback)` 异步创建场景
+- `Game:CreateItem(itemName, num)` 创建一个道具并返回道具对象
+- `Game:CreateNpc(idx, sceneName, x, y, z)` 创建一个Npc并返回道具对象
+- `Game:CreateMonstersByName(monsterName, count, range, sceneName, x, y)` 批量创建怪物
+- `player:GiveItemEx(itemName, des)` 增加一个物品(自动判断在哪个背包，并自动合并叠加物品) 返回物品对象
+- `player:GoHomeZ()` 获取回城Z坐标
+- `player:WearItem(wearSlot, item)` 穿戴装备
+- 注意： 本次更新对配置表结构和Lua脚本进行了更改。请在更新前备份您的数据，并建议使用合并更新的方式。
 - ### 1.0.1.7 2023-09-06
 - 1.怪物爆率现在支持按区域配置（请注意，不支持区域继承）。
 - 2.多个怪物可以使用同一份爆率文件，并且该文件支持爆率组的配置。

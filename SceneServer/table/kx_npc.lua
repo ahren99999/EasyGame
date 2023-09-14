@@ -15,6 +15,7 @@ local _kx_npc_table =
 [11] = {x = 22963,y = 34240,z = -6643,name = '伊斯纳斯',table_name = 'YiSiNaSi',dir = 1.5,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 11,model = 'Banker',city = '莱蒂尼斯',title = '<传送>',size = 1, },
 [12] = {x = 22960,y = 34281,z = -6677,shop_id = { 26 }, name = '宝石商人',table_name = 'BaoShiNpc',dir = 4.7,district = '莱蒂尼斯城',func_name = 'OnClickMain',idx = 12,model = 'Lizel',city = '莱蒂尼斯',title = '<宝石>',size = 1, },
 [13] = {x = 22521,y = 25644,z = -3064,shop_id = { 26 }, name = '宝石商人',table_name = 'BaoShiNpc',dir = 4.7,district = '天空之城',func_name = 'OnClickMain',idx = 13,model = 'Lizel',city = '精灵城',title = '<宝石>',size = 1, },
+[14] = {x = 26467,y = 25143,z = -3998,name = '副本4指路人',table_name = 'CopyMap4Npc',dir = 0,district = '迷雾之村',func_name = 'OnClickMain_1',copy_name = 'Copy_Map4',idx = 14,model = 'Lizel',city = '迷雾',title = '<副本4>',size = 1,is_copy = true, },
 
 }
 
@@ -46,6 +47,10 @@ size = 0,
 model = nil,
 ---商铺id
 shop_id = {},
+---是否副本
+is_copy = false,
+---副本场景名称
+copy_name = nil,
 ---方法所在table
 table_name = nil,
 ---方法名

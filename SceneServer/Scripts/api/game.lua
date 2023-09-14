@@ -1,6 +1,6 @@
----物品对象
+---游戏主对象
 ---@class Game
-local Game
+Game = {}
 
 
 --- 获取服务器Code
@@ -163,4 +163,52 @@ end
 --- @param val int64_t
 --- @param isSave boolean
 function Game:SetNumber(key, val, isSave)
+end
+
+---@param tabCustomCaches sol.table 自定义缓存表
+function Game:ResetCustomCache(tabCustomCaches)
+end
+
+---@param itemName string 物品名称
+---@param num int32_t 数量
+---@return Item
+function Game:CreateItem(itemName, num)
+end
+
+---@param idx uint32_t npc的索引
+---@param sceneName string 场景名称
+---@param x int32_t X坐标
+---@param y int32_t Y坐标
+---@param z int32_t Z坐标
+---@return Npc
+function Game:CreateNpc(idx, sceneName, x, y, z)
+end
+
+---@param sceneName string 场景模板名字
+---@return int32_t
+function Game:GetSceneCount(sceneName)
+end
+
+---@param sceneName string 场景名称
+---@return Scene
+function Game:GetSceneByName(sceneName)
+end
+
+---@param sceneName string 场景模板名称
+---@param callback sol.protected_function 异步创建场景后的Lua回调函数
+function Game:AsyncCreateScene(sceneName, callback)
+end
+
+---@param monsterName string 怪物名称
+---@param count int32_t 怪物数量
+---@param range int32_t 生成范围
+---@param sceneName string 场景名字
+---@param x int32_t X坐标
+---@param y int32_t Y坐标
+function Game:CreateMonstersByName(monsterName, count, range, sceneName, x, y)
+end
+
+---重新加载Lua脚本
+---@return boolean
+function Game:ReloadLuaScripts()
 end

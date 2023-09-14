@@ -38,4 +38,4 @@ npcs\图鲁普.lua
 npcs\阿拉特.lua
 npcs\伊斯纳斯.lua
 npcs\宝石商人.lua
-npcs\副本4.lua
+npcs\CopyMap4.lua

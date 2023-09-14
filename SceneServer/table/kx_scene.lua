@@ -4,6 +4,7 @@ local _kx_scene_table =
 {
 [1] = {x0 = 20000,name = 'Main_Scene',x1 = 40000,y1 = 40000,idx = 1,is_dup = false,y0 = 20000, },
 [2] = {x0 = 25388,name = 'Copy_Map4',x1 = 28546,y1 = 27000,idx = 2,is_dup = true,y0 = 24778, },
+[3] = {x0 = 25388,name = 'Copy_Map5',x1 = 28546,y1 = 27000,idx = 3,is_dup = true,y0 = 24778, },
 
 }
 

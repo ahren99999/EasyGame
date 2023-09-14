@@ -10,7 +10,7 @@ local customItemConfig = {
         name = "莱格尔路斯之剑",
         quality = 1.15,
         attr_level = {20, 20, 20, 20, 20},
-        attr_name = {"物理技能攻击力", "物理攻击力", "必杀成功率", "贯穿力", "击中率"},
+        attr_name = {"物理技能攻击力Lv13", "物理攻击力", "必杀成功率", "贯穿力", "击中率"},
     }
 
 
@@ -69,6 +69,25 @@ local function CustomCommand_CreateMonster(player, args)
         local y = player:PosY() + 1;
         Game:CreateMonsterByName(monsterName, player:SceneName(),x, y)
     end
+end
+
+
+---/召唤怪物 怪物名 数量 范围
+---@param player Player
+---@param args any
+local function CustomCommand_CreateMonsters(player, args)
+    local monsterName = args[2]
+    local count = tonumber(args[3])
+    local range = tonumber(args[4])
+
+    if monsterName == nil
+    or count == nil
+    or range == nil then
+        player:SendMsg(3, "/召唤怪物 怪物名 数量 范围")
+        return
+    end
+
+    Game:CreateMonstersByName(monsterName, count, range, player:SceneName(), player:PosX(), player:PosY())
 end
 
 local function CustomCommand_AddSkill(player, args)
@@ -145,16 +164,28 @@ local function CustomCommand_FullEnhancement(player, args)
     player:SendMsg(3, "提示：全身装备增幅完成！")
  end
 
+ --重读脚本
+ local function CustomCommand_ReloadLuaScripts(player, args)
+    local result = Game:ReloadLuaScripts()
+    if result then
+        player:SendMsg(3, "提示：重新加载Lua脚本成功...")
+        return
+    end
+    player:SendMsg(3, "提示：重新加载Lua脚本失败...")
+ end
+
 m.cmd = {
     ["11"] = {gm_level = 10, fun = CustomCommand_MakeItem},
     ["Map"] = {gm_level = 0, fun = CustomCommand_Map},
     ["移动"] = {gm_level = 10, fun = CustomCommand_MapMove},
     ["刷怪"] = {gm_level = 10, fun = CustomCommand_CreateMonster},
+    ["重读脚本"] = {gm_level = 10, fun = CustomCommand_ReloadLuaScripts},
     ["增加技能"] = {gm_level = 10, fun = CustomCommand_AddSkill},
     ["修改技能"] = {gm_level = 10, fun = CustomCommand_SetSkill},
     ["刷新技能"] = {gm_level = 10, fun = CustomCommand_RefreshSkillAll},
     ["全身增幅"] = {gm_level = 10, fun = CustomCommand_FullEnhancement},
     ["制造物品"] = {gm_level = 10, fun = CustomCommand_MakeItemEx},
+    ["召唤怪物"] = {gm_level = 10, fun = CustomCommand_CreateMonsters},
 }
 
 ---处理客户端发起的自定义命令

@@ -64,6 +64,16 @@ function m.LoginSuccess(player)
         player:GiveItem("高级回城卷轴", 100, des)
         player:GiveItem("提速卷轴", 100, des)
         player:GiveItem("攻击速度卷轴", 100, des)
+        ---@type Item
+        local right = player:GiveItemEx("初级传声筒", des)
+         ---@type Item
+        local left = player:GiveItemEx("初级传声筒", des)
+        if right ~= nil and left ~= nil then
+            right:SetChatChannel("初级频道")
+            left:SetChatChannel("交易频道")
+            player:WearItem(emWearSlot.Megaphone_Right ,right)
+            player:WearItem(emWearSlot.Megaphone_Left, left)
+        end
     end
     player:SetPrestige(255)
     AdminLoginSucess(player)                                --管理员登录

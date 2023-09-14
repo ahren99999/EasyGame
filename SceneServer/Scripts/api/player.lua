@@ -670,3 +670,14 @@ end
 --- @return ItemPtr
 function player:GiveItemEx(itemName, des)
 end
+
+--- 获取回城Z坐标
+--- @return int32_t
+function player:GoHomeZ()
+end
+
+--- 穿戴装备
+--- @param wearSlot emWearSlot 穿戴位置
+--- @param item Item 装备对象
+function player:WearItem(wearSlot, item)
+end

@@ -62,8 +62,22 @@ function m.PointMapMove(player, x, y, z)
     end
     ---@type kx_point_trigger_data
     local pointConfig = m.point[x][y]
-    player:MapMoveEx("Main_Scene", pointConfig.target_x, pointConfig.target_y, pointConfig.target_z);
-   
+
+    ---如果配置了传送点触发
+    ---前判断回调函数返回的结果
+    if pointConfig.trigger then
+        local result = _G[pointConfig.trigger_callback_tab][pointConfig.trigger_callback_func](player)
+        if not result then
+            return
+        end
+    end
+    ---如果属于副本中的场景
+    if pointConfig.is_copy then
+        player:MapMoveEx(player:SceneName(), pointConfig.target_x, pointConfig.target_y, pointConfig.target_z);
+    else
+        player:MapMoveEx("Main_Scene", pointConfig.target_x, pointConfig.target_y, pointConfig.target_z);
+    end
+
 end
 
 PointTriggerMnager = m
