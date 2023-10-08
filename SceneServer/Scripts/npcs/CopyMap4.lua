@@ -41,7 +41,7 @@ local monster_config = {
 ---初始化场景怪物
 local function InitMonster(scene)
     for index, config in ipairs(monster_config) do
-        Game:CreateMonsterByName(config.name, scene:Name(), config.x, config.y)
+        Game:CreateMonsterByName(config.name, scene:Name(), config.x, config.y, 0)
     end
 end
 
@@ -50,7 +50,7 @@ end
 ---@return boolean false:无法传送 true:允许传送
 function m.OnPointTrigger_1(player)
     local scene = Game:GetSceneByName(player:SceneName())
-    if scene:GetMonsterCount() > 0 then
+    if scene:GetMonsterCountByName("迷雾狼统领") > 0 then
         player:SendMsg(3, "提示：当前副本中的怪物未清理完，无法使用传送点！")
         return false
     end

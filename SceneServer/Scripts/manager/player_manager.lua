@@ -9,6 +9,7 @@ local m = {
 
 }
 
+---@type LuaConfig
 local luaConfig
 ---@type PetManager
 local petManager
@@ -51,7 +52,23 @@ local function AdminLoginSucess(player)
     log(string.format("AdminLoginSucess name %s", player:Name()));
 end
 
+---初始化地图
+---@param player Player
+local function InitMap(player)
 
+    local mapIdx = player:GetCurrentMapIdx()
+    local mapDB = luaConfig.mapConfig[mapIdx]
+
+    if mapDB == nil then
+        player:GoHome()
+        return
+    end
+
+    if mapDB.ban_login then
+        player:GoHome()
+        return
+    end
+end
 
 ---玩家登录成功
 ---@param player Player
@@ -75,11 +92,12 @@ function m.LoginSuccess(player)
             player:WearItem(emWearSlot.Megaphone_Left, left)
         end
     end
+    InitMap(player)                                         --初始化地图
     player:SetPrestige(255)
     AdminLoginSucess(player)                                --管理员登录
-    ExpManager.InitExpMultiplier(player)                    --初始化经验倍率
+    ExpManager.RefreshExpRate(player)                       --初始化经验倍率
 
-    player:RegisterTimer(1001, 1000 * 1, "OnlineRewards", "OnlineReward_Timer1001", true)       --在线奖励
+    --player:RegisterTimer(1001, 1000 * 1, "OnlineRewards", "OnlineReward_Timer1001", true)       --在线奖励
     player:RegisterTimer(1002, 1000 * 1, "PlayerManager", "OnStateRecovery_Timer1002", true)    --状态恢复
     Game:SendMsg(2, string.format("系统:尊敬的玩家 %s 上线了！", player:Name()));
 end
@@ -89,9 +107,14 @@ function m.OnStateRecovery_Timer1002(spirit)
     local player = spirit:ToPlayer()
     local hpRegen = player:GetAttr(emBaseAttr.HPRegen)
     local mpRegen = player:GetAttr(emBaseAttr.MPRegen)
+
+    if player:IsDead() then
+        return
+    end
+
     if hpRegen > 0 then
         local hp = player:HP()
-        local maxHP = player:MaxExp()
+        local maxHP = player:MaxHP()
         if hp < maxHP then
             player:IncAttr(emBaseAttr.HP, hpRegen)
         end
@@ -106,11 +129,31 @@ function m.OnStateRecovery_Timer1002(spirit)
     end
 end
 
+---玩家升级事件(升级前)
+---@param player Player
+---@return boolean 返回是否允许升级 true 可以升级 false 无法升级
+function m.LevelUpBeforeEvent(player)
+    return true
+end
+
 ---玩家升级事件(升级后)
 ---@param player Player
-function m.LevelUpEvent(player)
-    ExpManager.InitExpMultiplier(player)                    --初始化经验倍率
+function m.LevelUpAfterEvent(player)
+    --刷新经验倍率
+    ExpManager.RefreshExpRate(player)
 end
+
+---玩家死亡前事件
+function m.OnDeathBeforeEvent(player)
+    
+end
+
+---玩家死亡后事件
+function m.OnDeathAfterEvent(player)
+    
+end
+
+
 
 
 ---玩家位置更新事件 1秒触发3次 
@@ -469,43 +512,6 @@ function m.OnPlayerDeadEvent(player, killer)
     end
 
     return true
-end
-
-
----玩家组队获取经验事件
----@param player Player 获取经验的成员
----@param exp number 本次获取的经验
----@return number exp 返回本次成员可获取的经验值
-function m.OnSharedExpEvent(player, exp)
-    local teamNumbers = player:GetTeamNumbers();
-
-    if teamNumbers == nil then
-        return exp
-    end
-
-    if #teamNumbers == 0 then
-        return exp
-    end
-
-    local x1 = player:PosX()
-    local y1 = player:PosY();
-    local vd = player:VD();                      --视野
-
-    for i = 1, #teamNumbers, 1 do
-        local _player = teamNumbers[i]
-        if _player == nil  then
-            goto continue
-         end
-          local dis = Utility.Distance(x1, y1, _player:PosX(), _player:PosY())
-
-        if dis > vd then                        --如果队伍成员距离大于视野
-            goto continue
-        end
-        _player:IncExp(math.floor(exp * 0.1))   --成员获取到百分之10的经验
-        :: continue ::
-    end
-    teamNumbers = nil
-    return exp
 end
 
 ---打开摆摊事件

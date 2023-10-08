@@ -14,7 +14,6 @@ function m.ScriptLoaded(game)
     --PlayerManager.Init()
     --GlobalTimerManager.Init()
     --PointTriggerMnager.Init();
-
 end
 
 ---游戏启动完成事件

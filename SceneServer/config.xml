@@ -3,6 +3,7 @@
 	<ServerName>凯旋服务器A</ServerName>
 	<ServerCode>1</ServerCode>
 	<MainServer>true</MainServer>
+	<SeqUrl>http://127.0.0.1:5341</SeqUrl>
 	<LoginUrl>http://127.0.0.1:5000</LoginUrl>
 	<Address>127.0.0.1:18900</Address>
 	<LoginAddr>127.0.0.1:18700</LoginAddr>

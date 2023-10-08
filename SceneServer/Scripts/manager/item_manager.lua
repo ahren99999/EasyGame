@@ -50,7 +50,7 @@ end
 ---@param itemIdx number 使用的物品idx
 ---@return boolean 返回 true则扣除物品， 返回false 则不会扣除物品
 function m.OnUseItem_2(player, itemIdx)
-    player:AddBuffByIdx(10, 120, false);
+    player:AddBuffByIdx(10, 3600, false);
     return true
 end
 
@@ -207,6 +207,26 @@ function m.OnUseItem_10(player, itemIdx)
     player:SetSkillLevel(skillName, level)
     player:RefreshAttribute(false)
     player:SendMsg(3, string.format("提示：您的技能 %s等级已提升至 %s级!", skillName, level))
+    return true
+end
+
+---使用能力值初始化宝石
+---@param player Player 玩家对象
+---@param itemIdx number 使用的物品idx
+---@return boolean 返回 true则扣除物品， 返回false 则不会扣除物品
+function m.OnUseItem_100(player, itemIdx)
+    local config = LuaConfig.newPlayerConfig[player:ProfessionIndex()]
+
+    player:SetDistributablePoints((player:Level() - 1) * 10)
+    player:SetPoint(emPoint.STR, config.str)
+    player:SetPoint(emPoint.DEX, config.dex)
+    player:SetPoint(emPoint.SPI, config.spi)
+    player:SetPoint(emPoint.WhiteMagic, config.white_magic)
+    player:SetPoint(emPoint.RedMagic, config.red_magic)
+    player:SetPoint(emPoint.BlueMagic, config.blue_magic)
+    player:SetPoint(emPoint.YellowMagic, config.yellow_magic)
+    player:SetPoint(emPoint.BlackMagic, config.black_magic)
+
     return true
 end
 

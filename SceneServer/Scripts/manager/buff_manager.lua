@@ -889,6 +889,7 @@ end
 ---@param player Player 玩家对象
 ---@param idx number buff idx
 function m.OnBuffStart_55(player, idx, buffUid)
+    player:OpenGrowBlind(250, 250, 250, 240)
 end
 
 
@@ -896,6 +897,7 @@ end
 ---@param player Player 玩家对象
 ---@param idx number buff idx
 function m.OnBuffExpired_55(player, idx, buffUid)
+    player:CloseGrowBlind()
 end
 
 ---冰冻 buff 开始
@@ -1676,30 +1678,18 @@ end
 ---@param player Player 玩家对象
 ---@param idx number buff idx
 function m.OnBuffStart_1(player, idx, buffUid)
-    --local buffConfig = LuaConfig.buffConfig[idx]
-    --player:IncAttr(emBaseAttr.MoveSpeed, 1);
     player:SetNumber("移动速度卷轴", 30, false)
     player:RefreshAttribute(false)
-    --log(string.format("Player %s Use %s", player:Name(), buffConfig.name))
-end
-
----移动速度卷轴Buff 持续触发
----@param player Player 玩家对象
----@param idx number buff idx
-function m.OnBuffTriggered_1(player, idx, buffUid)
-    
+    player:SendMsg(3, "提示：移动速度提高了！")
 end
 
 ---移动速度卷轴Buff 到期触发
 ---@param player Player 玩家对象
 ---@param idx number buff idx
 function m.OnBuffExpired_1(player, idx, buffUid)
-    --local buffConfig = LuaConfig.buffConfig[idx]
-    --player:SubAttr(emBaseAttr.MoveSpeed, 1);
     player:SetNumber("移动速度卷轴", 0, false)
     player:RefreshAttribute(false)
 
-    --log(string.format("Player %s buff %s end", player:Name(), buffConfig.name))
 end
 
 ---移动速度卷轴Buff 刷新属性回调
@@ -1716,30 +1706,18 @@ end
 ---@param player Player 玩家对象
 ---@param idx number buff idx
 function m.OnBuffStart_2(player, idx, buffUid)
-    --local buffConfig = LuaConfig.buffConfig[idx]
-    --player:IncAttr(emBaseAttr.MoveSpeed, 1);
     player:SetNumber("攻击速度卷轴", 15, false)
     player:RefreshAttribute(false)
-    --log(string.format("Player %s Use %s", player:Name(), buffConfig.name))
-end
-
----攻击速度卷轴Buff 持续触发
----@param player Player 玩家对象
----@param idx number buff idx
-function m.OnBuffTriggered_2(player, idx, buffUid)
-    
+    player:SendMsg(3, "提示：攻击速度提高了！")
 end
 
 ---攻击速度卷轴Buff 到期触发
 ---@param player Player 玩家对象
 ---@param idx number buff idx
 function m.OnBuffExpired_2(player, idx, buffUid)
-    --local buffConfig = LuaConfig.buffConfig[idx]
-    --player:SubAttr(emBaseAttr.MoveSpeed, 1);
     player:SetNumber("攻击速度卷轴", 0, false)
     player:RefreshAttribute(false)
 
-    --log(string.format("Player %s buff %s end", player:Name(), buffConfig.name))
 end
 
 ---移动速度卷轴Buff 刷新属性回调

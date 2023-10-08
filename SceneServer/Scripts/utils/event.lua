@@ -237,7 +237,9 @@ function Luvent:addAction(actionToAdd)
     assert(isActionCallable(actionToAdd) == true)
 
     -- We do not allow adding an action more than once to an event.
-    if self:hasAction(actionToAdd) then return end
+    if self:hasAction(actionToAdd) then
+        return
+    end
 
     local new = newAction(actionToAdd)
     table.insert(self.actions, new)
@@ -334,26 +336,7 @@ end
 -- @param ... All arguments given to this method will be passed along
 -- to every action.
 function Luvent:trigger(...)
-    -- 无需使用协程
-    -- local call = function (action, ...)
-    --     local keep = invokeAction(action, ...)
-    --     if keep == false then
-    --         self:removeAction(action.id)
-    --     end
-    -- end
-    --无需优先队列
-    --sortActionsByPriority(self)
-
     for _,action in ipairs(self.actions) do
-        --取消延迟队列
-        -- if action.interval > 0 then
-        --     if os.difftime(os.time(), action.timeOfLastInvocation) >= action.interval then
-        --         call(action, ...)
-        --         action.timeOfLastInvocation = os.time()
-        --     end
-        -- else
-            
-        -- end
         action.callable(...)
     end
 end

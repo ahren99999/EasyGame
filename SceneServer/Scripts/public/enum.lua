@@ -185,3 +185,17 @@ emBasePoint = {
 	SPI = 3,			--精神
 	Magic = 4			--魔法点数
 }
+
+
+---@class emPoint
+emPoint =
+{
+	STR  = 1,
+	DEX= 2,
+	SPI= 3,
+	WhiteMagic= 4,
+	RedMagic= 5,
+	BlueMagic= 6,
+	YellowMagic= 7,
+	BlackMagic= 8,
+};

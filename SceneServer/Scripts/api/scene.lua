@@ -26,3 +26,9 @@ end
 ---@return number
 function Scene:GetExpireTime()
 end
+
+--- 通过怪物名字获取场景怪物数量
+---@param monsterName string
+---@return number
+function Scene:GetMonsterCountByName(monsterName)
+end

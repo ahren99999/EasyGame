@@ -22,7 +22,7 @@ end
 --- @param idx int32_t
 --- @param x int32_t
 --- @param y int32_t
---- @returns MonsterPtr
+--- @returns Monster
 function Game:CreateMonsterByIdx(idx, x, y)
 end
 
@@ -30,13 +30,13 @@ end
 --- @param name string
 --- @param x int32_t
 --- @param y int32_t
---- @returns MonsterPtr
+--- @returns Monster
 function Game:CreateMonsterByName(name, x, y)
 end
 
 --- 创建一个场景
 --- @param sceneName string
---- @returns ScenePtr
+--- @returns Scene
 function Game:CreateScene(sceneName)
 end
 
@@ -165,50 +165,19 @@ end
 function Game:SetNumber(key, val, isSave)
 end
 
----@param tabCustomCaches sol.table 自定义缓存表
-function Game:ResetCustomCache(tabCustomCaches)
+--- 移除怪物
+---@param monsterUid uint32_t
+function Game:RemoveMonsterByUid(monsterUid)
 end
 
----@param itemName string 物品名称
----@param num int32_t 数量
----@return Item
-function Game:CreateItem(itemName, num)
+--- 通过Uid获取怪物对象
+---@param uid uint32_t
+---@return Monster
+function Game:GetMonsterByUid(uid)
 end
 
----@param idx uint32_t npc的索引
----@param sceneName string 场景名称
----@param x int32_t X坐标
----@param y int32_t Y坐标
----@param z int32_t Z坐标
----@return Npc
-function Game:CreateNpc(idx, sceneName, x, y, z)
-end
-
----@param sceneName string 场景模板名字
----@return int32_t
-function Game:GetSceneCount(sceneName)
-end
-
----@param sceneName string 场景名称
----@return Scene
-function Game:GetSceneByName(sceneName)
-end
-
----@param sceneName string 场景模板名称
----@param callback sol.protected_function 异步创建场景后的Lua回调函数
-function Game:AsyncCreateScene(sceneName, callback)
-end
-
----@param monsterName string 怪物名称
----@param count int32_t 怪物数量
----@param range int32_t 生成范围
----@param sceneName string 场景名字
----@param x int32_t X坐标
----@param y int32_t Y坐标
-function Game:CreateMonstersByName(monsterName, count, range, sceneName, x, y)
-end
-
----重新加载Lua脚本
----@return boolean
-function Game:ReloadLuaScripts()
+--- 获取所有玩家列表
+--- 必须值拷贝，不是线程安全的操作，存在迭代器失效问题
+---@return table
+function Game:GetPlayerAll()
 end

@@ -681,3 +681,60 @@ end
 --- @param item Item 装备对象
 function player:WearItem(wearSlot, item)
 end
+
+--- 获取阵营
+---@return int32_t
+function player:Camp()
+end
+
+--- 设置阵营
+---@param camp int32_t
+function player:SetCamp(camp)
+end
+
+--- 回家
+function player:GoHome()
+end
+
+--- 设置基础点数
+---@param point emBasePoint
+---@param val int32_t
+function player:SetPoint(point, val)
+end
+
+--- 获取经验倍率百分比
+---@return int32_t
+function player:PctExpRate()
+end
+
+--- 增加经验百分比
+---@param val int32_t
+function player:IncPctExpRate(val)
+end
+
+--- 设置经验倍率百分比
+---@param val int32_t
+function player:SetPctExpRate(val)
+end
+
+--- 开启致盲
+---@param r int32_t
+---@param g int32_t
+---@param b int32_t
+---@param a int32_t
+function player:OpenGrowBlind(r, g, b, a)
+end
+
+--- 关闭致盲
+function player:CloseGrowBlind()
+end
+
+--- 获取当前地图区域配置索引号
+---@return int32_t
+function player:GetCurrentMapIdx()
+end
+
+--- 设置可分配点数
+---@param val uint16_t
+function player:SetDistributablePoints(val)
+end

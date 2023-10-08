@@ -11,7 +11,13 @@ local customItemConfig = {
         quality = 1.15,
         attr_level = {20, 20, 20, 20, 20},
         attr_name = {"物理技能攻击力Lv13", "物理攻击力", "必杀成功率", "贯穿力", "击中率"},
-    }
+    },
+    [2] = {
+        name = "达比拳套",
+        quality = 1.15,
+        attr_level = {20, 20, 20, 20, 20},
+        attr_name = {"物理技能攻击力Lv13", "物理攻击力", "必杀成功率", "贯穿力", "击中率"},
+    },
 
 
 }
@@ -67,7 +73,7 @@ local function CustomCommand_CreateMonster(player, args)
         end
         local x = player:PosX() + 1;
         local y = player:PosY() + 1;
-        Game:CreateMonsterByName(monsterName, player:SceneName(),x, y)
+        Game:CreateMonsterByName(monsterName, player:SceneName(),x, y, 0)
     end
 end
 
@@ -174,7 +180,68 @@ local function CustomCommand_FullEnhancement(player, args)
     player:SendMsg(3, "提示：重新加载Lua脚本失败...")
  end
 
+ ---踢出队伍
+ ---@param player Player
+ ---@param args any
+ local function CustomCommand_KickTeam(player, args)
+    if not player:IsCaptain() then
+        player:SendMsg(3, "提示：您不是队长！")
+        return
+    end
+
+    if args[2] == nil then
+        player:SendMsg(3, "提示：/踢出队伍 玩家名")
+        return
+    end
+
+    if args[2] == player:Name() then
+        player:SendMsg(3, "提示：不能踢出自己！")
+        return
+    end
+
+    local otherPlayer = Game:GetPlayerByName(args[2]);
+    if otherPlayer == nil then
+        player:SendMsg(3, "提示：玩家未在队伍内！")
+        return
+    end
+
+    if not player:IsSameTeam(otherPlayer) then
+        player:SendMsg(3, "提示：玩家未在队伍内！")
+        return
+    end
+    otherPlayer:LeaveTeam();
+ end
+
+ local function CustomCommand_SetCamp(player, args)
+    if args[2] == nil then
+        return
+    end
+    local camp = tonumber(args[2])
+    if camp == nil then
+        return
+    end
+    player:SetCamp(camp)
+    player:SendMsg(3, string.format("提示：设置阵营成功 %s", camp))
+ end
+
+ local function CustomCommand_CastleStart(player, args)
+    CastleFight.Start()
+ end
+
+local function CustomCommand_CastleStop(player, args)
+    CastleFight.Stop()
+end
+
+local function CustomCommand_SetGuildWar(player, args)
+    if args[2] == nil then
+        return
+    end
+    player:SetGuildWar(args[2])
+    player:SendMsg(3, string.format("提示：设置敌对行会成功 %s", args[2]))
+end
+
 m.cmd = {
+    ["踢出队员"] = {gm_level = 0, fun = CustomCommand_KickTeam},
     ["11"] = {gm_level = 10, fun = CustomCommand_MakeItem},
     ["Map"] = {gm_level = 0, fun = CustomCommand_Map},
     ["移动"] = {gm_level = 10, fun = CustomCommand_MapMove},
@@ -186,6 +253,10 @@ m.cmd = {
     ["全身增幅"] = {gm_level = 10, fun = CustomCommand_FullEnhancement},
     ["制造物品"] = {gm_level = 10, fun = CustomCommand_MakeItemEx},
     ["召唤怪物"] = {gm_level = 10, fun = CustomCommand_CreateMonsters},
+    ["设置攻城阵营"] = {gm_level = 10, fun = CustomCommand_SetCamp},
+    ["开始攻城"] = {gm_level = 10, fun = CustomCommand_CastleStart},
+    ["结束攻城"] = {gm_level = 10, fun = CustomCommand_CastleStop},
+    ["设置敌对行会"] = {gm_level = 10, fun = CustomCommand_SetGuildWar},
 }
 
 ---处理客户端发起的自定义命令

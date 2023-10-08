@@ -150,6 +150,12 @@ function m.GetGlobalTimer()
     return m.globalTimer
 end
 
+m.gameLog = nil
+function m.GetGameLog()
+    package.loaded["table\\kx_game_log"] = nil
+    m.gameLog = require("table\\kx_game_log")
+    return m.gameLog
+end
 
 LuaConfig = m
 return m

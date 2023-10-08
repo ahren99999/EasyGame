@@ -20,7 +20,7 @@ function m.GamePosToUEPos(gameX, gameY)
 end
 
 
----获取元素在table的下标,没有找到返回0
+---获取元素在table的下标,没有找到返回-1
 ---@param tab table
 ---@param item any
 ---@return number
@@ -94,6 +94,63 @@ function m.GiveRewards(player, tabRewards, desc)
     end
 end
 
+---需求道具转换字符串
+---@param tabNeedItem any
+---@param tabNeedCount any
+function m.NeedItemToStr(tabNeedItem, tabNeedCount)
+    local str = ""
+    for index, value in ipairs(tabNeedItem) do
+        if index ~= #tabNeedItem then
+            str = string.format("%s%s*%s、", str, value, tabNeedCount[index])
+        else
+            str = string.format("%s%s*%s", str, value, tabNeedCount[index])
+        end
+    end
+    return str
+end
+
+---判断是否拥有道具
+---@param player Player
+---@param tabNeedItem any
+---@param tabNeedCount any
+function m.CheckHasNeedItem(player, tabNeedItem, tabNeedCount)
+    for index, value in ipairs(tabNeedItem) do
+        local itemName = value
+        local itemCount = tabNeedCount[index]
+
+        if itemName == "金币" then
+            if player:Gold() < itemCount then
+                return false
+            end
+            goto continue
+        end
+
+        if player:GetItemNumByName(itemName) < itemCount then
+            return false
+        end
+        ::continue::
+    end
+    return true
+end
+
+---批量扣除道具
+---@param player Player
+---@param tabNeedItem any
+---@param tabNeedCount any
+function m.TakeItems(player, tabNeedItem, tabNeedCount)
+    for index, value in ipairs(tabNeedItem) do
+        local itemName = value
+        local itemCount = tabNeedCount[index]
+
+        if itemName == "金币" then
+            player:SubGold(itemCount)
+            goto continue
+        end
+        
+        player:TakeItemByName(itemName, itemCount)
+        ::continue::
+    end
+end
 
 
 
