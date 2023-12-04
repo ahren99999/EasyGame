@@ -1,8 +1,8 @@
-# EsayGame 项目文档
+# EasyGame 项目文档
 
 ## 项目概述
 
-EsayGame 是一个基于分布式多场景架构设计简单的游戏后端框架，
+EasyGame 是一个基于分布式多场景架构设计简单的游戏后端框架，
 
 ## 技术栈
 
@@ -22,9 +22,9 @@ EsayGame 是一个基于分布式多场景架构设计简单的游戏后端框�
 
 ## 快速开始
 
-1. **克隆项目**：使用 Git 克隆 EsayGame 项目到本地：
+1. **克隆项目**：使用 Git 克隆 EasyGame 项目到本地：
    
-2. **搭建数据库**：需要自主搭建Pg数据库，然后将连接字符串正确填写到配置文件 `EsayGame\KxLogin\AppConfig\serverConfig.json`。
+2. **搭建数据库**：需要自主搭建Pg数据库，然后将连接字符串正确填写到配置文件 `EasyGame\KxLogin\AppConfig\serverConfig.json`。
 
 3. **服务启动**：依次按启动 KxLogin.exe、KxCenterServer.Release.exe、KxStartup.Release.exe、KxGateway.exe。
    
@@ -206,7 +206,7 @@ EsayGame 是一个基于分布式多场景架构设计简单的游戏后端框�
 
 ## 贡献指南
 
-欢迎所有对游戏开发感兴趣的人参与到 EsayGame 项目中来。如果您想要做出贡献，请遵循以下步骤：
+欢迎所有对游戏开发感兴趣的人参与到 EasyGame 项目中来。如果您想要做出贡献，请遵循以下步骤：
 
 1. 提交问题：如果您发现了 bug 或者有改进的建议，请先提交一个 issue 来讨论。
 2. 创建分支：为了避免直接修改主分支，创建一个新的分支用于您的修改。
